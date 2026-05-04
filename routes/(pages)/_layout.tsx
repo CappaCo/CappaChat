@@ -5,7 +5,6 @@ export default define.layout(function ({ Component }) {
         <>
             <nav>navbar</nav>
             <Component />
-            <p>hi</p>
             <footer>footer &copy; 2026</footer>
         </>
     );
