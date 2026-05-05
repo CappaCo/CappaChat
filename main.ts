@@ -10,7 +10,11 @@ app.use(cors());
 
 // Middleware to log all requests
 app.use(function loggerMiddleware(ctx) {
-    console.log(`${(new Date()).toLocaleTimeString()} ${ctx.req.method}: ${ctx.req.url}`);
+    console.log(
+        `${
+            (new Date()).toLocaleTimeString()
+        } ${ctx.req.method}: ${ctx.req.url}`,
+    );
     return ctx.next();
 });
 
