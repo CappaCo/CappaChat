@@ -6,10 +6,9 @@ export default define.page(function Home() {
     return (
         <>
             <Head>
-                <title>Home page</title>
+                <title>Sign up page</title>
             </Head>
-            <h1>Main page</h1>
-            <img src="/logo.webp" />
+            <h1>Sign up page</h1>
         </>
     );
 });

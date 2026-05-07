@@ -17,6 +17,7 @@ body {
 
 nav {
     background-color: rgb(228, 164, 164);
+    display: flex;
 }
 
 #chat {
