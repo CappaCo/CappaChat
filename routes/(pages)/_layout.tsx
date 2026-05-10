@@ -9,8 +9,8 @@ export default define.layout(function ({ Component }) {
                     <span>CappaChat</span>
                 </div>
                 <div class="right">
-                    <a href="/login">Login</a>
-                    <a href="/sign-up">Sign up</a>
+                    <a class="button" href="/login">Login</a>
+                    <a class="button" href="/sign-up">Sign up</a>
                 </div>
             </nav>
             <Component />

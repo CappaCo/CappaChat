@@ -1,19 +1,19 @@
 import { define } from "@/utils.ts";
 
+function serverIcon() {
+    return (
+        <li>
+            <a>Server 1</a>
+        </li>
+    );
+}
+
 export default define.layout(function ({ Component }) {
     return (
         <>
             <aside>
                 <ul id="server-group">
-                    <li>
-                        <a>Server 1</a>
-                    </li>
-                    <li>
-                        <a>Server 2</a>
-                    </li>
-                    <li>
-                        <a>Server 3</a>
-                    </li>
+                    {/*<serverIcon />*/}
                 </ul>
             </aside>
             <Component />
