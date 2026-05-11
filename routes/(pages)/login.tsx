@@ -2,7 +2,7 @@ import { Head } from "fresh/runtime";
 
 import { define } from "@/utils.ts";
 
-export default define.page(function Home() {
+export default define.page(function Login() {
     return (
         <>
             <Head>

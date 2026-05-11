@@ -8,8 +8,11 @@ export default define.page(function Home() {
             <Head>
                 <title>Home page</title>
             </Head>
+            <div id="hero">
+                <h1>Hello</h1>
+                <h2>Hi</h2>
+            </div>
             <h1>Main page</h1>
-            <img src="/logo.webp" />
         </>
     );
 });

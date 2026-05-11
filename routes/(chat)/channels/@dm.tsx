@@ -2,13 +2,14 @@ import { Head } from "fresh/runtime";
 
 import { define } from "@/utils.ts";
 
-export default define.page(function SignUp() {
+export default define.page(function () {
+
     return (
         <>
             <Head>
-                <title>Sign up page</title>
+                <title>DMs</title>
             </Head>
-            <h1>Sign up page</h1>
+            <h1>DM page</h1>
         </>
     );
 });
