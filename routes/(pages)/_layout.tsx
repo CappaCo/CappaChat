@@ -10,11 +10,11 @@ export default define.layout(function ({ Component }) {
                 </div>
                 <div class="right">
                     <a class="button" href="/login">Login</a>
-                    <a class="button" href="/sign-up">Sign up</a>
+                    <a class="button secondary" href="/sign-up">Sign up</a>
                 </div>
             </nav>
             <Component />
-            <footer>footer &copy; 2026</footer>
+            <footer> <a href="/about">About Us</a> <a href="/privacy-policy">Privacy Policy</a> <a href="/terms-conditions">Terms and Conditions</a> Cappachat &copy; 2026</footer>
         </>
     );
 });
