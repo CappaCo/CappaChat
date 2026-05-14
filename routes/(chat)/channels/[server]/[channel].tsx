@@ -13,7 +13,9 @@ export default define.page(function (ctx) {
             <Head>
                 <title>s:{serverID} c:{channelID}</title>
             </Head>
-            <h1>Title</h1>
+            <main id="messages">
+                <p>hi</p>
+            </main>
         </>
     );
 });

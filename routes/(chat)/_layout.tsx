@@ -1,15 +1,26 @@
 import { define } from "@/utils.ts";
 
 import ServerIcon from "@/components/ServerIcon.tsx";
+import ChannelIcon from "@/components/ChannelIcon.tsx";
 
 export default define.layout(function ({ Component }) {
     return (
         <>
-            <aside>
+            <aside id="server-select">
                 <ul id="servers-group">
-                    <ServerIcon name="Server 1" />
-                    <ServerIcon name="Server 2" />
-                    <ServerIcon name="Server 3" />
+                    <ServerIcon>Server 1</ServerIcon>
+                    <ServerIcon>Server 2</ServerIcon>
+                    <ServerIcon>Server 3</ServerIcon>
+                </ul>
+            </aside>
+            <aside id="server-info">
+                <h3 id="server-name">Termite Piddle Atrium</h3>
+                <ul id="channels-group">
+                    <ChannelIcon>General</ChannelIcon>
+                    <ChannelIcon>Activities</ChannelIcon>
+                    <ChannelIcon>Thoughts</ChannelIcon>
+                    <ChannelIcon>Mutations</ChannelIcon>
+                    <ChannelIcon>News</ChannelIcon>
                 </ul>
             </aside>
             <Component />

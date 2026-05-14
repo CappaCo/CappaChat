@@ -1,14 +1,14 @@
 import type { ComponentChildren } from "preact";
 
-export interface ServerIconProps {
+export interface ChannelIconProps {
     id?: string;
     children?: ComponentChildren;
 }
 
-export default function ServerIcon(props: ServerIconProps) {
+export default function ChannelIcon(props: ChannelIconProps) {
     return (
         <li>
-            <a>{props.children || "gus"}</a>
+            <a>{props.children || "sug"}</a>
         </li>
     );
 }
