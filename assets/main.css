@@ -97,12 +97,6 @@ nav .right {
 }
 
 /*
-    chat page styles
-*/
-
-
-
-/*
     inline classes
 */
 
@@ -127,7 +121,15 @@ nav .right {
     text-align: center;
 }
 
+/* idk what to do with fuelweaver image */
+#index-page {
+    justify-items: center;
+}
 
+#index-page p {
+    margin-top: 1em;
+    margin-bottom: 1.2em;
+}
 
 footer {
     background-color: var(--background-color);

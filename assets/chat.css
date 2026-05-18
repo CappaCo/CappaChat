@@ -1,0 +1,19 @@
+/*
+    styles for chat pages
+*/
+
+#chat-grid {
+    display: grid;
+    grid-template-areas:
+        "server-select server-info any users"
+        "server-select server-info any users"
+    ;
+}
+
+#chat-grid.format2 {
+    grid-template-areas:
+        "server-select server-info users users"
+        "server-select server-info any   any  "
+    ;
+}
+
