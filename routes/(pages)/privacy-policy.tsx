@@ -8,7 +8,9 @@ export default define.page(function PrivacyPolicy() {
             <Head>
                 <title>Privacy Policy page</title>
             </Head>
-            <h1>Privacy Policy page</h1>
+            <main>
+                <h1>Privacy Policy page</h1>
+            </main>
         </>
     );
 });

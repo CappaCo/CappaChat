@@ -12,10 +12,12 @@ export default define.page(function Home() {
                 <h1>Welcome to Cappachat</h1>
                 <h2>Hello</h2>
             </div>
-            <h1>Main page</h1>
-            <h2>(Ancient Fuelweaver approved)</h2>
-            <img src="fuelweaver.jfif"/>
-            <p><a class="button try-now" href="/sign-up">Try now!</a></p>
+            <main id="index-page">
+                <h1>Main page</h1>
+                <h2>(Ancient Fuelweaver approved)</h2>
+                <img src="fuelweaver.jfif"/>
+                <p><a class="button try-now" href="/sign-up">Try now!</a></p>
+            </main>
         </>
     );
 });

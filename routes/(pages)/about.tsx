@@ -8,7 +8,18 @@ export default define.page(function Home() {
             <Head>
                 <title>About page</title>
             </Head>
-            <h1>About page</h1>
+            <div id="hero">
+                <h1>About us</h1>
+            </div>
+            <main>
+                <h2>Our History</h2>
+                <h3>We are termites in human bodies</h3>
+                <h2>The <s>freaks</s> normal people</h2>
+                <p>Cappa</p>
+                <p>Hamuel</p>
+                <p>Michael</p>
+                <p>Noah Dixon</p>
+            </main>
         </>
     );
 });
