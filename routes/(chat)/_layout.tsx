@@ -2,10 +2,11 @@ import { define } from "@/utils.ts";
 
 import ServerIcon from "@/components/ServerIcon.tsx";
 import ChannelIcon from "@/components/ChannelIcon.tsx";
+import UserDisplay from "@/components/UserDisplay.tsx";
 
 export default define.layout(function ({ Component }) {
     return (
-        <>
+        <div id="chat-grid">
             <aside id="server-select">
                 <ul id="servers-group">
                     <ServerIcon>Server 1</ServerIcon>
@@ -23,7 +24,14 @@ export default define.layout(function ({ Component }) {
                     <ChannelIcon>News</ChannelIcon>
                 </ul>
             </aside>
+            <section id="users">
+                <ul id="users-group">
+                    <UserDisplay>person1</UserDisplay>
+                    <UserDisplay>person2</UserDisplay>
+                    <UserDisplay>person3</UserDisplay>
+                </ul>
+            </section>
             <Component />
-        </>
+        </div>
     );
 });
