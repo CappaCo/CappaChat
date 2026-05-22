@@ -1,9 +1,10 @@
+import { asset, Head } from "fresh/runtime";
+
 import { define } from "@/utils.ts";
 
 import ServerIcon from "@/components/ServerIcon.tsx";
 import ChannelIcon from "@/components/ChannelIcon.tsx";
 import UserDisplay from "@/components/UserDisplay.tsx";
-import { Head } from "fresh/runtime";
 
 export default define.layout(function ({ Component }) {
     return (
@@ -11,7 +12,7 @@ export default define.layout(function ({ Component }) {
             <Head>
                 <link
                     rel="stylesheet"
-                    href="/styles/chat.css"
+                    href={asset("/styles/chat.css")}
                 />
             </Head>
             <div id="chat-grid">
@@ -39,7 +40,9 @@ export default define.layout(function ({ Component }) {
                         <UserDisplay>person3</UserDisplay>
                     </ul>
                 </section>
-                <Component />
+                <section id="page-content">
+                    <Component />
+                </section>
             </div>
         </>
     );

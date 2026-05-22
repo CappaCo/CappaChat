@@ -2,17 +2,50 @@
     styles for chat pages
 */
 
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
 #chat-grid {
     display: grid;
     grid-template-areas:
-        "server-select server-info any users"
-        "server-select server-info any users"
+        "server-select server-info component users"
+        "server-select server-info component users"
     ;
+    --size: 6.7em;
+    grid-template-columns: calc(1*var(--size)) calc(4*var(--size)) auto calc(4*var(--size));
+    height: 100%;
 }
 
 #chat-grid.format2 {
     grid-template-areas:
-        "server-select server-info users users"
-        "server-select server-info any   any  "
+        "server-select server-info users     users    "
+        "server-select server-info component component"
     ;
+
 }
+
+#chat-grid > * {
+    border: #000 1px solid
+}
+
+#chat-grid > #server-select {
+    grid-area: server-select;
+}
+
+#chat-grid > #server-info {
+    grid-area: server-info;
+}
+
+#chat-grid > #users {
+    grid-area: users;
+}
+
+#chat-grid > #page-content {
+    grid-area: component;
+}
+

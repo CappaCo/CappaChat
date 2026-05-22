@@ -1,3 +1,5 @@
+import { asset } from "fresh/runtime";
+
 import { define } from "@/utils.ts";
 
 export default define.page(function ({ Component }) {
@@ -12,7 +14,7 @@ export default define.page(function ({ Component }) {
 
                 <link
                     rel="stylesheet"
-                    href="/styles/main.css"
+                    href={asset("/styles/main.css")}
                 />
 
                 {/* Google font (inter) */}
