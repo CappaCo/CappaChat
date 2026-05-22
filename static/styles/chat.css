@@ -16,8 +16,8 @@ body {
         "server-select server-info component users"
         "server-select server-info component users"
     ;
-    --size: 6.7em;
-    grid-template-columns: calc(1*var(--size)) calc(4*var(--size)) auto calc(4*var(--size));
+
+    grid-template-columns: 5em 15em auto 15em;
     height: 100%;
 }
 
@@ -30,7 +30,8 @@ body {
 }
 
 #chat-grid > * {
-    border: #000 1px solid
+    border: #fff 1px solid;
+    margin: 5px;
 }
 
 #chat-grid > #server-select {
@@ -49,3 +50,19 @@ body {
     grid-area: component;
 }
 
+:is(#server-select, #server-info, #users) ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* chat container */
+#chat-container {
+    display: grid;
+    grid-template-rows: auto 2em;
+    height: 100%;
+}
+
+#messages {
+    display: flex;
+    align-items: flex-end;
+}
