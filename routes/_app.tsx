@@ -13,6 +13,7 @@ export default define.page(function ({ Component }) {
                 />
 
                 <link
+                    id="stylesheet-main"
                     rel="stylesheet"
                     href={asset("/styles/main.css")}
                 />

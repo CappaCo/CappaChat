@@ -11,6 +11,7 @@ export default define.layout(function ({ Component }) {
         <>
             <Head>
                 <link
+                    id="stylesheet-chat"
                     rel="stylesheet"
                     href={asset("/styles/chat.css")}
                 />
@@ -33,13 +34,13 @@ export default define.layout(function ({ Component }) {
                         <ChannelIcon>News</ChannelIcon>
                     </ul>
                 </aside>
-                <section id="users">
+                <aside id="users">
                     <ul id="users-group">
                         <UserDisplay>person1</UserDisplay>
                         <UserDisplay>person2</UserDisplay>
                         <UserDisplay>person3</UserDisplay>
                     </ul>
-                </section>
+                </aside>
                 <section id="page-content">
                     <Component />
                 </section>
