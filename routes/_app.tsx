@@ -10,6 +10,11 @@ export default define.page(function ({ Component }) {
                     content="width=device-width, initial-scale=1.0"
                 />
 
+                <link
+                    rel="stylesheet"
+                    href="/styles/main.css"
+                />
+
                 {/* Google font (inter) */}
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
