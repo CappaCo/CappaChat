@@ -66,3 +66,19 @@ body {
     display: flex;
     align-items: flex-end;
 }
+
+/* TODO: make the padding good */
+
+.server-icon img {
+    width: 54px;
+    height: 54px;
+    margin: auto;
+}
+
+.server-icon a {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1;
+    justify-content: center;
+    box-sizing: border-box;
+}

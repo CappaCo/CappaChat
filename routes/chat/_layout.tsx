@@ -19,9 +19,9 @@ export default define.layout(function ({ Component }) {
             <div id="chat-grid">
                 <aside id="server-select">
                     <ul id="servers-group">
-                        <ServerIcon>Server 1</ServerIcon>
-                        <ServerIcon>Server 2</ServerIcon>
-                        <ServerIcon>Server 3</ServerIcon>
+                        <ServerIcon imgSrc="/testImages/servers/geeked.webp"/>
+                        <ServerIcon imgSrc="/testImages/servers/rio.webp"/>
+                        <ServerIcon imgSrc="/testImages/servers/wariotoilet.webp"/>
                     </ul>
                 </aside>
                 <aside id="server-info">
