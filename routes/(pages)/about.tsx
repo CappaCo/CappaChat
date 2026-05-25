@@ -11,14 +11,18 @@ export default define.page(function Home() {
             <div id="hero">
                 <h1>About us</h1>
             </div>
-            <main>
-                <h2>Our History</h2>
-                <h3>We are termites in human bodies</h3>
-                <h2>The <s>freaks</s> normal people</h2>
-                <p>Cappa</p>
-                <p>Hamuel</p>
-                <p>Michael</p>
-                <p>Noah Dixon</p>
+            <main id="about-page">
+                <div class="history-section">
+                    <h1>Our History</h1>
+                    <p>We are termites in human bodies</p>
+                </div>
+                <div class="dev-section">
+                    <h1>The <s>freaks</s> normal people</h1>
+                    <p>Cappa</p>
+                    <p>Hamuel</p>
+                    <p>Michael</p>
+                    <p>Noah Dixon</p>
+                </div>
             </main>
         </>
     );

@@ -18,6 +18,12 @@ export default define.page(function Home() {
                 <img src="fuelweaver.jfif"/>
                 <p><a class="button try-now" href="/sign-up">Try now!</a></p>
             </main>
+            <div id="login-modal" class="modal">
+
+            </div>
+            <div id="signup-modal" class="modal">
+
+            </div>
         </>
     );
 });
