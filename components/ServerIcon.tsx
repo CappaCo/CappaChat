@@ -19,7 +19,7 @@ export default function ServerIcon(props: ServerIconProps) {
     thingo = (thingo + 1) % files.length;
 
     return (
-        <li class="server-icon">
+        <li class="server-icon" id={props.id}>
             <a href="#">
                 <img src={props.imgSrc || selectedImage} />
             </a>

@@ -30,7 +30,7 @@ body {
 }
 
 #chat-grid > * {
-    border: #fff 1px solid;
+    border: var(--secondary-border);
     margin: 5px;
 }
 
@@ -69,7 +69,7 @@ body {
 
 /* TODO: make the padding good */
 
-.server-icon img {
+:is(.server-icon, .user-icon) img {
     width: 54px;
     height: 54px;
     margin: auto;
@@ -81,4 +81,14 @@ body {
     aspect-ratio: 1;
     justify-content: center;
     box-sizing: border-box;
+}
+
+.channel-display a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#server-name {
+    padding: 8px;
+    border-bottom: var(--secondary-border);
 }

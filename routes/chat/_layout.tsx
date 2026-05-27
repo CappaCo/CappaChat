@@ -3,7 +3,7 @@ import { asset, Head } from "fresh/runtime";
 import { define } from "@/utils.ts";
 
 import ServerIcon from "@/components/ServerIcon.tsx";
-import ChannelIcon from "@/components/ChannelIcon.tsx";
+import ChannelDisplay from "@/components/ChannelDisplay.tsx";
 import UserDisplay from "@/components/UserDisplay.tsx";
 
 export default define.layout(function ({ Component }) {
@@ -27,11 +27,11 @@ export default define.layout(function ({ Component }) {
                 <aside id="server-info">
                     <h3 id="server-name">Termite Piddle Atrium</h3>
                     <ul id="channels-group">
-                        <ChannelIcon>General</ChannelIcon>
-                        <ChannelIcon>Activities</ChannelIcon>
-                        <ChannelIcon>Thoughts</ChannelIcon>
-                        <ChannelIcon>Mutations</ChannelIcon>
-                        <ChannelIcon>News</ChannelIcon>
+                        <ChannelDisplay>General</ChannelDisplay>
+                        <ChannelDisplay>Activities</ChannelDisplay>
+                        <ChannelDisplay>Thoughts</ChannelDisplay>
+                        <ChannelDisplay>Mutations</ChannelDisplay>
+                        <ChannelDisplay>News</ChannelDisplay>
                     </ul>
                 </aside>
                 <aside id="users">
