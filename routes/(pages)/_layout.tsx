@@ -1,5 +1,8 @@
 import { define } from "@/utils.ts";
 
+import LoginButton from "@/components/LoginButton.tsx";
+import SignUpButton from "@/components/SignUpButton.tsx";
+
 export default define.layout(function ({ Component }) {
     return (
         <>
@@ -11,8 +14,8 @@ export default define.layout(function ({ Component }) {
                     </a>
                 </div>
                 <div class="right">
-                    <a class="button" href="/login">Login</a>
-                    <a class="button secondary" href="/sign-up">Sign up</a>
+                    <LoginButton />
+                    <SignUpButton />
                 </div>
             </nav>
             <Component />

@@ -14,8 +14,7 @@ body {
     display: grid;
     grid-template-areas:
         "server-select server-info component users"
-        "server-select server-info component users"
-    ;
+        "server-select server-info component users";
 
     grid-template-columns: 5em 15em auto 15em;
     height: 100%;
@@ -24,9 +23,31 @@ body {
 #chat-grid.format2 {
     grid-template-areas:
         "server-select server-info users     users    "
-        "server-select server-info component component"
-    ;
+        "server-select server-info component component";
+}
 
+@media screen and (max-width: 768px) {
+    #chat-grid {
+        display: block;
+    }
+
+    #chat-grid > #server-select {
+        display: none;
+    }
+
+    #chat-grid > #server-info {
+        display: none;
+    }
+
+    #chat-grid > #users {
+        display: none;
+    }
+
+    #chat-grid > #page-content {
+        display: block;
+        height: 100%;
+        margin: 0;
+    }
 }
 
 #chat-grid > * {
