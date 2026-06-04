@@ -1,11 +1,17 @@
-import { useState } from "preact/hooks";
-
-function openLoginModal() {
-    console.log("hi");
-}
+import { useSignal } from "@preact/signals";
 
 export default function LoginButton() {
-    const isOpen = useState(false);
+    const isOpen = useSignal(false);
+
+    function openLoginModal() {
+        console.log("opening modal");
+        isOpen.value = true;
+    }
+
+    function closeLoginModal() {
+        console.log("closing modal");
+        isOpen.value = false;
+    }
 
     return (
         <>
@@ -13,13 +19,11 @@ export default function LoginButton() {
                 Log In
             </button>
 
-            {isOpen && (
-                <div id="login-modal" class="modal">
-                    <span class="close">&times;</span>
-                    <p>Log In</p>
-                    <input id="freddy" placeholder="freddy" />
-                </div>
-            )}
+            <div id="login-modal" class="modal">
+                <span class="close" onClick={closeLoginModal}>&times;</span>
+                <p>Log In</p>
+                <input id="freddy" placeholder="freddy" />
+            </div>
         </>
     );
 }
