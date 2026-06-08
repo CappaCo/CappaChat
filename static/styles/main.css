@@ -7,7 +7,7 @@
     --foreground-border: var(--border-width) solid #666;
     --secondary-color: #fff;
     --secondary-border: var(--border-width) solid #ddd;
-    
+
     --text-primary: #fff;
     --text-secondary: #000;
 }
@@ -56,7 +56,7 @@ nav .left a span {
     margin-left: 10px;
 }
 
-nav .left span{
+nav .left span {
     font-size: 2em;
 }
 
@@ -79,6 +79,7 @@ nav .right {
     color: inherit;
     transition: background-color 0.2s ease-in-out;
     text-decoration: none;
+    cursor: pointer;
 }
 
 :is(button, .button).secondary {
@@ -94,6 +95,10 @@ nav .right {
 
 :is(button, .button).secondary:hover {
     background-color: rgb(110, 110, 110);
+}
+
+:is(button, .button).modal:hover {
+    background-color: #1c501e;
 }
 
 /*
@@ -162,4 +167,79 @@ footer a {
 
 .dev-section {
     justify-items: center;
+}
+
+/* modal */
+.modal {
+    background-color: var(--background-color);
+    border: var(--foreground-border);
+    border-width: 2px;
+    color: var(--text-primary);
+}
+
+.modal[open="false"] .modal-content {
+    display: none;
+}
+
+.modal[open="true"] .modal-content {
+    display: flex;
+}
+
+.modal-content {
+    flex-direction: column;
+    background-color: var(--background-color);
+}
+
+.modal :is(button, .button)[type="submit"] {
+    background-color: #3c963f;
+    border: #245f26;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.modal button.close {
+    padding: 1em;
+    background-color: transparent;
+    border: 0px;
+}
+
+.pull-right {
+    float: right;
+}
+.pull-left {
+    float: left;
+}
+.clear-fix {
+    clear: both;
+}
+div.form-item {
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+}
+input {
+    transition: all 0.2s ease;
+}
+div.form-item .form-style:focus {
+    outline: none;
+    border: 1px solid #58bff6;
+    color: #58bff6;
+}
+div.form-item p.formLabel {
+    position: absolute;
+    left: 26px;
+    top: 2px;
+    transition: all 0.4s ease;
+    color: #bbb;
+}
+.formTop {
+    top: -22px !important;
+    left: 26px;
+    background-color: #fff;
+    padding: 0 5px;
+    font-size: 14px;
+    color: #58bff6 !important;
+}
+.formStatus {
+    color: #8a8a8a !important;
 }

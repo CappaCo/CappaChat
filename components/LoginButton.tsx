@@ -1,29 +1,29 @@
-import { useSignal } from "@preact/signals";
-
 export default function LoginButton() {
-    const isOpen = useSignal(false);
-
-    function openLoginModal() {
-        console.log("opening modal");
-        isOpen.value = true;
-    }
-
-    function closeLoginModal() {
-        console.log("closing modal");
-        isOpen.value = false;
-    }
-
     return (
         <>
-            <button type="button" onClick={openLoginModal}>
+            <button type="button" command="show-modal" commandfor="login-modal">
                 Log In
             </button>
 
-            <div id="login-modal" class="modal">
-                <span class="close" onClick={closeLoginModal}>&times;</span>
-                <p>Log In</p>
-                <input id="freddy" placeholder="freddy" />
-            </div>
+            <dialog id="login-modal" class="modal">
+                <div class="modal-content">
+                    <button
+                        type="button"
+                        class="close"
+                        command="close"
+                        commandfor="login-modal"
+                    >
+                        &times;
+                    </button>
+                    <p>Log In</p>
+                    <label for="username">Username/Email</label>
+                    <input id="username" placeholder="Username" />
+                    <label for="password">Password</label>
+                    <input id="password" placeholder="Strong password" />
+                    <a href="/forgot-password">Forgot Password???</a>
+                    <button type="submit">Log in</button>
+                </div>
+            </dialog>
         </>
     );
 }
