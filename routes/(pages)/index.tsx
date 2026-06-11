@@ -10,10 +10,10 @@ export default define.page(function Home() {
 
                 <script defer src="/scripts/main.js" />
             </Head>
-            
+
             <div id="hero">
                 <h1>Welcome to Cappachat</h1>
-                <h2>Hello</h2>
+                <h2>The customisable, user first chat app</h2>
             </div>
 
             <main id="index-page">
@@ -21,6 +21,10 @@ export default define.page(function Home() {
                 <h2>(Ancient Fuelweaver approved)</h2>
                 <img src="fuelweaver.jfif" />
             </main>
+            
+            <section>
+                <p>hello</p>
+            </section>
         </>
     );
 });

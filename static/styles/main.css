@@ -1,5 +1,6 @@
 :root {
     --border-width: 2px;
+    --border-radius: 1em;
 
     --background-color: #000;
     --background-border: var(--border-width) solid #222;
@@ -14,7 +15,7 @@
 
 * {
     margin: 0;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
 }
 
 body {
@@ -144,6 +145,11 @@ footer {
     display: flex;
     justify-content: space-around;
     border-top: var(--background-border);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
 }
 
 footer a {
@@ -171,23 +177,16 @@ footer a {
 
 /* modal */
 .modal {
+    z-index: 100;
+    border-width: 0;
+
+    margin: auto;
+
     background-color: var(--background-color);
     border: var(--foreground-border);
-    border-width: 2px;
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
     color: var(--text-primary);
-}
-
-.modal[open="false"] .modal-content {
-    display: none;
-}
-
-.modal[open="true"] .modal-content {
-    display: flex;
-}
-
-.modal-content {
-    flex-direction: column;
-    background-color: var(--background-color);
 }
 
 .modal :is(button, .button)[type="submit"] {
@@ -203,43 +202,65 @@ footer a {
     border: 0px;
 }
 
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    background-color: var(--foreground-color);
+    border: var(--background-border);
+    border-radius: 1.25em;
+    padding: 0.67em;
+}
+
+.forgot-password {
+    font-size: 0.85em;
+    color: grey;
+    text-decoration: none;
+}
+
 .pull-right {
     float: right;
 }
+
 .pull-left {
     float: left;
 }
+
 .clear-fix {
     clear: both;
 }
-div.form-item {
+
+.form-item {
     position: relative;
     display: block;
     margin-bottom: 20px;
 }
+
 input {
     transition: all 0.2s ease;
 }
-div.form-item .form-style:focus {
-    outline: none;
-    border: 1px solid #58bff6;
-    color: #58bff6;
-}
-div.form-item p.formLabel {
+
+.form-item label {
     position: absolute;
     left: 26px;
     top: 2px;
     transition: all 0.4s ease;
     color: #bbb;
 }
+
 .formTop {
     top: -22px !important;
     left: 26px;
     background-color: #fff;
     padding: 0 5px;
     font-size: 14px;
-    color: #58bff6 !important;
+    color: #000 !important;
 }
-.formStatus {
-    color: #8a8a8a !important;
+
+/* section */
+
+section {
+    border-top: var(--background-border);
 }
