@@ -181,6 +181,8 @@ footer a {
     border-width: 0;
 
     margin: auto;
+    padding: 2em;
+    width: min(50%, 500px);
 
     background-color: var(--background-color);
     border: var(--foreground-border);
@@ -189,15 +191,22 @@ footer a {
     color: var(--text-primary);
 }
 
+.modal::backdrop {
+    background-color: #000000aa;
+}
+
 .modal :is(button, .button)[type="submit"] {
     background-color: #3c963f;
     border: #245f26;
     color: var(--text-primary);
     text-decoration: none;
+    width: max(40%, 6.7em);
+    margin: auto;
 }
 
 .modal button.close {
-    padding: 1em;
+    padding: 0;
+    font-size: 1.5em;
     background-color: transparent;
     border: 0px;
 }
@@ -207,17 +216,35 @@ footer a {
     flex-direction: column;
 }
 
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.modal-header span {
+    font-size: 1.5em;
+}
+
+/* form */
+
 input {
     background-color: var(--foreground-color);
     border: var(--background-border);
-    border-radius: 1.25em;
-    padding: 0.67em;
+    border-radius: 2em;
+}
+
+.modal form input {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .forgot-password {
     font-size: 0.85em;
     color: grey;
     text-decoration: none;
+    margin-bottom: 5px;
+    width: fit-content;
 }
 
 .pull-right {
@@ -235,28 +262,26 @@ input {
 .form-item {
     position: relative;
     display: block;
-    margin-bottom: 20px;
+    margin: 0.75em 0;
 }
 
 input {
-    transition: all 0.2s ease;
+    padding: 1em;
+    color: var(--text-primary);
 }
 
 .form-item label {
     position: absolute;
-    left: 26px;
-    top: 2px;
+    top: 0.75em;
+    left: 10px;
     transition: all 0.4s ease;
     color: #bbb;
 }
 
-.formTop {
-    top: -22px !important;
-    left: 26px;
-    background-color: #fff;
+.form-item label.move-up {
+    top: -1.5em !important;
     padding: 0 5px;
-    font-size: 14px;
-    color: #000 !important;
+    font-size: 0.8em;
 }
 
 /* section */

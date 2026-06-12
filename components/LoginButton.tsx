@@ -6,21 +6,27 @@ export default function LoginButton() {
             </button>
 
             <dialog id="login-modal" class="modal">
-                <button
-                    type="button"
-                    class="close"
-                    command="close"
-                    commandfor="login-modal"
-                >
-                    &times;
-                </button>
+                <div class="modal-header">
+                    <span>Log In</span>
+                    <button
+                        type="button"
+                        class="close"
+                        command="close"
+                        commandfor="login-modal"
+                    >
+                        &times;
+                    </button>
+                </div>
 
                 <form method="dialog">
-                    <span>Log In</span>
-
                     <div class="form-item">
-                        <label for="username">Username/Email</label>
-                        <input id="username" type="email" autofocus />
+                        <label for="username-email">Username/Email</label>
+                        <input
+                            id="username-email"
+                            type="email"
+                            autofocus
+                            autocomplete="on"
+                        />
                     </div>
 
                     <div class="form-item">
