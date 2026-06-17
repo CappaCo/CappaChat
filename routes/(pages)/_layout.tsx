@@ -23,7 +23,7 @@ export default define.layout(function ({ Component }) {
                 <a href="/about">About Us</a>
                 <a href="/privacy-policy">Privacy Policy</a>
                 <a href="/terms-conditions">Terms and Conditions</a>
-                Cappachat &copy; 2026
+                CappaChat &copy; 2026
             </footer>
         </>
     );
