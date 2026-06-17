@@ -4,10 +4,17 @@
 
     --background-color: #000;
     --background-border: var(--border-width) solid #222;
+
     --foreground-color: #444;
+    --foreground-hover: #222;
     --foreground-border: var(--border-width) solid #666;
+
     --secondary-color: #fff;
+    --secondary-hover: #aaa;
     --secondary-border: var(--border-width) solid #ddd;
+
+    --confirm-color: #3c963f;
+    --confirm-hover: #317933;
 
     --text-primary: #fff;
     --text-secondary: #000;
@@ -18,6 +25,10 @@
     /*box-sizing: border-box;*/
 }
 
+html {
+    font-size: 20px;
+}
+
 body {
     font-family: "Inter", sans-serif;
     background-color: var(--background-color);
@@ -26,7 +37,7 @@ body {
 
 nav {
     background-color: var(--background-color);
-    outline: var(--background-border);
+    border-bottom: var(--background-border);
     display: flex;
     width: 100vw;
     padding: 1em;
@@ -35,8 +46,7 @@ nav {
 }
 
 nav img {
-    height: 4em;
-    width: 4em;
+    height: 3.5em;
 }
 
 nav .left {
@@ -50,15 +60,18 @@ nav .left a {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--text-primary);
 }
 
-nav .left a span {
+nav .left a span { /* nav CappaChat thing */
     margin-left: 10px;
 }
 
+nav .left:hover a span {
+    text-decoration: underline;
+}
+
 nav .left span {
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
 nav .right {
@@ -68,19 +81,47 @@ nav .right {
     gap: 10px;
 }
 
-#chat {
-    border: 4px solid white;
+/* footer */
+footer {
+    background-color: var(--background-color);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto 0px 0px 0px;
+    display: flex;
+    justify-content: space-around;
+    border-top: var(--background-border);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+a {
+    color: var(--text-primary);
 }
 
 :is(button, .button) {
+    font-size: inherit;
     background-color: var(--foreground-color);
     border: var(--foreground-border);
     border-radius: 1.5em;
-    padding: 1em;
+    padding: 0.75em;
     color: inherit;
     transition: background-color 0.2s ease-in-out;
     text-decoration: none;
     cursor: pointer;
+}
+
+:is(button, .button):hover {
+    background-color: var(--foreground-hover);
 }
 
 :is(button, .button).secondary {
@@ -90,16 +131,16 @@ nav .right {
     text-decoration: none;
 }
 
-:is(button, .button):hover {
-    background-color: #222;
-}
-
 :is(button, .button).secondary:hover {
-    background-color: rgb(110, 110, 110);
+    background-color: var(--secondary-hover);
 }
 
-:is(button, .button).modal:hover {
-    background-color: #1c501e;
+:is(button, .button).confirm {
+    background-color: var(--confirm-color);
+}
+
+:is(button, .button).confirm:hover {
+    background-color: var(--confirm-hover);
 }
 
 /*
@@ -123,11 +164,10 @@ nav .right {
     max-width: none;
     font: 2em;
     box-sizing: border-box;
-    background-color: #666;
+    background-color: #444444;
     text-align: center;
 }
 
-/* idk what to do with fuelweaver image */
 #index-page {
     justify-items: center;
 }
@@ -135,25 +175,6 @@ nav .right {
 #index-page p {
     margin-top: 1em;
     margin-bottom: 1.2em;
-}
-
-footer {
-    background-color: var(--background-color);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: auto 0px 0px 0px;
-    display: flex;
-    justify-content: space-around;
-    border-top: var(--background-border);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-    width: 100%;
-}
-
-footer a {
-    color: #fff;
 }
 
 #about-page {
@@ -196,12 +217,16 @@ footer a {
 }
 
 .modal :is(button, .button)[type="submit"] {
-    background-color: #3c963f;
-    border: #245f26;
+    background-color: var(--confirm-color);
+    border: none;
     color: var(--text-primary);
     text-decoration: none;
     width: max(40%, 6.7em);
     margin: auto;
+}
+
+.modal :is(button, .button)[type="submit"]:hover {
+    background-color: var(--confirm-hover);
 }
 
 .modal button.close {
@@ -266,14 +291,15 @@ input {
 }
 
 input {
-    padding: 1em;
+    padding: 0.5em;
+    font-size: 1em;
     color: var(--text-primary);
 }
 
 .form-item label {
     position: absolute;
-    top: 0.75em;
-    left: 10px;
+    top: 0.6em;
+    left: 1em;
     transition: all 0.4s ease;
     color: #bbb;
 }
