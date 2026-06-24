@@ -7,8 +7,6 @@ export default define.page(function Home() {
         <>
             <Head>
                 <title>Home page</title>
-
-                <script defer src="/scripts/main.js" />
             </Head>
 
             <div id="hero">
