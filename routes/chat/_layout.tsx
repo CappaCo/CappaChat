@@ -34,6 +34,7 @@ export default define.layout(function ({ Component }) {
                         <ChannelDisplay>News</ChannelDisplay>
                     </ul>
                 </aside>
+                <div id="server-info-resizer"></div>
                 <aside id="users">
                     <ul id="users-group">
                         <UserDisplay>person1</UserDisplay>

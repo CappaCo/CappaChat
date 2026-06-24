@@ -19,7 +19,7 @@ export default function UserDisplay(props: UserDisplayProps) {
     thingo = (thingo + 1) % files.length;
 
     return (
-        <li class="user-icon" id={props.id}>
+        <li class="user-display" id={props.id}>
             <img src={props.imgSrc || selectedImage} />
             {props.children || "person"}
         </li>

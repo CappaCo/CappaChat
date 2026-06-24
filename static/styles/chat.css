@@ -11,19 +11,20 @@ body {
 }
 
 #chat-grid {
+    --server-info-width: 15em;
     display: grid;
     grid-template-areas:
-        "server-select server-info component users"
-        "server-select server-info component users";
+        "server-select server-info server-info-resizer component users"
+        "server-select server-info server-info-resizer component users";
 
-    grid-template-columns: 5em 15em auto 15em;
+    grid-template-columns: 5em var(--server-info-width) 16px auto 15em;
     height: 100%;
 }
 
 #chat-grid.format2 {
     grid-template-areas:
-        "server-select server-info users     users    "
-        "server-select server-info component component";
+        "server-select server-info server-info-resizer users     users    "
+        "server-select server-info server-info-resizer component component";
 }
 
 @media screen and (max-width: 768px) {
@@ -39,6 +40,10 @@ body {
         display: none;
     }
 
+    #chat-grid > #server-info-resizer {
+        display: none;
+    }
+
     #chat-grid > #users {
         display: none;
     }
@@ -51,8 +56,7 @@ body {
 }
 
 #chat-grid > * {
-    border: var(--secondary-border);
-    margin: 5px;
+    outline: var(--background-border);
 }
 
 #chat-grid > #server-select {
@@ -63,12 +67,17 @@ body {
     grid-area: server-info;
 }
 
+#chat-grid > #server-info-resizer {
+    grid-area: server-info-resizer;
+}
+
 #chat-grid > #users {
     grid-area: users;
 }
 
 #chat-grid > #page-content {
     grid-area: component;
+    overflow: hidden;
 }
 
 :is(#server-select, #server-info, #users) ul {
@@ -81,6 +90,8 @@ body {
     display: grid;
     grid-template-rows: auto 2em;
     height: 100%;
+    padding: 1em;
+    box-sizing: border-box;
 }
 
 #messages {
@@ -88,20 +99,33 @@ body {
     align-items: flex-end;
 }
 
-/* TODO: make the padding good */
+.user-display {
+    padding: 0.25em;
+    margin: 0.25em;
+    padding-top: 0.75em;
+}
 
-:is(.server-icon, .user-icon) img {
+.user-display img {
+    margin-right: 0.25em;
+}
+
+:is(.server-icon, .user-display) img {
     width: 54px;
     height: 54px;
-    margin: auto;
+}
+
+:is(.server-icon) img {
+    width: 70px;
+    height: 70px;
 }
 
 .server-icon a {
     display: flex;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1.5;
     justify-content: center;
     box-sizing: border-box;
+    padding-top: 0.75em;
 }
 
 .channel-display a {
@@ -109,7 +133,20 @@ body {
     color: inherit;
 }
 
+.channel-display {
+    margin: 0.5em
+}
+
 #server-name {
     padding: 8px;
     border-bottom: var(--secondary-border);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#channel-display {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

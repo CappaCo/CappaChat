@@ -20,6 +20,25 @@
     --text-secondary: #000;
 }
 
+[data-theme="light"] {
+    --background-color: #fff;
+    --background-border: var(--border-width) solid #cacaca;
+
+    --foreground-color: #a7a7a7;
+    --foreground-hover: #7a7a7a;
+    --foreground-border: var(--border-width) solid #555555;
+
+    --secondary-color: #1a1a1a;
+    --secondary-hover: #353535;
+    --secondary-border: var(--border-width) solid #ddd;
+
+    --confirm-color: #3c963f;
+    --confirm-hover: #317933;
+
+    --text-primary: #000000;
+    --text-secondary: #ffffff;
+}
+
 * {
     margin: 0;
     /*box-sizing: border-box;*/
