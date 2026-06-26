@@ -128,6 +128,15 @@ body {
     padding-top: 0.75em;
 }
 
+#server-buttons {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1.5;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-top: 0.75em;
+}
+
 .channel-display a {
     text-decoration: none;
     color: inherit;

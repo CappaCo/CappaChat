@@ -23,6 +23,10 @@ export default define.layout(function ({ Component }) {
                         <ServerIcon imgSrc="/testImages/servers/rio.webp"/>
                         <ServerIcon imgSrc="/testImages/servers/wariotoilet.webp"/>
                     </ul>
+                    <ul id="server-buttons">
+                        <img src="/home-icon.png"/>
+                        <img src="/settings-icon.png"/>
+                    </ul>
                 </aside>
                 <aside id="server-info">
                     <h3 id="server-name">Termite Piddle Atrium</h3>
