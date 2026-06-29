@@ -334,3 +334,7 @@ input {
 section {
     border-top: var(--background-border);
 }
+
+.settings-top {
+    display: flex;
+}

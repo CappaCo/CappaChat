@@ -12,12 +12,13 @@ body {
 
 #chat-grid {
     --server-info-width: 15em;
+    --resizer-width: 16px;
     display: grid;
     grid-template-areas:
         "server-select server-info server-info-resizer component users"
         "server-select server-info server-info-resizer component users";
 
-    grid-template-columns: 5em var(--server-info-width) 16px auto 15em;
+    grid-template-columns: min-content var(--server-info-width) 0 auto 15em;
     height: 100%;
 }
 
@@ -68,7 +69,13 @@ body {
 }
 
 #chat-grid > #server-info-resizer {
+    width: var(--resizer-width);
     grid-area: server-info-resizer;
+    position: relative;
+    left: calc(0 - var(--resizer-width)/2);
+    opacity: 0;
+    z-index: 1;
+    cursor: ew-resize;
 }
 
 #chat-grid > #users {
@@ -83,6 +90,12 @@ body {
 :is(#server-select, #server-info, #users) ul {
     list-style-type: none;
     padding: 0;
+}
+
+#server-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* chat container */
@@ -109,20 +122,12 @@ body {
     margin-right: 0.25em;
 }
 
-:is(.server-icon, .user-display) img {
-    width: 54px;
-    height: 54px;
-}
-
-:is(.server-icon) img {
-    width: 70px;
-    height: 70px;
+:is(.server-icon, .user-display, #server-buttons) img {
+    width: 64px;
 }
 
 .server-icon a {
     display: flex;
-    width: 100%;
-    aspect-ratio: 1.5;
     justify-content: center;
     box-sizing: border-box;
     padding-top: 0.75em;

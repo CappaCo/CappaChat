@@ -18,11 +18,11 @@ export default define.page(function Home() {
                 <h1>Main page</h1>
                 <h2>(Ancient Fuelweaver approved)</h2>
                 <img src="fuelweaver.jfif" />
+
+                <section>
+                    <p>hello</p>
+                </section>
             </main>
-            
-            <section>
-                <p>hello</p>
-            </section>
         </>
     );
 });
