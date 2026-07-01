@@ -131,6 +131,7 @@ body {
     justify-content: center;
     box-sizing: border-box;
     padding-top: 0.75em;
+    margin-right: 0.65em;
 }
 
 #server-buttons {
@@ -149,6 +150,10 @@ body {
 
 .channel-display {
     margin: 0.5em
+}
+
+#channels-group {
+    padding-left: 0.75em;
 }
 
 #server-name {

@@ -81,7 +81,8 @@ nav .left a {
     text-decoration: none;
 }
 
-nav .left a span { /* nav CappaChat thing */
+nav .left a span {
+    /* nav CappaChat thing */
     margin-left: 10px;
 }
 
@@ -194,6 +195,37 @@ a {
 #index-page p {
     margin-top: 1em;
     margin-bottom: 1.2em;
+}
+
+.index-grid-container {
+    display: grid;
+    grid-template-areas:
+        "one big"
+        "two big";
+    gap: 20px;
+}
+
+.index-grid-item {
+    background-color: #444444;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.index-grid-item.one {
+    grid-area: one;
+}
+.index-grid-item.two {
+    grid-area: two;
+}
+
+.index-grid-item-big {
+    grid-area: big;
+    background-color: #444444;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    align-content: right;
 }
 
 #about-page {
