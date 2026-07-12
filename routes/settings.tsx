@@ -8,9 +8,9 @@ export default define.page(function Home() {
             <Head>
                 <title>Settings page</title>
             </Head>
-        <main>
-            <div class="settings-top">
-                <h1>Settings page</h1>
+            <main>
+                <div class="settings-top">
+                    <h1>Settings page</h1>
                 </div>
                 <section>
                     <p>hello, change my settings</p>

@@ -1,6 +1,14 @@
 {
     "deno.enable": true,
     "deno.lint": true,
+    "deno.enablePaths": [
+        "./routes",
+        "./components",
+        "./islands",
+        "./*.ts",
+        "./deno.json",
+        "./deno.lock",
+    ],
     "editor.defaultFormatter": "denoland.vscode-deno",
     "[typescriptreact]": {
         "editor.defaultFormatter": "denoland.vscode-deno"

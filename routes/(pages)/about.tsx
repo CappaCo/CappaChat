@@ -17,7 +17,9 @@ export default define.page(function Home() {
                     <p>We are termites in human bodies</p>
                 </div>
                 <div class="dev-section">
-                    <h1>The <s>freaks</s> normal people</h1>
+                    <h1>
+                        The <s>freaks</s> normal people
+                    </h1>
                     <p>Cappa</p>
                     <p>Hamuel</p>
                     <p>Michael</p>

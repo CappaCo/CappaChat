@@ -1,7 +1,5 @@
 {
-    "fmt": {
-        "indentWidth": 4
-    },
+    "fmt": { "indentWidth": 4 },
     "nodeModulesDir": "manual",
     "tasks": {
         "check": "deno fmt --check . && deno lint . && deno check",
@@ -10,17 +8,8 @@
         "start": "deno serve -A _fresh/server.js",
         "update": "deno run -A -r jsr:@fresh/update ."
     },
-    "lint": {
-        "rules": {
-            "tags": [
-                "fresh",
-                "recommended"
-            ]
-        }
-    },
-    "exclude": [
-        "**/_fresh/*"
-    ],
+    "lint": { "rules": { "tags": ["fresh", "recommended"] } },
+    "exclude": ["**/_fresh/*"],
     "imports": {
         "@/": "./",
         "fresh": "jsr:@fresh/core@^2.3.3",
@@ -31,12 +20,7 @@
         "@types/babel__core": "npm:@types/babel__core@^7.20.5"
     },
     "compilerOptions": {
-        "lib": [
-            "dom",
-            "dom.asynciterable",
-            "dom.iterable",
-            "deno.ns"
-        ],
+        "lib": ["dom", "dom.asynciterable", "dom.iterable", "deno.ns"],
         "jsx": "precompile",
         "jsxImportSource": "preact",
         "jsxPrecompileSkipElements": [
@@ -55,8 +39,6 @@
             "noscript",
             "template"
         ],
-        "types": [
-            "vite/client"
-        ]
+        "types": ["vite/client"]
     }
 }

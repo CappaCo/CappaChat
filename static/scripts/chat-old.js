@@ -1,12 +1,16 @@
 console.log("Chat script loaded.");
-console.log("Use \"enableSanitization = false\" to disable DOMPurify sanitization.");
+console.log(
+    'Use "enableSanitization = false" to disable DOMPurify sanitization.',
+);
 
 const inputField = document.getElementById("inputField");
 const messagesField = document.getElementById("messagesField");
 const sendButton = document.getElementById("sendButton");
 const changeUsernameButton = document.getElementById("changeUsernameButton");
 
-const notificationsEnabledSwitch = document.getElementById("notificationsEnabledSwitch");
+const notificationsEnabledSwitch = document.getElementById(
+    "notificationsEnabledSwitch",
+);
 
 // Set up WebSocket URL
 const url = "https://cappabot.com/api/chat";
@@ -20,18 +24,21 @@ let enableSanitization = false; // Enable DOMPurify by default
 const messages = new Set();
 
 let username = localStorage.getItem("username") || "anon";
-let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
+let notificationsEnabled =
+    localStorage.getItem("notificationsEnabled") === "true";
 notificationsEnabledSwitch.checked = notificationsEnabled;
 
 async function initializeChat() {
     // Get messages from server
     try {
-        const response = await fetch(url, { headers: { "Accept": "application/json" } });
+        const response = await fetch(url, {
+            headers: { "Accept": "application/json" },
+        });
         if (!response.ok) {
             throw new Error("Failed to fetch messages from server.");
         }
         const data = await response.json();
-        data.forEach(msg => {
+        data.forEach((msg) => {
             messages.add(msg);
         });
         renderMessages();
@@ -55,8 +62,8 @@ function connectWebSocket() {
             user: json.user,
             timestamp: json.timestamp,
             message: json.message,
-        }
-        
+        };
+
         messages.add(message);
         renderMessages();
         sendMessageNotification(message);
@@ -99,15 +106,19 @@ function renderMessages() {
             return a.timestamp - b.timestamp;
         })
         .map((msg) => {
-            const timestamp = `<span class="timestamp">(${new Date(msg.timestamp).toLocaleTimeString()})</span>`;
+            const timestamp = `<span class="timestamp">(${
+                new Date(msg.timestamp).toLocaleTimeString()
+            })</span>`;
             const user = `<strong>${msg.user}</strong>`;
             const message = msg.message;
             return `<span class="message" id="message-${msg.timestamp}">${timestamp} ${user}: ${message}</span>`;
         })
         .join("<br>");
-    
+
     // Sanitize the messages to prevent XSS attacks
-    messagesField.innerHTML = enableSanitization ? DOMPurify.sanitize(dirtyMessages) : dirtyMessages;
+    messagesField.innerHTML = enableSanitization
+        ? DOMPurify.sanitize(dirtyMessages)
+        : dirtyMessages;
     if (enableSanitization) console.log("Removed:", DOMPurify.removed);
 }
 
@@ -120,7 +131,7 @@ function sendMessageNotification(message) {
     });
 
     notification.onclick = notificationClick;
-    
+
     function notificationClick() {
         console.log("notification clicked");
         window.parent.parent.focus();
@@ -155,8 +166,7 @@ function findMessage(messageID) {
     return [...document.getElementById("messagesField").children]
         .filter((el) => {
             return el.id.replace("message-", "") == messageID;
-        })
-        [0];
+        })[0];
 }
 
 function changeUsername() {
@@ -179,7 +189,7 @@ changeUsernameButton.addEventListener("click", changeUsername);
 notificationsEnabledSwitch.addEventListener("change", (event) => {
     console.log("notification input changed");
     notificationsEnabled = event.target.checked;
-    
+
     if (Notification.permission !== "granted" && notificationsEnabled) {
         Notification.requestPermission();
     }
@@ -190,5 +200,5 @@ notificationsEnabledSwitch.addEventListener("change", (event) => {
 // Initialize chat
 initializeChat().then(
     // Connect to WebSocket after initial messages are loaded
-    connectWebSocket
+    connectWebSocket,
 );
