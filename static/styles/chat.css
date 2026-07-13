@@ -1,6 +1,9 @@
 /*
     styles for chat pages
 */
+:root {
+    --app-grid-border-width: 4px;
+}
 
 html,
 body {
@@ -11,162 +14,233 @@ body {
     margin: 0;
 }
 
-#chat-grid {
+/* app grid */
+#app-grid {
     --server-info-width: 15em;
     --resizer-width: 16px;
+
     display: grid;
     grid-template-areas:
-        "server-select server-info server-info-resizer component users"
-        "server-select server-info server-info-resizer component users";
+        "left-bar server-info chat-container users"
+        "left-bar server-info chat-container users";
 
-    grid-template-columns: min-content var(--server-info-width) 0 auto 15em;
+    grid-template-columns: min-content var(--server-info-width) auto 15em;
+    
     height: 100%;
 }
 
-#chat-grid.format2 {
-    grid-template-areas:
-        "server-select server-info server-info-resizer users     users    "
-        "server-select server-info server-info-resizer component component";
+#app-grid > * {
+    --border-width: 4px;
 }
 
-@media screen and (max-width: 768px) {
-    #chat-grid {
+#app-grid.format2 {
+    grid-template-areas:
+        "left-bar server-info users          users         "
+        "left-bar server-info chat-container chat-container";
+}
+
+/* change the app grid for small screens */
+@media screen and (max-width: 768px) { /* TODO: make these things work */
+    #app-grid {
         display: block;
     }
 
-    #chat-grid > #server-select {
+    #app-grid > #server-select {
         display: none;
     }
 
-    #chat-grid > #server-info {
+    #app-grid > #server-info {
         display: none;
     }
 
-    #chat-grid > #server-info-resizer {
+    #app-grid > #users {
         display: none;
     }
 
-    #chat-grid > #users {
-        display: none;
-    }
-
-    #chat-grid > #page-content {
+    #app-grid > #chat-container {
         display: block;
         height: 100%;
-        margin: 0;
     }
 }
 
-#chat-grid > * {
-    outline: var(--background-border);
-}
+/* server selection area */
+#left-bar {
+    grid-area: left-bar;
+    border-right: var(--background-border);
+    border-width: var(--app-grid-border-width);
 
-#chat-grid > #server-select {
-    grid-area: server-select;
-}
+    padding: 16px;
 
-#chat-grid > #server-info {
-    grid-area: server-info;
-}
-
-#chat-grid > #server-info-resizer {
-    width: var(--resizer-width);
-    grid-area: server-info-resizer;
-    position: relative;
-    left: calc(0 - var(--resizer-width)/2);
-    opacity: 0;
-    z-index: 1;
-    cursor: ew-resize;
-}
-
-#chat-grid > #users {
-    grid-area: users;
-}
-
-#chat-grid > #page-content {
-    grid-area: component;
-    overflow: hidden;
-}
-
-:is(#server-select, #server-info, #users) ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#server-select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+#server-select, #left-bar-other {
+    list-style-type: none;
+    padding: 0;
+}
+
+:is(#server-select, #left-bar-other) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+:is(#server-select, #left-bar-other) a {
+    display: block;
+    height: 64px;
+}
+
+#server-select img {
+    width: 64px;
+}
+
+
+
+
+
+/* server info section */
+#server-info {
+    grid-area: server-info;
+    border-right: var(--background-border);
+    border-width: var(--app-grid-border-width);
+
+    min-width: 100px;
+    max-width: 800px;
+}
+
+#server-info-resizer {
+    width: var(--resizer-width);
+    height: 100%;
+
+    position: relative;
+    float: right;
+    top: 0;
+    right: calc((var(--resizer-width) + var(--app-grid-border-width))/  -2);
+
+    opacity: 0;
+    background-color: red;
+    z-index: 1;
+    cursor: ew-resize;
+}
+
+#server-name-container {
+    border-bottom: var(--background-border);
+    border-width: var(--app-grid-border-width);
+    padding: 16px;
+}
+
+#server-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#channels-group {
+    padding: 16px;
+}
+
+.channel-display {
+    padding: 8px;
+    margin: -4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+}
+
+.channel-display a {
+    text-decoration: none var(--background-color);
+    color: inherit;
+    transition: text-decoration 0.2s;
+}
+
+.channel-display:is(:hover, :focus) {
+    background-color: var(--foreground-color);
+}
+
+.channel-display:is(:hover, :focus) a {
+    text-decoration: underline var(--text-primary);
+}
+
+
+
+/* users section */
+#users {
+    grid-area: users;
+    border-left: var(--background-border);
+    border-width: var(--app-grid-border-width);
+}
+
+#app-grid.format2 #users {
+    border-left: none;
+    border-bottom: var(--background-border);
+    border-width: var(--app-grid-border-width);
+}
+
+#users-group {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-display {
+    padding: 8px;
+    margin: 8px;
+    display: flex;
+    gap: 8px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+}
+
+.user-display:is(:hover, :focus) {
+    background-color: var(--foreground-color);
+}
+
+.user-display img {
+    width: 64px;
+}
+
+.user-display-username {
+    margin: auto 0;
+}
+
+
+
 /* chat container */
 #chat-container {
-    display: grid;
-    grid-template-rows: auto 2em;
+    grid-area: chat-container;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
     height: 100%;
     padding: 1em;
+
     box-sizing: border-box;
 }
 
+
+
+/* messages */
 #messages {
+    height: 100%;
     display: flex;
     align-items: flex-end;
 }
 
-.user-display {
-    padding: 0.25em;
-    margin: 0.25em;
-    padding-top: 0.75em;
-}
-
-.user-display img {
-    margin-right: 0.25em;
-}
-
-:is(.server-icon, .user-display, #server-buttons) img {
-    width: 64px;
-}
-
-.server-icon a {
+#chat-controls {
     display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-top: 0.75em;
-    margin-right: 0.65em;
+    gap: 8px;
 }
 
-#server-buttons {
-    display: flex;
-    width: 100%;
-    aspect-ratio: 1.5;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-top: 0.75em;
+/* TODO: remove this old interface stuff */
+#inputField {
+    flex-grow: 1;
 }
 
-.channel-display a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.channel-display {
-    margin: 0.5em;
-}
-
-#channels-group {
-    padding-left: 0.75em;
-}
-
-#server-name {
-    padding: 8px;
-    border-bottom: var(--secondary-border);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-#channel-display {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+#chat-controls button {
+    padding: 0.5em;
 }

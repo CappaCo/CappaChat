@@ -1,5 +1,5 @@
 import type { Signal } from "@preact/signals";
-import { Button } from "../components/Button.tsx";
+import { Button } from "@/components/ExampleButton.tsx";
 
 interface CounterProps {
     // deno-lint-ignore no-explicit-any

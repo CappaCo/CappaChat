@@ -1,12 +1,14 @@
 import type { ComponentChildren } from "preact";
 
-export interface UserDisplayProps {
+export interface ServerIconProps {
     id?: string;
     imgSrc?: string;
     children?: ComponentChildren;
 }
 
-const dirPath = "static/testImages/users/";
+const dirPath = "static/testImages/servers/";
+
+console.log("hey");
 
 const files = (await Array.fromAsync(Deno.readDir(dirPath)))
     .filter((entry) => entry.isFile)
@@ -14,15 +16,16 @@ const files = (await Array.fromAsync(Deno.readDir(dirPath)))
 
 let thingo = 0;
 
-export default function UserDisplay(props: UserDisplayProps) {
+export default function ServerIcon(props: ServerIconProps) {
     const selectedImage = "/" + dirPath.split("/").slice(1).join("/") +
         files[thingo];
     thingo = (thingo + 1) % files.length;
 
     return (
-        <li class="user-display" id={props.id}>
-            <img src={props.imgSrc || selectedImage} />
-            {props.children || "person"}
+        <li class="server-icon" id={props.id}>
+            <a href="#">
+                <img src={props.imgSrc || selectedImage} />
+            </a>
         </li>
     );
 }
