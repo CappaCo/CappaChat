@@ -2,7 +2,8 @@
     styles for chat pages
 */
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -149,7 +150,7 @@ body {
 }
 
 .channel-display {
-    margin: 0.5em
+    margin: 0.5em;
 }
 
 #channels-group {

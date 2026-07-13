@@ -7,7 +7,7 @@
         "./islands",
         "./*.ts",
         "./deno.json",
-        "./deno.lock",
+        "./deno.lock"
     ],
     "editor.defaultFormatter": "denoland.vscode-deno",
     "[typescriptreact]": {
