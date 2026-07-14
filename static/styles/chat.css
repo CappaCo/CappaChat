@@ -25,7 +25,7 @@ body {
         "left-bar server-info chat-container users";
 
     grid-template-columns: min-content var(--server-info-width) auto 15em;
-    
+
     height: 100%;
 }
 
@@ -40,7 +40,8 @@ body {
 }
 
 /* change the app grid for small screens */
-@media screen and (max-width: 768px) { /* TODO: make these things work */
+@media screen and (max-width: 768px) {
+    /* TODO: make these things work */
     #app-grid {
         display: block;
     }
@@ -76,7 +77,8 @@ body {
     justify-content: space-between;
 }
 
-#server-select, #left-bar-other {
+#server-select,
+#left-bar-other {
     list-style-type: none;
     padding: 0;
 }
@@ -96,10 +98,6 @@ body {
     width: 64px;
 }
 
-
-
-
-
 /* server info section */
 #server-info {
     grid-area: server-info;
@@ -117,7 +115,7 @@ body {
     position: relative;
     float: right;
     top: 0;
-    right: calc((var(--resizer-width) + var(--app-grid-border-width))/  -2);
+    right: calc((var(--resizer-width) + var(--app-grid-border-width))/ -2);
 
     opacity: 0;
     background-color: red;
@@ -165,8 +163,6 @@ body {
     text-decoration: underline var(--text-primary);
 }
 
-
-
 /* users section */
 #users {
     grid-area: users;
@@ -206,8 +202,6 @@ body {
     margin: auto 0;
 }
 
-
-
 /* chat container */
 #chat-container {
     grid-area: chat-container;
@@ -221,8 +215,6 @@ body {
 
     box-sizing: border-box;
 }
-
-
 
 /* messages */
 #messages {

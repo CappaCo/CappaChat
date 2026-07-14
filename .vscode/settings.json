@@ -5,7 +5,9 @@
         "./routes",
         "./components",
         "./islands",
-        "./*.ts",
+        "./main.ts",
+        "./utils.ts",
+        "./types.ts",
         "./deno.json",
         "./deno.lock"
     ],

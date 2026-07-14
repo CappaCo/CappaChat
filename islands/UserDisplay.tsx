@@ -23,7 +23,9 @@ export default function UserDisplay(props: UserDisplayProps) {
     return (
         <li class="user-display" id={props.id}>
             <img src={props.imgSrc || selectedImage} />
-            <span class="user-display-username">{props.children || "person"}</span>
+            <span class="user-display-username">
+                {props.children || "person"}
+            </span>
         </li>
     );
 }
