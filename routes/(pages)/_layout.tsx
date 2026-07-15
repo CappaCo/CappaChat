@@ -1,4 +1,4 @@
-import { define } from "@/utils.ts";
+import { define } from "@/lib/utils.ts";
 
 import LoginButton from "@/components/LoginButton.tsx";
 import SignUpButton from "@/components/SignUpButton.tsx";

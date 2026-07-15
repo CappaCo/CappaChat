@@ -1,5 +1,5 @@
-import { define } from "@/utils.ts";
-import { Message } from "@/types.ts";
+import { define } from "@/lib/utils.ts";
+import { Message } from "@/lib/types.ts";
 
 // TODO: implement this
 const messages: Message[] = [];

@@ -1,26 +1,41 @@
 {
-    "fmt": { "indentWidth": 4 },
+    "fmt": {
+        "indentWidth": 4
+    },
     "nodeModulesDir": "manual",
     "tasks": {
-        "check": "deno fmt --check . && deno lint . && deno check",
-        "dev": "vite",
-        "build": "vite build",
+        "dev": "deno run -A --unstable-kv vite",
+
+        "build": "deno run -A --unstable-kv vite build",
         "start": "deno serve -A _fresh/server.js",
+
+        "check": "deno fmt --check . && deno lint . && deno check",
         "update": "deno run -A -r jsr:@fresh/update ."
     },
     "lint": { "rules": { "tags": ["fresh", "recommended"] } },
     "exclude": ["**/_fresh/*"],
     "imports": {
         "@/": "./",
+        "@std/http": "jsr:@std/http@^1.1.2",
+
         "fresh": "jsr:@fresh/core@^2.3.3",
+        "@fresh/plugin-vite": "jsr:@fresh/plugin-vite@^1.1.2",
+
         "preact": "npm:preact@^10.29.7",
         "@preact/signals": "npm:@preact/signals@^2.9.3",
-        "@fresh/plugin-vite": "jsr:@fresh/plugin-vite@^1.1.2",
+
         "vite": "npm:vite@^7.3.6",
+
         "@types/babel__core": "npm:@types/babel__core@^7.20.5"
     },
     "compilerOptions": {
-        "lib": ["dom", "dom.asynciterable", "dom.iterable", "deno.ns"],
+        "lib": [
+            "dom",
+            "dom.asynciterable",
+            "dom.iterable",
+            "deno.ns",
+            "deno.unstable"
+        ],
         "jsx": "precompile",
         "jsxImportSource": "preact",
         "jsxPrecompileSkipElements": [

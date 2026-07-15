@@ -1,4 +1,5 @@
-import { define } from "@/utils.ts";
+import { define } from "@/lib/utils.ts";
+import { AuthType } from "@/lib/types.ts";
 
 // https://usefresh.dev/docs/concepts/middleware
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/418
@@ -41,15 +42,10 @@ const authValidation = define.middleware(async (ctx) => {
     const auth = ctx.req.headers.get("Authorization");
     console.log("auth:", auth);
 
-    if (auth === null) {
-        console.log("no auth:", auth);
-
-        return new Response("no auth", {
-            status: 401, // 401 Unauthorized
-        });
-    }
-
-    function getAuth(auth: string): ["User" | "Bot", string] {
+    function getAuth(auth: string | null): [AuthType, string] {
+        if (auth === null) {
+            return [ "None", "" ]
+        }
         const split = auth.split(" ");
 
         if (split.length !== 2) throw "bad format";

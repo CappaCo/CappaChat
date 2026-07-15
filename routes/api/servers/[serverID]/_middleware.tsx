@@ -1,4 +1,4 @@
-import { define } from "@/utils.ts";
+import { define } from "@/lib/utils.ts";
 
 // https://usefresh.dev/docs/concepts/middleware
 
@@ -18,9 +18,14 @@ export default define.middleware(async (ctx) => {
     if (!checkAuth(authToken)) {
         console.log("forbidden");
 
-        return new Response("forbidden", {
-            status: 403, // 403 Forbidden
-        });
+        return new Response(
+            JSON.stringify({
+                message: "403 Forbidden",
+            }),
+            {
+                status: 403,
+            },
+        );
     }
 
     const serverID = Number(ctx.params.serverID);

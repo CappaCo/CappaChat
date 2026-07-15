@@ -1,6 +1,6 @@
 import { Head } from "fresh/runtime";
 
-import { define } from "@/utils.ts";
+import { define } from "@/lib/utils.ts";
 
 import Chat from "@/islands/Chat.tsx";
 import ServerInfo from "@/islands/ServerInfo.tsx";

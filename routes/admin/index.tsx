@@ -2,18 +2,16 @@ import { Head } from "fresh/runtime";
 
 import { define } from "@/lib/utils.ts";
 
-export default define.page(function Home() {
+export default define.page(() => {
     return (
         <>
             <Head>
-                <title>Settings page</title>
+                <title>Admin</title>
             </Head>
             <main>
-                <div class="settings-top">
-                    <h1>Settings page</h1>
-                </div>
+                <h1>Admin page</h1>
                 <section>
-                    <p>hello, change my settings</p>
+                    <p>hello, administrate my system - Adminweaver</p>
                 </section>
             </main>
         </>

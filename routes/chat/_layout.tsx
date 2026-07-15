@@ -1,6 +1,6 @@
 import { asset, Head } from "fresh/runtime";
 
-import { define } from "@/utils.ts";
+import { define } from "@/lib/utils.ts";
 
 import LeftBar from "@/islands/LeftBar.tsx";
 

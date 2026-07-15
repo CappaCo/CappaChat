@@ -5,6 +5,7 @@
         "./routes",
         "./components",
         "./islands",
+        "./lib",
         "./main.ts",
         "./utils.ts",
         "./types.ts",
