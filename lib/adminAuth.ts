@@ -1,16 +1,18 @@
 import { getCookies } from "@std/http/cookie";
-import { randomUUID } from "node:crypto";
+import * as crypto from "node:crypto";
+import * as hex from "@std/encoding/hex";
 
 import { kv } from "@/lib/kv.ts";
 
-function hash(input: string) {
-    // TODO: implement this with some actual one-way hash function
-    return input.split("").reverse().join("");
+async function hash(input: string) {
+    const inputBuffer = new TextEncoder().encode(input);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", inputBuffer);
+    return hex.encodeHex(hashBuffer);
 }
 
 const adminTokensKVKey = "adminTokens";
 export async function checkAdminAuth(key: string) {
-    const result = await kv.get([adminTokensKVKey, hash(key)]);
+    const result = await kv.get([adminTokensKVKey, await hash(key)]);
 
     if (result.value === null) return false;
 
@@ -18,14 +20,14 @@ export async function checkAdminAuth(key: string) {
 }
 
 export async function addAdminAuth(key: string) {
-    const thing = await kv.set([adminTokensKVKey, hash(key)], key);
+    const thing = await kv.set([adminTokensKVKey, await hash(key)], key);
 
     if (!thing.ok) throw "thing not ok";
 }
 
-const adminSessionsKVKey = "adminTokens";
+const adminSessionsKVKey = "adminSessions";
 export async function checkAdminSession(key: string) {
-    const result = await kv.get([adminSessionsKVKey, hash(key)]);
+    const result = await kv.get([adminSessionsKVKey, await hash(key)]);
 
     if (result.value === null) return false;
 
@@ -33,9 +35,9 @@ export async function checkAdminSession(key: string) {
 }
 
 export async function createAdminSession() {
-    const key = randomUUID();
+    const key = crypto.randomUUID();
 
-    const thing = await kv.set([adminSessionsKVKey], hash(key));
+    const thing = await kv.set([adminSessionsKVKey], await hash(key));
 
     // TODO: add some sort of expiry to the session token
 
@@ -52,3 +54,13 @@ export function isAdminRequest(headers: Headers): boolean {
 // set up stuff ig
 // TODO: get this from a .env file
 addAdminAuth("cappa");
+
+async function showAdminTokens() {
+    const list = kv.list({ prefix: [adminTokensKVKey] });
+    const things = [];
+    for await (const thing of list) things.push(thing);
+
+    console.log("adminTokens:", things);
+}
+
+showAdminTokens();
