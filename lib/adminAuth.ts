@@ -46,9 +46,10 @@ export async function createAdminSession() {
     return key;
 }
 
-export function isAdminRequest(headers: Headers): boolean {
+export async function isAdminRequest(headers: Headers) {
     const adminAuth = getCookies(headers)["adminAuth"];
-    return !!(adminAuth && checkAdminSession(adminAuth));
+    if (adminAuth === undefined) return false;
+    return await checkAdminSession(adminAuth);
 }
 
 // set up stuff ig

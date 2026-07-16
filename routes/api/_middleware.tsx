@@ -44,7 +44,7 @@ const authValidation = define.middleware(async (ctx) => {
 
     function getAuth(auth: string | null): [AuthType, string] {
         if (auth === null) {
-            return [ "None", "" ]
+            return ["None", ""];
         }
         const split = auth.split(" ");
 
