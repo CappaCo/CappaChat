@@ -51,11 +51,12 @@ export const handler = define.handlers({
             content,
         };
 
-        // TODO: implement this
+        console.log("Creating message:", message);
+        console.log("For server:", serverID);
+        console.log("For channel:", channelID);
+        // TODO: implement this with websockets and database
         messages.push(message);
 
-        console.log("Creating message:", message);
-
-        return new Response(JSON.stringify(message));
+        return new Response(JSON.stringify({ message: "ok" }));
     },
 });

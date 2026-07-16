@@ -2,7 +2,7 @@ console.log("chat.js started");
 
 // resize bar for server-info
 // TODO: refactor names and stuff
-(async function setUpModals() {
+(function setUpResizer() {
     const appGrid = document.getElementById("app-grid");
     const serverInfo = document.getElementById("server-info");
     const serverInfoResizer = document.getElementById("server-info-resizer");

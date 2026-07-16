@@ -134,6 +134,7 @@ function sendMessageNotification(message) {
 
     function notificationClick() {
         console.log("notification clicked");
+        // deno-lint-ignore no-window
         window.parent.parent.focus();
 
         // Find the message that caused the notification
@@ -149,8 +150,8 @@ function sendMessageNotification(message) {
     }
 }
 
+let messageHighlightTimeout;
 function highlightMessage(message) {
-    var messageHighlightTimeout;
     clearTimeout(messageHighlightTimeout);
 
     console.log("highlighting message");

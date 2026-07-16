@@ -6,6 +6,7 @@
         "./components",
         "./islands",
         "./lib",
+        "./static/scripts",
         "./main.ts",
         "./utils.ts",
         "./types.ts",

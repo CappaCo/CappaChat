@@ -3,7 +3,7 @@ console.log("main.js is running");
 // set up functions are async so they can run on multiple threads maybe
 
 // set up forms with stuff and things
-(async function setUpForms() {
+(function setUpForms() {
     const formInputs = document.querySelectorAll("form input");
     const moveUpClass = "move-up";
 
@@ -25,7 +25,7 @@ console.log("main.js is running");
 })();
 
 // set up modals with stuff and things
-(async function setUpModals() {
+(function setUpModals() {
     const modals = document.querySelectorAll("dialog.modal");
 
     modals.forEach((x) =>

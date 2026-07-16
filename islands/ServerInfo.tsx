@@ -7,7 +7,9 @@ export interface ServerInfoProps {
 
 export default function ServerInfo({ serverID, channelID }: ServerInfoProps) {
     console.log("getting server info for:", serverID);
-    const serverName = "Termite Piddle Atrium"; // this will be fetched from the server
+    console.log("need to highlight channel:", channelID);
+
+    const serverName = "Termite Piddle Atrium"; // TODO: fetch from the server
 
     return (
         <aside id="server-info">
@@ -16,6 +18,7 @@ export default function ServerInfo({ serverID, channelID }: ServerInfoProps) {
                 <h2 id="server-name">{serverName}</h2>
             </div>
             <ul id="channels-group">
+                {/* TODO: fetch these from the server */}
                 <ChannelDisplay>General</ChannelDisplay>
                 <ChannelDisplay>Activities</ChannelDisplay>
                 <ChannelDisplay>Thoughts</ChannelDisplay>
