@@ -5,6 +5,9 @@ import { AuthType } from "@/lib/types.ts";
 export interface State {
     authType: AuthType;
     authToken: string;
+
+    isJSONReturn: boolean;
+
     // user: User;
     serverID: number;
     channelID: number;

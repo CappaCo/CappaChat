@@ -87,4 +87,17 @@ const authValidation = define.middleware(async (ctx) => {
     return await ctx.next();
 });
 
-export default [rateLimiting, authValidation];
+// automatically set json headers for api
+const JSONHeaders = define.middleware(async (ctx) => {
+    ctx.state.isJSONReturn = true;
+
+    const response = await ctx.next();
+
+    if (ctx.state.isJSONReturn) {
+        response.headers.set("Content-Type", "application/json");
+    }
+
+    return response;
+});
+
+export default [rateLimiting, authValidation, JSONHeaders];
