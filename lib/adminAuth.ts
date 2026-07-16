@@ -10,34 +10,38 @@ async function hash(input: string) {
     return hex.encodeHex(hashBuffer);
 }
 
+// admin tokens
 const adminTokensKVKey = "adminTokens";
-export async function checkAdminAuth(key: string) {
-    const result = await kv.get([adminTokensKVKey, await hash(key)]);
-
-    if (result.value === null) return false;
-
-    return true;
-}
 
 export async function addAdminAuth(key: string) {
-    const thing = await kv.set([adminTokensKVKey, await hash(key)], key);
+    const thing = await kv.set(
+        [adminTokensKVKey, await hash(key)],
+        "adminAuthKey",
+    );
 
     if (!thing.ok) throw "thing not ok";
 }
 
-const adminSessionsKVKey = "adminSessions";
-export async function checkAdminSession(key: string) {
-    const result = await kv.get([adminSessionsKVKey, await hash(key)]);
+export async function checkAdminAuth(key: string) {
+    const result = await kv.get(
+        [adminTokensKVKey, await hash(key)],
+    );
 
     if (result.value === null) return false;
 
     return true;
 }
 
+// admin sessions
+const adminSessionsKVKey = "adminSessions";
+
 export async function createAdminSession() {
     const key = crypto.randomUUID();
 
-    const thing = await kv.set([adminSessionsKVKey], await hash(key));
+    const thing = await kv.set(
+        [adminSessionsKVKey, await hash(key)],
+        "adminSessionKey",
+    );
 
     // TODO: add some sort of expiry to the session token
 
@@ -46,9 +50,21 @@ export async function createAdminSession() {
     return key;
 }
 
+export async function checkAdminSession(key: string) {
+    const result = await kv.get(
+        [adminSessionsKVKey, await hash(key)],
+    );
+
+    if (result.value === null) return false;
+
+    return true;
+}
+
 export async function isAdminRequest(headers: Headers) {
     const adminAuth = getCookies(headers)["adminAuth"];
+
     if (adminAuth === undefined) return false;
+
     return await checkAdminSession(adminAuth);
 }
 
