@@ -1,14 +1,10 @@
 {
-    "fmt": {
-        "indentWidth": 4
-    },
+    "fmt": { "indentWidth": 4 },
     "nodeModulesDir": "manual",
     "tasks": {
         "dev": "deno run -A --unstable-kv vite",
-
         "build": "deno run -A --unstable-kv vite build",
         "start": "deno serve -A _fresh/server.js",
-
         "check": "deno fmt --check . && deno lint . && deno check",
         "update": "deno run -A -r jsr:@fresh/update ."
     },
@@ -18,15 +14,11 @@
         "@/": "./",
         "@std/encoding": "jsr:@std/encoding@^1.0.11",
         "@std/http": "jsr:@std/http@^1.1.2",
-
         "fresh": "jsr:@fresh/core@^2.3.3",
         "@fresh/plugin-vite": "jsr:@fresh/plugin-vite@^1.1.2",
-
-        "preact": "npm:preact@^10.29.7",
-        "@preact/signals": "npm:@preact/signals@^2.9.3",
-
+        "preact": "npm:preact@^10.29.1",
+        "@preact/signals": "npm:@preact/signals@^2.9.0",
         "vite": "npm:vite@^7.3.6",
-
         "@types/babel__core": "npm:@types/babel__core@^7.20.5"
     },
     "compilerOptions": {
