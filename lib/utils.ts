@@ -10,6 +10,7 @@ export interface State {
 
     serverID: ID;
     channelID: ID;
+    userID: ID;
 }
 
 export const define = createDefine<State>();

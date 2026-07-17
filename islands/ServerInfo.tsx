@@ -1,21 +1,26 @@
 import ChannelDisplay from "@/islands/ChannelDisplay.tsx";
+import { ID, Server } from "@/lib/types.ts";
 
 export interface ServerInfoProps {
-    serverID: number;
-    channelID: number;
+    serverID: ID;
+    channelID: ID;
 }
 
-export default function ServerInfo({ serverID, channelID }: ServerInfoProps) {
-    console.log("getting server info for:", serverID);
-    console.log("need to highlight channel:", channelID);
-
-    const serverName = "Termite Piddle Atrium"; // TODO: fetch from the server
-
+export default function ServerInfo(
+    {
+        server,
+        highlightPosition,
+    }: {
+        server: Server;
+        highlightPosition: number;
+    },
+) {
+    highlightPosition; // TODO: do something with this
     return (
         <aside id="server-info">
             <div id="server-info-resizer"></div>
             <div id="server-name-container">
-                <h2 id="server-name">{serverName}</h2>
+                <h2 id="server-name">{server.name}</h2>
             </div>
             <ul id="channels-group">
                 {/* TODO: fetch these from the server */}

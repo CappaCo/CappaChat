@@ -1,7 +1,7 @@
 console.log("chat.js started");
 
 // resize bar for server-info
-// TODO: refactor names and stuff
+// TODO: move this to island and use refs instead of ids
 (function setUpResizer() {
     const appGrid = document.getElementById("app-grid");
     const serverInfo = document.getElementById("server-info");

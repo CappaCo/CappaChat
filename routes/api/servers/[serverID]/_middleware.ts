@@ -28,34 +28,8 @@ export default define.middleware(async (ctx) => {
         );
     }
 
-    const serverID = Number(ctx.params.serverID);
-    if (Number.isNaN(serverID)) {
-        return new Response(
-            JSON.stringify({
-                message: "400 Bad request",
-            }),
-            {
-                status: 400,
-            },
-        );
-    }
-
-    function checkServerExists(serverID: number) {
-        // TODO: implement this
-        console.log("checking serverID exists:", serverID);
-        return true;
-    }
-
-    if (!checkServerExists(serverID)) {
-        return new Response(
-            JSON.stringify({
-                message: "404 Not found",
-            }),
-            {
-                status: 404,
-            },
-        );
-    }
+    const serverID = ctx.params.serverID;
+    ctx.state.serverID = serverID;
 
     return await ctx.next();
 });

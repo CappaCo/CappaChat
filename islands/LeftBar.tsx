@@ -6,9 +6,9 @@ export default function LeftBar() {
     return (
         <aside id="left-bar">
             <ul id="server-select">
-                <ServerIcon imgSrc="/testImages/servers/geeked.webp" />
-                <ServerIcon imgSrc="/testImages/servers/rio.webp" />
-                <ServerIcon imgSrc="/testImages/servers/wariotoilet.webp" />
+                <ServerIcon />
+                <ServerIcon />
+                <ServerIcon />
             </ul>
             <ul id="left-bar-other">
                 <a href="/settings">

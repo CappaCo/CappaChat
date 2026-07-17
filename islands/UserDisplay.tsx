@@ -6,19 +6,11 @@ export interface UserDisplayProps {
     children?: ComponentChildren;
 }
 
-console.log("getting images");
-const dirPath = "static/testImages/users/";
-
-const files = (await Array.fromAsync(Deno.readDir(dirPath)))
-    .filter((entry) => entry.isFile)
-    .map((entry) => entry.name);
-
 let thingo = 0;
 
 export default function UserDisplay(props: UserDisplayProps) {
-    const selectedImage = "/" + dirPath.split("/").slice(1).join("/") +
-        files[thingo];
-    thingo = (thingo + 1) % files.length;
+    const selectedImage = "/testImages/users/" + thingo + ".webp";
+    thingo = (thingo + 1) % 3;
 
     return (
         <li class="user-display" id={props.id}>

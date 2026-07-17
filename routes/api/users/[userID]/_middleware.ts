@@ -1,5 +1,4 @@
 import { define } from "@/lib/utils.ts";
-import { ID } from "@/lib/types.ts";
 
 export default define.middleware(async (ctx) => {
     const authToken = ctx.state.authToken;
@@ -26,23 +25,7 @@ export default define.middleware(async (ctx) => {
     }
 
     const userID = ctx.params.userID;
-
-    function checkUserExists(userID: ID) {
-        // TODO: implement this
-        console.log("checking userID exists:", userID);
-        return true;
-    }
-
-    if (!checkUserExists(userID)) {
-        return new Response(
-            JSON.stringify({
-                message: "404 Not found",
-            }),
-            {
-                status: 404,
-            },
-        );
-    }
+    ctx.state.userID = userID;
 
     return await ctx.next();
 });

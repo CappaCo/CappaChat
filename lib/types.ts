@@ -76,10 +76,10 @@ export interface ChannelSummary {
 export interface Message {
     id: ID;
     authorID: ID;
+    channelID: ID;
+
     content: string;
     //attachments?: Attachment[];
-
-    channelID: ID;
 
     createdAt: Timestamp;
     editedAt?: Timestamp;

@@ -15,6 +15,7 @@
         "@db/postgres": "jsr:@db/postgres@^0.19.5",
         "@std/encoding": "jsr:@std/encoding@^1.0.11",
         "@std/http": "jsr:@std/http@^1.1.2",
+        "@std/ulid": "jsr:@std/ulid@^1.0.0",
         "@types/node": "npm:@types/node@^26.1.1",
         "fresh": "jsr:@fresh/core@^2.3.3",
         "@fresh/plugin-vite": "jsr:@fresh/plugin-vite@^1.1.2",

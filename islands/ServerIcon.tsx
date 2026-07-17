@@ -6,20 +6,11 @@ export interface ServerIconProps {
     children?: ComponentChildren;
 }
 
-const dirPath = "static/testImages/servers/";
-
-console.log("hey");
-
-const files = (await Array.fromAsync(Deno.readDir(dirPath)))
-    .filter((entry) => entry.isFile)
-    .map((entry) => entry.name);
-
 let thingo = 0;
 
 export default function ServerIcon(props: ServerIconProps) {
-    const selectedImage = "/" + dirPath.split("/").slice(1).join("/") +
-        files[thingo];
-    thingo = (thingo + 1) % files.length;
+    const selectedImage = "/testImages/servers/" + thingo + ".webp";
+    thingo = (thingo + 1) % 3;
 
     return (
         <li class="server-icon" id={props.id}>

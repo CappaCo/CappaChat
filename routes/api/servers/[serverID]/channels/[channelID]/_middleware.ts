@@ -1,4 +1,5 @@
 import { define } from "@/lib/utils.ts";
+import { ID } from "@/lib/types.ts";
 
 // https://usefresh.dev/docs/concepts/middleware
 
@@ -25,34 +26,8 @@ export default define.middleware(async (ctx) => {
         );
     }
 
-    const channelID = Number(ctx.params.channelID);
-    if (Number.isNaN(channelID)) {
-        return new Response(
-            JSON.stringify({
-                message: "400 Bad request",
-            }),
-            {
-                status: 400,
-            },
-        );
-    }
-
-    function checkChannelExists(channelID: number) {
-        // TODO: implement this
-        console.log("checking channel exists:", channelID);
-        return true;
-    }
-
-    if (!checkChannelExists(channelID)) {
-        return new Response(
-            JSON.stringify({
-                message: "404 Not found",
-            }),
-            {
-                status: 404,
-            },
-        );
-    }
+    const channelID: ID = ctx.params.channelID;
+    ctx.state.channelID = channelID;
 
     return await ctx.next();
 });

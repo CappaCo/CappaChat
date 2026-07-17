@@ -1,29 +1,23 @@
 import { define } from "@/lib/utils.ts";
-import { Message } from "@/lib/types.ts";
-
-// TODO: implement this
-const messages: Message[] = [];
+import { createMessage, getMessages } from "@/lib/db/channel.ts";
+import { User } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     // get messages in the channel
-    GET(ctx) {
-        const serverID = ctx.state.serverID;
+    async GET(ctx) {
         const channelID = ctx.state.channelID;
 
-        console.log(
-            "Getting messages in server:",
-            serverID,
-            "channel:",
-            channelID,
-        );
+        const messages = await getMessages(channelID);
+        // TODO: return some user objects
+        const users: User[] = []; // TODO: don't return full users, just the relevant info
 
-        return new Response(JSON.stringify(messages));
+        return new Response(JSON.stringify({
+            messages,
+            users,
+        }));
     },
 
-    // test this endpoint with:
-    // await fetch("http://localhost:5173/api/servers/1/channels/2/messages", { method: "POST", body: JSON.stringify({ message: "hey what's up"}) })
     async POST(ctx) {
-        const serverID = ctx.state.serverID;
         const channelID = ctx.state.channelID;
 
         const json = await ctx.req.json();
@@ -45,19 +39,13 @@ export const handler = define.handlers({
             );
         }
 
-        const message: Message = {
-            id: "0", // TODO: generate unique id for this
-            authorID: "0",
+        const message = {
+            authorID: "0", // TODO: get meeeee
             content,
-            channelID,
-            createdAt: (new Date()).toISOString(),
         };
 
-        console.log("Creating message:", message);
-        console.log("For server:", serverID);
-        console.log("For channel:", channelID);
-        // TODO: implement this with websockets and database
-        messages.push(message);
+        // TODO: implement this with websockets
+        await createMessage(channelID, message);
 
         return new Response(JSON.stringify({ message: "ok" }));
     },
