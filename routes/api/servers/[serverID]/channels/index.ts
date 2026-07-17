@@ -1,5 +1,5 @@
 import { define } from "@/lib/utils.ts";
-import { Channel } from "@/lib/types.ts";
+import { ChannelSummary } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
@@ -7,21 +7,24 @@ export const handler = define.handlers({
 
         // TODO: implement this
         console.log("Getting channels in server:", serverID);
-        const channels: Channel[] = [
+        const channels: ChannelSummary[] = [
             {
-                id: 0,
+                id: "0",
                 type: "text",
                 name: "general",
+                position: 0,
             },
             {
-                id: 1,
+                id: "1",
                 type: "text",
                 name: "activities",
+                position: 0,
             },
             {
-                id: 1,
+                id: "2",
                 type: "voice",
                 name: "vc",
+                position: 0,
             },
         ];
 

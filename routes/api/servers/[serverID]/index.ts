@@ -11,6 +11,9 @@ export const handler = define.handlers({
         const server: Server = {
             id: serverID,
             name: "Termite Piddle Atrium",
+            description: "",
+            ownerID: "0",
+            createdAt: (new Date()).toISOString(),
         };
 
         return new Response(JSON.stringify(server));

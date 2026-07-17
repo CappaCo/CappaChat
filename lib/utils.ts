@@ -1,5 +1,5 @@
 import { createDefine } from "fresh";
-import { AuthType } from "@/lib/types.ts";
+import { AuthType, ID } from "@/lib/types.ts";
 
 // This specifies the type of "ctx.state" which is used to share data among middlewares, layouts and routes.
 export interface State {
@@ -8,9 +8,8 @@ export interface State {
 
     isJSONReturn: boolean;
 
-    // user: User;
-    serverID: number;
-    channelID: number;
+    serverID: ID;
+    channelID: ID;
 }
 
 export const define = createDefine<State>();

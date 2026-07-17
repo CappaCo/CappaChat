@@ -6,15 +6,22 @@ export const handler = define.handlers({
         const serverID = ctx.state.serverID;
 
         console.log("getting members in server:", serverID);
+
         // TODO: implement this
         const members: Member[] = [{
-            user: {
-                id: 0,
-                username: "CappaBot",
-                description: "Hi, I'm CappaBot",
-            },
+            userID: "0",
+            joinedAt: (new Date()).toISOString(),
         }];
 
         return new Response(JSON.stringify(members));
+    },
+    POST(ctx) {
+        const serverID = ctx.state.serverID;
+
+        // TODO: implement this
+        console.log("joining user to server:", serverID);
+        return new Response(JSON.stringify({
+            message: "ok",
+        }));
     },
 });

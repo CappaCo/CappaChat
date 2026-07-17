@@ -10,11 +10,8 @@ export const handler = define.handlers({
 
         // TODO: implement this
         const member: Member = {
-            user: {
-                id: 0,
-                username: "CappaBot",
-                description: "Hi, I'm CappaBot",
-            },
+            userID: "0",
+            joinedAt: (new Date()).toISOString(),
             //permissions:
         };
 

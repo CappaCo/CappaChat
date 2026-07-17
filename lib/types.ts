@@ -1,34 +1,88 @@
-// TODO: add the things to all of the things
+// ID type will be ulid https://github.com/ulid/javascript
+export type ID = string;
 
+// Timestamp type is ISO timestamp so new Date(Time) works
+export type Timestamp = string;
+
+// user
 export interface User {
-    id: number;
+    id: ID;
+
     username: string;
+    displayName: string;
+
     description: string;
+    profilePictureURL?: string;
+
+    createdAt: Timestamp;
 }
 
+// kinda like user but in the context of a server
 export interface Member {
-    user: User;
-    //permissions: // TODO: idk, something
+    userID: ID;
+    //permissions: number; // stored as bits, spec to come
+    //roles: ID[];
+
+    joinedAt: Timestamp;
 }
 
+// role
+export interface Role {
+    id: ID;
+    //permissionsPlus: number;
+    //permissionsMinus: number;
+}
+
+// server
 export interface Server {
-    id: number;
+    id: ID;
     name: string;
-    description?: string; // TODO: should this be null, undefined, or "" in empty state?
+    description: string;
+
+    ownerID: ID;
+
+    createdAt: Timestamp;
 }
 
+export interface ServerSummary {
+    id: ID;
+    name: string;
+    description: string;
+    iconURL?: string;
+}
+
+// channel
 export interface Channel {
-    id: number;
+    id: ID;
     name: string;
     type: "text" | "voice";
-    position?: number;
+
+    position: number;
+
+    serverID: ID;
+
+    createdAt: Timestamp;
 }
 
+export interface ChannelSummary {
+    id: ID;
+    name: string;
+    type: "text" | "voice";
+
+    position: number;
+}
+
+// message
 export interface Message {
-    id: number;
-    content?: string;
-    author: number; // TODO: should this be author user object or author id?
+    id: ID;
+    authorID: ID;
+    content: string;
     //attachments?: Attachment[];
+
+    channelID: ID;
+
+    createdAt: Timestamp;
+    editedAt?: Timestamp;
 }
 
 /*export interface Attachment {

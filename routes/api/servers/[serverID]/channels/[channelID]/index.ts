@@ -18,6 +18,9 @@ export const handler = define.handlers({
             id: channelID,
             name: "general",
             type: "text",
+            position: 0,
+            serverID: "0",
+            createdAt: (new Date()).toISOString(),
         };
 
         return new Response(JSON.stringify(channel));

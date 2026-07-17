@@ -46,9 +46,11 @@ export const handler = define.handlers({
         }
 
         const message: Message = {
-            id: 0, // TODO: generate unique id for this
-            author: 0,
+            id: "0", // TODO: generate unique id for this
+            authorID: "0",
             content,
+            channelID,
+            createdAt: (new Date()).toISOString(),
         };
 
         console.log("Creating message:", message);
