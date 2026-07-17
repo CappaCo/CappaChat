@@ -12,6 +12,7 @@
     "exclude": ["**/_fresh/*"],
     "imports": {
         "@/": "./",
+        "@db/postgres": "jsr:@db/postgres@^0.19.5",
         "@std/encoding": "jsr:@std/encoding@^1.0.11",
         "@std/http": "jsr:@std/http@^1.1.2",
         "@types/node": "npm:@types/node@^26.1.1",

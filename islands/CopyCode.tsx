@@ -4,24 +4,23 @@ export interface CopyCodeProps {
     text: string;
 }
 
-export default function CopyCode(props: CopyCodeProps) {
+export default function CopyCode({ text }: CopyCodeProps) {
     const codeRef = useRef<HTMLElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-
-    const text = props.text;
 
     const initialText = "Copy code";
     const copiedText = "Copied!";
 
     return (
         <>
-            {/* TODO: style code tags */}
-            <code
-                ref={codeRef}
-                style="display: block; margin: 8px; padding: 8px; border: 2px white solid; border-radius: 8px;"
-            >
-                {text}
-            </code>
+            <pre>
+                <code
+                    ref={codeRef}
+                    style="overflow-x: auto; background: var(--foreground-color); display: block; margin: 8px; padding: 8px; border: 2px white solid; border-radius: 8px;"
+                >
+                    {text}
+                </code>
+            </pre>
             <button
                 ref={buttonRef}
                 type="button"
