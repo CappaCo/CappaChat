@@ -1,11 +1,21 @@
 import { Client, QueryArguments } from "@db/postgres";
 
-const databaseURL = Deno.env.get("DATABASE_URL");
-if (!databaseURL) {
+const databaseURLString = Deno.env.get("DATABASE_URL");
+if (!databaseURLString) {
     throw new Error("DATABASE_URL is not set");
 }
+const databaseURL: URL = new URL(databaseURLString);
 
-const db = new Client(databaseURL);
+const db = new Client({
+    hostname: databaseURL.hostname,
+    port: databaseURL.port,
+    user: databaseURL.username,
+    password: databaseURL.password,
+    database: databaseURL.pathname.replace("/", ""),
+    tls: {
+        enabled: false,
+    },
+});
 
 console.info("connecting to db...");
 await db.connect();
