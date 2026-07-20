@@ -1,10 +1,11 @@
 import { Channel, ID, Message, Server } from "@/lib/types.ts";
 import { Head, IS_BROWSER } from "fresh/runtime";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import MessagesDisplay from "@/islands/MessagesDisplay.tsx";
 import ChatControls from "@/islands/ChatControls.tsx";
 import ServerInfo from "@/islands/ServerInfo.tsx";
 import UsersDisplay from "@/islands/UsersDisplay.tsx";
+import LeftBar from "@/islands/LeftBar.tsx";
 
 export default function ChatPage(
     { serverID, channelID }: { serverID: ID; channelID: ID },
@@ -13,6 +14,8 @@ export default function ChatPage(
     const [channel, setChannel] = useState<Channel>();
     const [channels, setChannels] = useState<Channel[]>();
     const [messages, setMessages] = useState<Message[]>();
+
+    const appGridRef = useRef<HTMLDivElement>(null);
 
     console.log("chat page rendering now...");
 
@@ -65,12 +68,15 @@ export default function ChatPage(
             <Head>
                 <title>{channel?.name} | {server?.name} | CappaChat</title>
             </Head>
-            <ServerInfo server={server} channels={channels} />
-            <UsersDisplay />
+            <div id="app-grid" ref={appGridRef}>
+                <LeftBar />
+                <ServerInfo server={server} channels={channels} appGridRef={appGridRef} />
+                <UsersDisplay />
 
-            <div id="chat-container">
-                <MessagesDisplay messages={messages} />
-                <ChatControls server={server} channel={channel} />
+                <div id="chat-container">
+                    <MessagesDisplay messages={messages} />
+                    <ChatControls server={server} channel={channel} />
+                </div>
             </div>
         </>
     );
