@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 // TODO: move this to another file
 function MessageElement({ message }: { message: Message }) {
     if (message.content) {
-        return <p class="message text">{message.content}</p>;
+        return <p class="message text"><span>{message.authorID}:</span><span>{message.content}</span></p>;
     }
 
     return (
@@ -55,7 +55,7 @@ export default function Chat({ channelID }: { channelID: ID }) {
 
     return (
         <div id="chat-container">
-            <section id="messagesField" style="padding: 10px;">
+            <section id="messages" style="padding: 10px;">
                 {(() => {
                     if (messages === null) return "Loading...";
                     if (messages.length === 0) return "No auths";
