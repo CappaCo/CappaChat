@@ -31,20 +31,12 @@ export default function ServerInfo(
         const resizeOffset = 2; // half of border width
         if (serverInfo === null || serverInfo === undefined) return;
 
+        const serverInfoStyle = globalThis.getComputedStyle(serverInfo);
         function getStyleValue(key: string): number {
             if (serverInfo === null) {
                 throw "um, yeah I don't know what to write here";
             }
-            if (serverInfo.computedStyleMap) {
-                return (serverInfo.computedStyleMap().get(key) as CSSUnitValue)
-                    .value;
-            } else {
-                // fallback for firefox
-                // TODO: fix this
-                if (key === "min-width") return 100;
-                if (key === "max-width") return 800;
-                return 0;
-            }
+            return Number(serverInfoStyle.getPropertyValue(key).replace("px", ""));
         }
 
         const minWidth = getStyleValue("min-width");
