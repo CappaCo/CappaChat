@@ -37,7 +37,7 @@ export default define.page(function (ctx) {
             </Head>
             <ServerInfo server={server} highlightPosition={channel.position} />
             <UsersDisplay />
-            <Chat channelID={channelID} />
+            <Chat serverID={serverID} channelID={channelID} />
         </>
     );
 });

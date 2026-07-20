@@ -5,7 +5,15 @@ import { useEffect, useRef, useState } from "preact/hooks";
 // TODO: move this to another file
 function MessageElement({ message }: { message: Message }) {
     if (message.content) {
-        return <p class="message text"><span>{message.authorID}:</span><span>{message.content}</span></p>;
+        return (
+            <div class="message text">
+                <span class="message-header">
+                    <span class="message-username">username</span>
+                    <span class="message-timestamp">{message.createdAt}</span>
+                </span>
+                <span class="message-content">{message.content}</span>
+            </div>
+        );
     }
 
     return (
@@ -15,9 +23,9 @@ function MessageElement({ message }: { message: Message }) {
     );
 }
 
-export default function Chat({ channelID }: { channelID: ID }) {
-    console.log("Chat island rendering with channelID:", channelID);
-
+export default function Chat(
+    { serverID, channelID }: { serverID: ID; channelID: ID },
+) {
     const [messages, setMessages] = useState<Message[] | null>(null);
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -28,11 +36,10 @@ export default function Chat({ channelID }: { channelID: ID }) {
     function fetchRecentMessages() {
         if (!IS_BROWSER) return;
 
-        fetch(`/api/servers/${0}/channels/${channelID}/messages`) // TODO: serverID
+        fetch(`/api/servers/${serverID}/channels/${channelID}/messages`)
             .then((response) => response.json())
-            .then((json: { messages: Message[]; users: User[] }) => { // TODO: update to user partial
-                console.log("got json:", json);
-                setMessages(json.messages.reverse());
+            .then((messages: Message[]) => {
+                setMessages(messages.reverse());
             });
     }
 
@@ -58,7 +65,7 @@ export default function Chat({ channelID }: { channelID: ID }) {
             <section id="messages" style="padding: 10px;">
                 {(() => {
                     if (messages === null) return "Loading...";
-                    if (messages.length === 0) return "No auths";
+                    if (messages.length === 0) return "No messages";
                     return messages.map((message) => (
                         <MessageElement key={message.id} message={message} />
                     ));
@@ -84,4 +91,8 @@ export default function Chat({ channelID }: { channelID: ID }) {
             </section>
         </div>
     );
+}
+
+function MessagesDisplay({ messages }: { messages: Message[] }) {
+
 }

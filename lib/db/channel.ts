@@ -16,7 +16,7 @@ export async function getMessages(
 
     const response = await query<Message>(
         `
-        SELECT *
+        SELECT id, author_id as "authorID", channel_id as "channelID", content, created_at as "createdAt", edited_at as "aditedAt"
         FROM messages
         WHERE channel_id = $1
           AND created_at < $2
