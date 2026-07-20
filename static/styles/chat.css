@@ -149,6 +149,11 @@ body {
     transition: background-color 0.2s;
 }
 
+.channel-display.selected {
+    background-color: var(--foreground-highlight-color);
+
+}
+
 .channel-display a {
     text-decoration: none var(--background-color);
     color: inherit;

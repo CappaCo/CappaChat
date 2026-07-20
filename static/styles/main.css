@@ -6,6 +6,7 @@
     --background-border: var(--border-width) solid #333;
 
     --foreground-color: #444;
+    --foreground-highlight-color: #333;
     --foreground-hover: #222;
     --foreground-border: var(--border-width) solid #666;
 
@@ -20,6 +21,7 @@
     --text-secondary: #000;
 }
 
+/* TODO: make this up to date */
 [data-theme="light"] {
     --background-color: #fff;
     --background-border: var(--border-width) solid #cacaca;

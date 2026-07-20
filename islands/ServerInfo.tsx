@@ -1,34 +1,38 @@
 import ChannelDisplay from "@/islands/ChannelDisplay.tsx";
-import { ID, Server } from "@/lib/types.ts";
-
-export interface ServerInfoProps {
-    serverID: ID;
-    channelID: ID;
-}
+import { Channel, Server } from "@/lib/types.ts";
 
 export default function ServerInfo(
     {
         server,
-        highlightPosition,
+        channels,
+        currentChannel,
     }: {
-        server: Server;
-        highlightPosition: number;
+        server?: Server;
+        channels?: Channel[];
+        currentChannel?: Channel;
     },
 ) {
-    highlightPosition; // TODO: do something with this
     return (
         <aside id="server-info">
             <div id="server-info-resizer"></div>
             <div id="server-name-container">
-                <h2 id="server-name">{server.name}</h2>
+                <h2 id="server-name">{server ? server.name : "Loading..."}</h2>
             </div>
             <ul id="channels-group">
-                {/* TODO: fetch these from the server */}
-                <ChannelDisplay>General</ChannelDisplay>
-                <ChannelDisplay>Activities</ChannelDisplay>
-                <ChannelDisplay>Thoughts</ChannelDisplay>
-                <ChannelDisplay>Mutations</ChannelDisplay>
-                <ChannelDisplay>News</ChannelDisplay>
+                {(() => {
+                    if (channels === undefined) return "Loading...";
+                    if (channels.length === 0) return "No channels";
+                    return channels.map((channel) => {
+                        return (
+                            <ChannelDisplay
+                                key={channel.id}
+                                channel={channel}
+                                highlighted={currentChannel === undefined ||
+                                    channel.id === currentChannel.id}
+                            />
+                        );
+                    });
+                })()}
             </ul>
         </aside>
     );
