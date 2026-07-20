@@ -5,7 +5,7 @@ import { AuthType } from "@/lib/types.ts";
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/418
 
 // basic global rate limiting
-const rateLimit = 100;
+const rateLimit = 10000;
 type Seconds = number;
 const rateLimitReset: Seconds = 60; // one minute
 let rateLimitCounter = 0;
@@ -28,12 +28,10 @@ const rateLimiting = define.middleware(async (ctx) => {
     return await ctx.next();
 });
 
-const resetRateLimiterInterval = setInterval(function resetRateLimiter() {
+const _resetRateLimiterInterval = setInterval(function resetRateLimiter() {
     if (rateLimitCounter !== 0) console.log("rate limit reset");
     rateLimitCounter = 0;
 }, 1000 * rateLimitReset);
-
-console.log("resetRateLimiterInterval:", resetRateLimiterInterval);
 
 // auth validation
 const authValidation = define.middleware(async (ctx) => {
