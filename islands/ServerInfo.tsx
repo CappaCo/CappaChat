@@ -17,8 +17,6 @@ export default function ServerInfo(
         appGridRef: RefObject<HTMLDivElement>;
     },
 ) {
-    console.log("rendering ServerInfo");
-
     const serverInfoRef = useRef<HTMLElement>(null);
     const serverInfoResizerRef = useRef<HTMLDivElement>(null);
 
@@ -37,8 +35,16 @@ export default function ServerInfo(
             if (serverInfo === null) {
                 throw "um, yeah I don't know what to write here";
             }
-            return (serverInfo.computedStyleMap().get(key) as CSSUnitValue)
-                .value;
+            if (serverInfo.computedStyleMap) {
+                return (serverInfo.computedStyleMap().get(key) as CSSUnitValue)
+                    .value;
+            } else {
+                // fallback for firefox
+                // TODO: fix this
+                if (key === "min-width") return 100;
+                if (key === "max-width") return 800;
+                return 0;
+            }
         }
 
         const minWidth = getStyleValue("min-width");
@@ -77,8 +83,6 @@ export default function ServerInfo(
             document.removeEventListener("mousemove", resize);
             document.removeEventListener("mouseup", stopResize);
         }
-
-        console.log("resizer bar is set up");
     });
 
     return (

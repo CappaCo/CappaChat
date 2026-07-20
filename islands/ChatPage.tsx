@@ -1,4 +1,4 @@
-import { Channel, ID, Message, Server } from "@/lib/types.ts";
+import { Channel, ID, Message, Server, User } from "@/lib/types.ts";
 import { Head, IS_BROWSER } from "fresh/runtime";
 import { useEffect, useRef, useState } from "preact/hooks";
 import MessagesDisplay from "@/islands/MessagesDisplay.tsx";
@@ -11,8 +11,10 @@ export default function ChatPage(
     { serverID, channelID }: { serverID: ID; channelID: ID },
 ) {
     const [server, setServer] = useState<Server>();
+    const [servers, setServers] = useState<Server[]>();
     const [channel, setChannel] = useState<Channel>();
     const [channels, setChannels] = useState<Channel[]>();
+    const [users, setUsers] = useState<User[]>();
     const [messages, setMessages] = useState<Message[]>();
 
     const appGridRef = useRef<HTMLDivElement>(null);
@@ -23,17 +25,19 @@ export default function ChatPage(
     if (server === undefined) {
         setServer({
             id: serverID,
-            name: "Termite Piddle Atrium",
+            name: "Test server",
             description: "real",
             ownerID: "0",
             createdAt: (new Date()).toISOString(),
         });
     }
 
+    if (servers === undefined && server) setServers([server]);
+
     if (channel === undefined) {
         setChannel({
             id: channelID,
-            name: "test",
+            name: "test channel",
             type: "text",
             position: 0,
             serverID: "0",
@@ -42,11 +46,21 @@ export default function ChatPage(
     }
 
     if (channels === undefined && channel) setChannels([channel]);
-    // up to here
+
+    if (users === undefined) {
+        setUsers([{
+            id: "0" + new Array(25).fill(" ").join(""), // add padding
+            displayName: "testUser",
+            username: "testuser#67",
+            description: "testing user",
+            createdAt: "",
+        }]);
+    }
+    // ------------------- up to here
 
     useEffect(() => {
         fetchRecentMessages();
-    }, [server, channel]);
+    }, []);
 
     async function fetchRecentMessages() {
         if (!IS_BROWSER) return;
@@ -69,12 +83,16 @@ export default function ChatPage(
                 <title>{channel?.name} | {server?.name} | CappaChat</title>
             </Head>
             <div id="app-grid" ref={appGridRef}>
-                <LeftBar />
-                <ServerInfo server={server} channels={channels} appGridRef={appGridRef} />
-                <UsersDisplay />
+                <LeftBar servers={servers} />
+                <ServerInfo
+                    server={server}
+                    channels={channels}
+                    appGridRef={appGridRef}
+                />
+                <UsersDisplay users={users} />
 
                 <div id="chat-container">
-                    <MessagesDisplay messages={messages} />
+                    <MessagesDisplay messages={messages} users={users} />
                     <ChatControls server={server} channel={channel} />
                 </div>
             </div>

@@ -1,22 +1,20 @@
-import type { ComponentChildren } from "preact";
+import { User } from "@/lib/types.ts";
 
-export interface UserDisplayProps {
-    id?: string;
-    imgSrc?: string;
-    children?: ComponentChildren;
-}
+export default function UserDisplay({ user }: { user: User }) {
+    // TODO: add interactivity and stuff
+    const pfpURL = user.profilePictureURL || "/testImages/users/0.webp";
 
-let thingo = 0;
-
-export default function UserDisplay(props: UserDisplayProps) {
-    const selectedImage = "/testImages/users/" + thingo + ".webp";
-    thingo = (thingo + 1) % 3;
+    function doThings() {
+        alert(
+            "do something like show the user description: " + user.description,
+        );
+    }
 
     return (
-        <li class="user-display" id={props.id}>
-            <img src={props.imgSrc || selectedImage} />
+        <li class="user-display" onClick={doThings}>
+            <img src={pfpURL} />
             <span class="user-display-username">
-                {props.children || "person"}
+                {user.displayName}
             </span>
         </li>
     );

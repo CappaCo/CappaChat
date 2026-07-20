@@ -1,12 +1,16 @@
 import UserDisplay from "@/islands/UserDisplay.tsx";
+import { User } from "@/lib/types.ts";
 
-export default function UsersDisplay() {
+export default function UsersDisplay({ users }: { users?: User[] }) {
     return (
         <aside id="users">
             <ul id="users-group">
-                <UserDisplay>person1</UserDisplay>
-                <UserDisplay>person2</UserDisplay>
-                <UserDisplay>person3</UserDisplay>
+                {(() => {
+                    if (users === undefined) return "Users loading skeleton...";
+                    return users.map((user) => {
+                        return <UserDisplay key={user.id} user={user} />;
+                    });
+                })()}
             </ul>
         </aside>
     );

@@ -151,7 +151,6 @@ body {
 
 .channel-display.selected {
     background-color: var(--foreground-highlight-color);
-
 }
 
 .channel-display a {
