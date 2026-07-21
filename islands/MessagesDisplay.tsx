@@ -81,11 +81,18 @@ function MessageElement(
     }
 
     function shouldGroupMessage() {
+        //return false;
+        // if this is the first message, don't group
         if (prevMessage === undefined) return false;
+        // if the messages aren't sent by the same user, don't group
         if (message.authorId !== prevMessage.authorId) return false;
-        const lastMessageButABitAfter = new Date(prevMessage.createdAt);
-        lastMessageButABitAfter.setHours(verbosityThresholdDate.getHours() - 1);
-        if (dateSent < lastMessageButABitAfter) return false;
+
+        // if the messages aren't sent within 1 hour of eachother, don't group
+        const lastMessageButABitLater = new Date(prevMessage.createdAt);
+        lastMessageButABitLater.setHours(
+            lastMessageButABitLater.getHours() + 1,
+        );
+        if (dateSent > lastMessageButABitLater) return false;
         return true;
     }
 
@@ -99,7 +106,7 @@ function MessageElement(
     if (groupMessage) {
         messageClasses.push("group");
     }
-    
+
     return (
         <li class={messageClasses.join(" ")}>
             {groupMessage ? null : <img src={pfpURL} />}

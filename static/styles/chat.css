@@ -237,10 +237,9 @@ body {
     --message-padding: 4px;
 
     margin-top: 10px;
-    height: fit-content;
     padding: var(--message-padding) 0;
     display: grid;
-    grid-template-columns: min-content auto;
+    grid-template-columns: auto max-content;
     position: relative;
 }
 
@@ -279,11 +278,11 @@ remove this to see what it does lol
 }
 
 .message .message-body {
-    margin-left: calc(var(--image-size) + var(--image-offset)*2);
+    padding-left: calc(var(--image-size) + var(--image-offset)*2);
+    width: 100%;
+    box-sizing: border-box;
     display: grid;
     grid-template-rows: auto auto;
-    width: 100%;
-    height: fit-content;
 }
 
 .message.group .message-body {
@@ -292,6 +291,10 @@ remove this to see what it does lol
 
 .message .message-header {
     font-size: 1em;
+}
+
+.message .message-header > * {
+    display: inline;
 }
 
 .message .message-timestamp {
