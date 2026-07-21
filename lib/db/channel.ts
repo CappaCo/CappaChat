@@ -1,4 +1,4 @@
-import { ulid } from "@std/ulid";
+import { generateId } from "@/lib/id.ts";
 import { query } from "@/lib/db.ts";
 import type { Id, Message } from "@/lib/types.ts";
 
@@ -39,7 +39,7 @@ export async function createMessage(
         content: string;
     },
 ) {
-    const id = ulid();
+    const id = generateId();
 
     await query(
         `

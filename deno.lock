@@ -13,6 +13,7 @@
     "jsr:@std/bytes@^1.0.6": "1.0.6",
     "jsr:@std/cli@^1.0.31": "1.0.32",
     "jsr:@std/crypto@^1.0.4": "1.1.0",
+    "jsr:@std/crypto@^1.1.0": "1.1.0",
     "jsr:@std/dotenv@~0.225.5": "0.225.7",
     "jsr:@std/encoding@^1.0.10": "1.0.11",
     "jsr:@std/encoding@^1.0.11": "1.0.11",
@@ -69,7 +70,7 @@
       "integrity": "afdbe608bd066cda2ee5dba37c416d332098b9238c51aec223331108e281954c",
       "dependencies": [
         "jsr:@std/bytes@^1.0.5",
-        "jsr:@std/crypto",
+        "jsr:@std/crypto@^1.0.4",
         "jsr:@std/encoding@^1.0.9",
         "jsr:@std/fmt@^1.0.6",
         "jsr:@std/path@^1.0.8"
@@ -1363,6 +1364,7 @@
       "jsr:@db/postgres@~0.19.5",
       "jsr:@fresh/core@^2.3.3",
       "jsr:@fresh/plugin-vite@^1.1.2",
+      "jsr:@std/crypto@^1.1.0",
       "jsr:@std/encoding@^1.0.11",
       "jsr:@std/http@^1.1.2",
       "jsr:@std/ulid@1",

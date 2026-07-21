@@ -1,11 +1,12 @@
 import * as cookie from "@std/http/cookie";
 import * as crypto from "node:crypto";
 import * as hex from "@std/encoding/hex";
+import salt from "@/lib/adminSalt.ts";
 
 import { kv } from "@/lib/kv.ts";
 
 async function hash(input: string) {
-    const inputBuffer = new TextEncoder().encode(input);
+    const inputBuffer = new TextEncoder().encode(salt(input));
     const hashBuffer = await crypto.subtle.digest("SHA-256", inputBuffer);
     return hex.encodeHex(hashBuffer);
 }

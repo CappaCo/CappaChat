@@ -1,4 +1,5 @@
 import { IS_BROWSER } from "fresh/runtime";
+import salt from "@/lib/adminSalt.ts";
 
 export default function HashTest() {
     return (
@@ -13,7 +14,7 @@ export default function HashTest() {
                         return;
                     }
 
-                    const msgBuffer = new TextEncoder().encode(message);
+                    const msgBuffer = new TextEncoder().encode(salt(message));
 
                     // Hash the message using SHA-256
                     crypto.subtle.digest("SHA-256", msgBuffer).then(
