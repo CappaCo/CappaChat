@@ -2,6 +2,7 @@ console.log("main.js is running");
 
 // set up functions are async so they can run on multiple threads maybe
 
+// TODO: move these to a component/island
 // set up forms with stuff and things
 (function setUpForms() {
     const formInputs = document.querySelectorAll("form input");

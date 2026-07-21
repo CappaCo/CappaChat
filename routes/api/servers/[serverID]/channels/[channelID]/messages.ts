@@ -34,7 +34,7 @@ export const handler = define.handlers({
         }
 
         const message = {
-            authorID: "0", // TODO: get meeeee
+            authorID: ctx.state.user.id, // TODO: get meeeee
             content,
         };
 

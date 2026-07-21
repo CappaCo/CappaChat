@@ -28,6 +28,7 @@ export default function ChatPage(
             name: "Test server",
             description: "real",
             ownerID: "0",
+            iconURL: "/testImages/servers/0.webp",
             createdAt: (new Date()).toISOString(),
         });
     }
@@ -48,13 +49,32 @@ export default function ChatPage(
     if (channels === undefined && channel) setChannels([channel]);
 
     if (users === undefined) {
-        setUsers([{
-            id: "0" + new Array(25).fill(" ").join(""), // add padding
-            displayName: "testUser",
-            username: "testuser#67",
-            description: "testing user",
-            createdAt: "",
-        }]);
+        setUsers([
+            {
+                id: "0" + new Array(25).fill(" ").join(""), // add padding
+                displayName: "testUserReal",
+                username: "testuser#444",
+                description: "testing user",
+                profilePictureURL: "/testImages/users/2.webp",
+                createdAt: (new Date()).toISOString(),
+            },
+            {
+                id: "1" + new Array(25).fill(" ").join(""), // add freddy padding
+                displayName: "Scrom Doglin",
+                username: "freddy#4",
+                description: "Wabungus Burger",
+                profilePictureURL: "/testImages/users/0.webp",
+                createdAt: (new Date()).toISOString(),
+            },
+            {
+                id: "2" + new Array(25).fill(" ").join(""), // add padding
+                displayName: "NahI'dWeave",
+                username: "AncientMichaelWeaver",
+                description: "Michael",
+                profilePictureURL: "/testImages/users/1.webp",
+                createdAt: (new Date()).toISOString(),
+            },
+        ]);
     }
     // ------------------- up to here
 

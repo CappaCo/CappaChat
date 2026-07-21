@@ -40,6 +40,7 @@ export interface Server {
     description: string;
 
     ownerID: ID;
+    iconURL?: string;
 
     createdAt: Timestamp;
 }

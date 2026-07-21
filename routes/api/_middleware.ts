@@ -81,6 +81,14 @@ const authValidation = define.middleware(async (ctx) => {
 
     ctx.state.authType = authType;
     ctx.state.authToken = authToken;
+    // TODO: get meeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    ctx.state.user = {
+        id: "0",
+        displayName: "testUser",
+        username: "testuser#0",
+        description: "yup description",
+        createdAt: "",
+    };
 
     return await ctx.next();
 });

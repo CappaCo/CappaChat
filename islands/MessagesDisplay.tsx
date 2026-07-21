@@ -3,7 +3,7 @@ import { ID, Message, User } from "@/lib/types.ts";
 function MessageElement({ message, user }: { message: Message; user?: User }) {
     if (message.content) {
         const username = user ? user.displayName : "loading username";
-        const _pfpURL = user
+        const pfpURL = user
             ? user.profilePictureURL
             : "/testImages/users/0.webp";
 
@@ -22,11 +22,14 @@ function MessageElement({ message, user }: { message: Message; user?: User }) {
         return (
             <div class="message text">
                 {/* TODO: add user profile picture into this */}
-                <span class="message-header">
-                    <span class="message-username">{username}</span>
-                    <span class="message-timestamp">{timestamp}</span>
-                </span>
-                <span class="message-content">{message.content}</span>
+                <img src={pfpURL} />
+                <div class="message-but-not-image">
+                    <span class="message-header">
+                        <span class="message-username">{username}</span>
+                        <small class="message-timestamp">{timestamp}</small>
+                    </span>
+                    <p class="message-content">{message.content}</p>
+                </div>
             </div>
         );
     }
@@ -54,23 +57,27 @@ export default function MessagesDisplay(
     }
 
     return (
-        <section id="messages">
-            {(() => {
-                if (messages === undefined) return <MessagesLoadingSkeleton />;
-                if (messages.length === 0) return "No messages";
+        <div id="messages-container">
+            <section id="messages">
+                {(() => {
+                    if (messages === undefined) {
+                        return <MessagesLoadingSkeleton />;
+                    }
+                    if (messages.length === 0) return "No messages";
 
-                return messages.map((message) => {
-                    const user = usersMap.get(message.authorID);
+                    return messages.map((message) => {
+                        const user = usersMap.get(message.authorID);
 
-                    return (
-                        <MessageElement
-                            key={message.id}
-                            message={message}
-                            user={user}
-                        />
-                    );
-                });
-            })()}
-        </section>
+                        return (
+                            <MessageElement
+                                key={message.id}
+                                message={message}
+                                user={user}
+                            />
+                        );
+                    });
+                })()}
+            </section>
+        </div>
     );
 }

@@ -215,14 +215,16 @@ body {
     flex-direction: column;
 
     height: 100%;
-    padding: 1em;
 
     box-sizing: border-box;
 }
 
 /* messages */
+#messages-container {
+    overflow-y: auto;
+}
+
 #messages {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -231,6 +233,16 @@ body {
 
 .message {
     padding: 10px;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.message > img {
+    width: 64px;
+}
+
+.message-but-not-image {
+    margin-left: 1em;
     display: grid;
     grid-template-rows: auto auto;
 }
@@ -244,6 +256,7 @@ body {
 #chat-controls {
     display: flex;
     gap: 8px;
+    padding: 1em;
 }
 
 /* TODO: remove this old interface stuff */
