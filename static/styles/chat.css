@@ -204,6 +204,7 @@ body {
 
 .user-display-username {
     margin: auto 0;
+    font-weight: bold;
 }
 
 /* chat container */
@@ -222,35 +223,82 @@ body {
 /* messages */
 #messages-container {
     overflow-y: auto;
+    height: 100%;
+    align-content: end;
 }
 
 #messages {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
+    padding: 0;
 }
 
 .message {
-    padding: 10px;
+    --image-size: 64px;
+    --image-offset: 16px;
+    --message-padding: 4px;
+
+    margin-top: 10px;
+    height: fit-content;
+    padding: var(--message-padding) 0;
     display: grid;
     grid-template-columns: min-content auto;
+    position: relative;
+}
+
+/* 
+even I don't know what this selector does at this point
+
+I'm pretty sure this is for the "lonely" messages that have
+an ungrouped message below them but only when this message
+itself is an ungrouped one
+
+Also if it's the most recent message and again, not grouped
+
+remove this to see what it does lol
+*/
+.message:not(.group):is(
+    :has(+ .message:not(.group)),
+    :last-child
+) {
+    height: var(--image-size);
+}
+
+.message:hover {
+    background-color: var(--background-hover);
+}
+
+.message.group {
+    margin-top: 0;
 }
 
 .message > img {
-    width: 64px;
+    position: absolute;
+    inset-inline-start: var(--image-offset);
+    inset-block-start: var(--message-padding);
+    width: var(--image-size);
+    z-index: 4;
 }
 
-.message-but-not-image {
-    margin-left: 1em;
+.message .message-body {
+    margin-left: calc(var(--image-size) + var(--image-offset)*2);
     display: grid;
     grid-template-rows: auto auto;
+    width: 100%;
+    height: fit-content;
 }
 
-.message-timestamp {
+.message.group .message-body {
+    grid-template-rows: auto;
+}
+
+.message .message-header {
+    font-size: 1em;
+}
+
+.message .message-timestamp {
     color: #999;
     margin-left: 0.5em;
     font-size: 0.7em;
+    font-weight: normal;
 }
 
 #chat-controls {

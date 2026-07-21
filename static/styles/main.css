@@ -3,6 +3,7 @@
     --border-radius: 1em;
 
     --background-color: #000;
+    --background-hover: #222;
     --background-border: var(--border-width) solid #333;
 
     --foreground-color: #444;
