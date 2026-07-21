@@ -3,14 +3,14 @@ import { Member } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
-        const serverID = ctx.state.serverID;
-        const userID = ctx.params.userID; // TODO: validate this
+        const serverId = ctx.state.serverId;
+        const userId = ctx.params.userId; // TODO: validate this
 
-        console.log("getting member:", userID, "in server:", serverID);
+        console.log("getting member:", userId, "in server:", serverId);
 
         // TODO: implement this
         const member: Member = {
-            userID: "0",
+            userId: "0",
             joinedAt: (new Date()).toISOString(),
             //permissions:
         };

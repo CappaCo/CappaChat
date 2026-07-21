@@ -1,6 +1,10 @@
 import { define } from "@/lib/utils.ts";
 
+// https://usefresh.dev/docs/concepts/middleware
+
 export default define.middleware(async (ctx) => {
+    console.log("API middleware running");
+
     const authToken = ctx.state.authToken;
     console.log("authToken", authToken);
 
@@ -24,8 +28,8 @@ export default define.middleware(async (ctx) => {
         );
     }
 
-    const userID = ctx.params.userID;
-    ctx.state.userID = userID;
+    const serverId = ctx.params.serverId;
+    ctx.state.serverId = serverId;
 
     return await ctx.next();
 });

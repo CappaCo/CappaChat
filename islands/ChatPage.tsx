@@ -1,4 +1,4 @@
-import { Channel, ID, Message, Server, User } from "@/lib/types.ts";
+import { Channel, Id, Message, Server, User } from "@/lib/types.ts";
 import { Head, IS_BROWSER } from "fresh/runtime";
 import { useEffect, useRef, useState } from "preact/hooks";
 import MessagesDisplay from "@/islands/MessagesDisplay.tsx";
@@ -8,7 +8,7 @@ import UsersDisplay from "@/islands/UsersDisplay.tsx";
 import LeftBar from "@/islands/LeftBar.tsx";
 
 export default function ChatPage(
-    { serverID, channelID }: { serverID: ID; channelID: ID },
+    { serverId, channelId }: { serverId: Id; channelId: Id },
 ) {
     const [server, setServer] = useState<Server>();
     const [servers, setServers] = useState<Server[]>();
@@ -24,11 +24,11 @@ export default function ChatPage(
     // TODO: replace this with actually fetching the data
     if (server === undefined) {
         setServer({
-            id: serverID,
+            id: serverId,
             name: "Test server",
             description: "real",
-            ownerID: "0",
-            iconURL: "/testImages/servers/0.webp",
+            ownerId: "0",
+            iconUrl: "/testImages/servers/0.webp",
             createdAt: (new Date()).toISOString(),
         });
     }
@@ -37,11 +37,11 @@ export default function ChatPage(
 
     if (channel === undefined) {
         setChannel({
-            id: channelID,
+            id: channelId,
             name: "test channel",
             type: "text",
             position: 0,
-            serverID: "0",
+            serverId: "0",
             createdAt: (new Date()).toISOString(),
         });
     }
@@ -55,7 +55,7 @@ export default function ChatPage(
                 displayName: "testUserReal",
                 username: "testuser#444",
                 description: "testing user",
-                profilePictureURL: "/testImages/users/2.webp",
+                profilePictureUrl: "/testImages/users/2.webp",
                 createdAt: (new Date()).toISOString(),
             },
             {
@@ -63,7 +63,7 @@ export default function ChatPage(
                 displayName: "Scrom Doglin",
                 username: "freddy#4",
                 description: "Wabungus Burger",
-                profilePictureURL: "/testImages/users/0.webp",
+                profilePictureUrl: "/testImages/users/0.webp",
                 createdAt: (new Date()).toISOString(),
             },
             {
@@ -71,7 +71,7 @@ export default function ChatPage(
                 displayName: "NahI'dWeave",
                 username: "AncientMichaelWeaver",
                 description: "Michael",
-                profilePictureURL: "/testImages/users/1.webp",
+                profilePictureUrl: "/testImages/users/1.webp",
                 createdAt: (new Date()).toISOString(),
             },
         ]);

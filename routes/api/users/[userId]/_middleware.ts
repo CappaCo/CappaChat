@@ -1,12 +1,8 @@
 import { define } from "@/lib/utils.ts";
-import { ID } from "@/lib/types.ts";
-
-// https://usefresh.dev/docs/concepts/middleware
 
 export default define.middleware(async (ctx) => {
-    console.log("Channel middleware running");
-
     const authToken = ctx.state.authToken;
+    console.log("authToken", authToken);
 
     function checkAuth(authToken: string) {
         // this function will check if the token is allowed to use the resource
@@ -16,6 +12,8 @@ export default define.middleware(async (ctx) => {
     }
 
     if (!checkAuth(authToken)) {
+        console.log("forbidden");
+
         return new Response(
             JSON.stringify({
                 message: "403 Forbidden",
@@ -26,8 +24,8 @@ export default define.middleware(async (ctx) => {
         );
     }
 
-    const channelID: ID = ctx.params.channelID;
-    ctx.state.channelID = channelID;
+    const userId = ctx.params.userId;
+    ctx.state.userId = userId;
 
     return await ctx.next();
 });

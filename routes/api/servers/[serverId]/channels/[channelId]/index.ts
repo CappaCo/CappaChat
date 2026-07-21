@@ -3,23 +3,23 @@ import { Channel } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
-        const serverID = ctx.state.serverID;
-        const channelID = ctx.state.channelID;
+        const serverId = ctx.state.serverId;
+        const channelId = ctx.state.channelId;
 
         console.log(
             "getting channel information for server:",
-            serverID,
+            serverId,
             "channel:",
-            channelID,
+            channelId,
         );
 
         // TODO: implement this
         const channel: Channel = {
-            id: channelID,
+            id: channelId,
             name: "general",
             type: "text",
             position: 0,
-            serverID: "0",
+            serverId: "0",
             createdAt: (new Date()).toISOString(),
         };
 

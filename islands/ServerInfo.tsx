@@ -36,7 +36,9 @@ export default function ServerInfo(
             if (serverInfo === null) {
                 throw "um, yeah I don't know what to write here";
             }
-            return Number(serverInfoStyle.getPropertyValue(key).replace("px", ""));
+            return Number(
+                serverInfoStyle.getPropertyValue(key).replace("px", ""),
+            );
         }
 
         const minWidth = getStyleValue("min-width");

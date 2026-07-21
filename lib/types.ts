@@ -1,52 +1,52 @@
 // ID type will be ulid https://github.com/ulid/javascript
-export type ID = string;
+export type Id = string;
 
 // Timestamp type is ISO timestamp so new Date(Time) works
 export type Timestamp = string;
 
 // user
 export interface User {
-    id: ID;
+    id: Id;
 
     username: string;
     displayName: string;
 
     description: string;
-    profilePictureURL?: string;
+    profilePictureUrl?: string;
 
     createdAt: Timestamp;
 }
 
 // kinda like user but in the context of a server
 export interface Member {
-    userID: ID;
+    userId: Id;
     //permissions: number; // stored as bits, spec to come
-    //roles: ID[];
+    //roles: Id[];
 
     joinedAt: Timestamp;
 }
 
 // role
 export interface Role {
-    id: ID;
+    id: Id;
     //permissionsPlus: number;
     //permissionsMinus: number;
 }
 
 // server
 export interface Server {
-    id: ID;
+    id: Id;
     name: string;
     description: string;
 
-    ownerID: ID;
-    iconURL?: string;
+    ownerId: Id;
+    iconUrl?: string;
 
     createdAt: Timestamp;
 }
 
 export interface ServerSummary {
-    id: ID;
+    id: Id;
     name: string;
     description: string;
     iconURL?: string;
@@ -54,19 +54,19 @@ export interface ServerSummary {
 
 // channel
 export interface Channel {
-    id: ID;
+    id: Id;
     name: string;
     type: "text" | "voice";
 
     position: number;
 
-    serverID: ID;
+    serverId: Id;
 
     createdAt: Timestamp;
 }
 
 export interface ChannelSummary {
-    id: ID;
+    id: Id;
     name: string;
     type: "text" | "voice";
 
@@ -75,9 +75,9 @@ export interface ChannelSummary {
 
 // message
 export interface Message {
-    id: ID;
-    authorID: ID;
-    channelID: ID;
+    id: Id;
+    authorId: Id;
+    channelId: Id;
 
     content: string;
     //attachments?: Attachment[];

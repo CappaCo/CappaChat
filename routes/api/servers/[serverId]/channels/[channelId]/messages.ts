@@ -4,15 +4,15 @@ import { createMessage, getMessages } from "@/lib/db/channel.ts";
 export const handler = define.handlers({
     // get messages in the channel
     async GET(ctx) {
-        const channelID = ctx.state.channelID;
+        const channelId = ctx.state.channelId;
 
-        const messages = await getMessages(channelID);
+        const messages = await getMessages(channelId);
 
         return new Response(JSON.stringify(messages));
     },
 
     async POST(ctx) {
-        const channelID = ctx.state.channelID;
+        const channelId = ctx.state.channelId;
 
         const json = await ctx.req.json();
         const {
@@ -34,12 +34,12 @@ export const handler = define.handlers({
         }
 
         const message = {
-            authorID: ctx.state.user.id, // TODO: get meeeee
+            authorId: ctx.state.requestingUser.id, // TODO: get meeeee
             content,
         };
 
         // TODO: implement this with websockets
-        await createMessage(channelID, message);
+        await createMessage(channelId, message);
 
         return new Response(JSON.stringify({ message: "ok" }));
     },

@@ -3,10 +3,10 @@ import { ChannelSummary } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
-        const serverID = ctx.state.serverID;
+        const serverId = ctx.state.serverId;
 
         // TODO: implement this
-        console.log("Getting channels in server:", serverID);
+        console.log("Getting channels in server:", serverId);
         const channels: ChannelSummary[] = [
             {
                 id: "0",

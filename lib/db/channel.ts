@@ -1,6 +1,6 @@
 import { ulid } from "@std/ulid";
 import { query } from "@/lib/db.ts";
-import type { ID, Message } from "@/lib/types.ts";
+import type { Id, Message } from "@/lib/types.ts";
 
 interface GetMessagesOptions {
     before?: Date;
@@ -8,7 +8,7 @@ interface GetMessagesOptions {
 }
 
 export async function getMessages(
-    channelID: ID,
+    channelId: Id,
     options: GetMessagesOptions = {},
 ) {
     const before = options.before ?? new Date();
@@ -16,26 +16,26 @@ export async function getMessages(
 
     const response = await query<Message>(
         `
-        SELECT id, author_id as "authorID", channel_id as "channelID", content, created_at as "createdAt", edited_at as "aditedAt"
+        SELECT id, author_id, channel_id, content, created_at, edited_at
         FROM messages
         WHERE channel_id = $1
           AND created_at < $2
         ORDER BY created_at DESC
         LIMIT $3
         `,
-        [channelID, before, limit],
+        [channelId, before, limit],
     );
 
     return response;
 }
 
 export async function createMessage(
-    channelID: ID,
+    channelId: Id,
     {
-        authorID,
+        authorId,
         content,
     }: {
-        authorID: ID;
+        authorId: Id;
         content: string;
     },
 ) {
@@ -51,7 +51,7 @@ export async function createMessage(
         )
         VALUES ($1, $2, $3, $4)
         `,
-        [id, channelID, authorID, content],
+        [id, channelId, authorId, content],
     );
 
     return id;

@@ -82,7 +82,7 @@ const authValidation = define.middleware(async (ctx) => {
     ctx.state.authType = authType;
     ctx.state.authToken = authToken;
     // TODO: get meeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-    ctx.state.user = {
+    ctx.state.requestingUser = {
         id: "0",
         displayName: "testUser",
         username: "testuser#0",
@@ -95,11 +95,11 @@ const authValidation = define.middleware(async (ctx) => {
 
 // automatically set json headers for api
 const JSONHeaders = define.middleware(async (ctx) => {
-    ctx.state.isJSONReturn = true;
+    ctx.state.isJsonReturn = true;
 
     const response = await ctx.next();
 
-    if (ctx.state.isJSONReturn) {
+    if (ctx.state.isJsonReturn) {
         response.headers.set("Content-Type", "application/json");
     }
 

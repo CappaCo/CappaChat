@@ -12,6 +12,7 @@ const db = new Client({
     user: databaseURL.username,
     password: databaseURL.password,
     database: databaseURL.pathname.replace("/", ""),
+
     tls: {
         enabled: false,
     },
@@ -31,17 +32,16 @@ async function cleanup() {
 Deno.addSignalListener("SIGINT", cleanup);
 Deno.addSignalListener("SIGTERM", cleanup);
 
-// test query
-db.queryObject("SELECT CURRENT_TIME;")
-    .then((response) => response.rows[0])
-    .then((time) => {
-        console.log("database queried at:", time);
-    });
-
 export async function query<T>(
     query: string,
     args?: QueryArguments,
 ) {
-    const response = await db.queryObject<T>(query, args);
+    //const response = await db.queryObject<T>(query, args);
+    const response = await db.queryObject<T>({
+        text: query,
+        args,
+        camelCase: true,
+    });
+
     return response.rows;
 }

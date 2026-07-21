@@ -3,16 +3,16 @@ import { Server } from "@/lib/types.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
-        const serverID = ctx.state.serverID;
+        const serverId = ctx.state.serverId;
 
-        console.log("getting information for server:", serverID);
+        console.log("getting information for server:", serverId);
 
         // TODO: implement this
         const server: Server = {
-            id: serverID,
+            id: serverId,
             name: "Termite Piddle Atrium",
             description: "",
-            ownerID: "0",
+            ownerId: "0",
             createdAt: (new Date()).toISOString(),
         };
 
