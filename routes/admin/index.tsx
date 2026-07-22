@@ -6,11 +6,10 @@ import ManageAuths from "@/islands/admin/ManageAuths.tsx";
 import ManageSessions from "@/islands/admin/ManageSessions.tsx";
 
 export default define.page(() => {
-    const dataBaseTest = `
+    const databaseTestText = `
 let query = "SELECT CURRENT_TIME;";
 await fetch(\`http://localhost:5173/api/admin/db?query=\${query}\`, { method: "GET", })
-    .then((x) => x.json())
-    .then((result) => result.rows);    
+    .then((x) => x.json());
 `.trim();
 
     return (
@@ -27,7 +26,7 @@ await fetch(\`http://localhost:5173/api/admin/db?query=\${query}\`, { method: "G
                         text={`await fetch("http://localhost:5173/api/admin/test", { method: "GET", }).then((x) => x.text());`}
                     />
                     <p>send a query to the database:</p>
-                    <CopyCode text={dataBaseTest} />
+                    <CopyCode text={databaseTestText} />
                 </section>
                 <HashTest />
                 <ManageAuths />
