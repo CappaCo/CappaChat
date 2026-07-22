@@ -52,24 +52,21 @@ export default function ChatPage(
         setUsers([
             {
                 id: "0" + new Array(25).fill(" ").join(""), // add padding
-                displayName: "testUserReal",
-                username: "testuser#444",
+                username: "testUserReal",
                 description: "testing user",
                 profilePictureUrl: "/testImages/users/2.webp",
                 createdAt: (new Date()).toISOString(),
             },
             {
                 id: "1" + new Array(25).fill(" ").join(""), // add freddy padding
-                displayName: "Scrom Doglin",
-                username: "freddy#4",
+                username: "Scrom Doglin",
                 description: "Wabungus Burger",
                 profilePictureUrl: "/testImages/users/0.webp",
                 createdAt: (new Date()).toISOString(),
             },
             {
                 id: "2" + new Array(25).fill(" ").join(""), // add padding
-                displayName: "NahI'dWeave",
-                username: "AncientMichaelWeaver",
+                username: "NahI'dWeave",
                 description: "Michael",
                 profilePictureUrl: "/testImages/users/1.webp",
                 createdAt: (new Date()).toISOString(),

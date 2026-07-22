@@ -14,7 +14,7 @@ export default function UserDisplay({ user }: { user: User }) {
         <li class="user-display" onClick={doThings}>
             <img src={pfpUrl} />
             <span class="user-display-username">
-                {user.displayName}
+                {user.username}
             </span>
         </li>
     );

@@ -64,7 +64,7 @@ function MessageElement(
     }
 
     //console.log("rendering user:", user);
-    const username = user ? user.displayName : "loading username";
+    const username = user ? user.username : "loading username";
     const pfpURL = user ? user.profilePictureUrl : "/testImages/users/0.webp";
 
     // TODO: move this to a separate function because the logic is complex

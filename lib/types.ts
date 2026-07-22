@@ -9,7 +9,6 @@ export interface User {
     id: Id;
 
     username: string;
-    displayName: string;
 
     description: string;
     profilePictureUrl?: string;
@@ -89,5 +88,3 @@ export interface Message {
 /*export interface Attachment {
     //something
 }*/
-
-export type AuthType = "None" | "User" | "Bot";

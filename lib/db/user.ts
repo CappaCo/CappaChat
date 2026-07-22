@@ -3,10 +3,9 @@ import { generateId } from "@/lib/id.ts";
 import { hash } from "@/lib/hashPassword.ts";
 import { Id, User } from "@/lib/types.ts";
 
-// TODO: test this function
 export async function createUser(
     { username, password }: { username: string; password: string },
-) {
+): Promise<Id> {
     const id = generateId();
     const passwordHash = await hash(password);
 
@@ -16,7 +15,7 @@ export async function createUser(
             id,
             username,
             password_hash,
-            avatar_url
+            profile_picture_url
         ) VALUES ($1, $2, $3, '/testImages/users/2.webp');
         `,
         [id, username, passwordHash],
@@ -25,19 +24,33 @@ export async function createUser(
     return id;
 }
 
-export async function getUser(id: Id) {
-    return await query<User>(
+export async function getUser(id: Id): Promise<User> {
+    return (await query<User>(
         `
         SELECT
             id,
             username,
-            display_name,
             description,
             profile_picture_url,
             created_at
         FROM users
-        WHERE id = $1;
+        WHERE id = $1
+        LIMIT 1;
         `,
         [id],
-    );
+    ))[0];
+}
+
+export async function getUserIdFromUsername(
+    username: string,
+): Promise<Id | undefined> {
+    return (await query<{ id: Id | undefined }>(
+        `
+        SELECT
+            id
+        FROM users
+        WHERE username = $1
+        LIMIT 1;`,
+        [username],
+    ))[0].id;
 }

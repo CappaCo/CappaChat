@@ -6,7 +6,7 @@ export default define.page(function () {
     return (
         <>
             <Head>
-                <title>DMs</title>
+                <title>DMs | CappaChat</title>
             </Head>
             <h1>DM page</h1>
         </>
