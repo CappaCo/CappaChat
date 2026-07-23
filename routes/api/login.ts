@@ -69,7 +69,9 @@ export const handler = define.handlers({
                 message: "yeah ok, go to /app/0/0",
             }),
             {
+                status: 302,
                 headers: {
+                    "Location": "/app",
                     "Set-Cookie": cookie,
                 },
             },

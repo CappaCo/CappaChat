@@ -8,6 +8,7 @@ export default function LeftBar({ servers }: { servers?: Server[] }) {
                     if (servers === undefined) {
                         return "Loading servers skeleton...";
                     }
+                    console.log("servers:", servers);
                     return servers.map((server) => {
                         console.log("rendering server:", server);
                         return <ServerIcon key={server.id} server={server} />;
@@ -25,7 +26,7 @@ export default function LeftBar({ servers }: { servers?: Server[] }) {
 
 function ServerIcon({ server }: { server: Server }) {
     // TODO: add interactivity and stuff
-    const serverLink = `../${server.id}`;
+    const serverLink = `/app/${server.id}`;
     return (
         <li class="server-icon" title={server.name}>
             <a href={serverLink}>

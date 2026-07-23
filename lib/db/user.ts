@@ -42,7 +42,7 @@ export async function getUser(userId: Id): Promise<User> {
 export async function getUserIdFromUsername(
     username: string,
 ): Promise<Id | undefined> {
-    return (await query<{ id: Id | undefined }>(
+    const user = (await query<{ id: Id | undefined }>(
         `
         SELECT
             id
@@ -50,7 +50,11 @@ export async function getUserIdFromUsername(
         WHERE username = $1
         LIMIT 1;`,
         [username],
-    ))[0].id;
+    ))[0];
+
+    if (user === undefined) return undefined;
+
+    return user.id;
 }
 
 export async function getServersUserIsIn(userId: Id): Promise<Server[]> {

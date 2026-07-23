@@ -8,7 +8,7 @@ import UsersDisplay from "@/islands/UsersDisplay.tsx";
 import LeftBar from "@/islands/LeftBar.tsx";
 
 export default function ChatPage(
-    { serverId, channelId }: { serverId: Id; channelId: Id },
+    { serverId, channelId }: { serverId?: Id; channelId?: Id },
 ) {
     const [server, setServer] = useState<Server>();
     const [servers, setServers] = useState<Server[]>();
@@ -28,13 +28,15 @@ export default function ChatPage(
     useEffect(() => {
         if (IS_BROWSER) {
             // TODO: only do these if they aren't already loaded somewhere
-            fetchServer();
             fetchServers();
-            fetchChannel();
-            fetchChannels();
             fetchUser(); // Do this once if it can't be loaded from cache
-            fetchUsers();
-            fetchRecentMessages();
+            if (serverId !== undefined) {
+                fetchServer();
+                fetchChannel();
+                fetchChannels();
+                fetchUsers();
+                fetchRecentMessages();
+            }
         }
     }, []);
 
@@ -44,6 +46,10 @@ export default function ChatPage(
         const response = await fetch(
             `/api/servers/${serverId}/channels/${channelId}/messages`,
         );
+
+        if (!response.ok) {
+            throw "fetching recent messages failed";
+        }
 
         const messages: Message[] = await response.json();
 
@@ -57,6 +63,10 @@ export default function ChatPage(
             `/api/servers/${serverId}`,
         );
 
+        if (!response.ok) {
+            throw "fetching server failed";
+        }
+
         const server: Server = await response.json();
 
         setServer(server);
@@ -68,6 +78,10 @@ export default function ChatPage(
         const response = await fetch(
             `/api/servers/`,
         );
+
+        if (!response.ok) {
+            throw "fetching servers failed";
+        }
 
         const servers: Server[] = await response.json();
 
@@ -81,6 +95,10 @@ export default function ChatPage(
             `/api/servers/${serverId}/channels/${channelId}`,
         );
 
+        if (!response.ok) {
+            throw "fetching channel failed";
+        }
+
         const channel: Channel = await response.json();
 
         setChannel(channel);
@@ -92,6 +110,10 @@ export default function ChatPage(
         const response = await fetch(
             `/api/servers/${serverId}/channels`,
         );
+
+        if (!response.ok) {
+            throw "fetching channels failed";
+        }
 
         const channels: Channel[] = await response.json();
 
@@ -105,6 +127,10 @@ export default function ChatPage(
             `/api/users/me`,
         );
 
+        if (!response.ok) {
+            throw "fetching user failed";
+        }
+
         const user: User = await response.json();
 
         setUser(user);
@@ -116,6 +142,10 @@ export default function ChatPage(
         const response = await fetch(
             `/api/servers/${serverId}/members`,
         );
+
+        if (!response.ok) {
+            throw "fetching users failed";
+        }
 
         const users: User[] = await response.json();
 
@@ -133,17 +163,29 @@ export default function ChatPage(
             </Head>
             <div id="app-grid" ref={appGridRef}>
                 <LeftBar servers={servers} />
-                <ServerInfo
-                    server={server}
-                    channels={channels}
-                    appGridRef={appGridRef}
-                />
-                <UsersDisplay users={users} />
+                {serverId
+                    ? (
+                        <>
+                            <ServerInfo
+                                server={server}
+                                channels={channels}
+                                appGridRef={appGridRef}
+                            />
+                            <UsersDisplay users={users} />
 
-                <div id="chat-container">
-                    <MessagesDisplay messages={messages} users={users} />
-                    <ChatControls server={server} channel={channel} />
-                </div>
+                            <div id="chat-container">
+                                <MessagesDisplay
+                                    messages={messages}
+                                    users={users}
+                                />
+                                <ChatControls
+                                    server={server}
+                                    channel={channel}
+                                />
+                            </div>
+                        </>
+                    )
+                    : <h1>dm page</h1>}
             </div>
         </>
     );

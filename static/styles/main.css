@@ -56,7 +56,6 @@ body {
     background-color: var(--background-color);
     color: var(--text-primary);
     min-height: 100dvh;
-    display: flex;
     flex-direction: column;
 }
 
@@ -367,6 +366,3 @@ input {
 
 /* section */
 
-.settings-top {
-    display: flex;
-}
