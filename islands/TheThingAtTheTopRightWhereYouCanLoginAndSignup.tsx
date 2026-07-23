@@ -36,6 +36,9 @@ export default function () {
                     <>
                         <span>you are: {currentUser.username}</span>
                         <LogoutButton />
+                        <a class="button secondary" href="/app">
+                            Enter CappaChat
+                        </a>
                     </>
                 );
             })()}

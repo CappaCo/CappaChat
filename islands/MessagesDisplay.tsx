@@ -9,8 +9,6 @@ export default function MessagesDisplay(
         for (const user of users) {
             usersMap.set(user.id, user);
         }
-    } else {
-        console.error("no users???");
     }
 
     return (

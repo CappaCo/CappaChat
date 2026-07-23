@@ -1,20 +1,11 @@
 import { define } from "@/lib/utils.ts";
-import { Server } from "@/lib/types.ts";
+import { getServer } from "@/lib/db/server.ts";
 
 export const handler = define.handlers({
-    GET(ctx) {
+    async GET(ctx) {
         const serverId = ctx.state.serverId;
 
-        console.log("getting information for server:", serverId);
-
-        // TODO: implement this
-        const server: Server = {
-            id: serverId,
-            name: "Termite Piddle Atrium",
-            description: "",
-            ownerId: "0",
-            createdAt: (new Date()).toISOString(),
-        };
+        const server = await getServer(serverId);
 
         return new Response(JSON.stringify(server));
     },

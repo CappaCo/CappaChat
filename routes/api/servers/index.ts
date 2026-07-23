@@ -1,17 +1,33 @@
 import { define } from "@/lib/utils.ts";
-import { ServerSummary } from "@/lib/types.ts";
+import { getServersUserIsIn } from "@/lib/db/user.ts";
 
 export const handler = define.handlers({
-    GET(_ctx) {
-        const servers: ServerSummary[] = [{
-            id: "0",
-            name: "Termite Piddle Atrium",
-            description: "",
-        }];
+    async GET(ctx) {
+        const user = ctx.state.requestingUser;
+        if (user === undefined) {
+            return new Response(
+                JSON.stringify({ message: "you are not logged in" }),
+                { status: 401 },
+            );
+        }
 
-        // TODO: make this return a defined type
-        return new Response(JSON.stringify({
-            servers: servers,
-        }));
+        const servers = await getServersUserIsIn(user.id);
+
+        return new Response(JSON.stringify(servers));
+    },
+    async POST(ctx) {
+        const user = ctx.state.requestingUser;
+        if (user === undefined) {
+            return new Response(
+                JSON.stringify({ message: "you are not logged in" }),
+                { status: 401 },
+            );
+        }
+
+        const id = await ""; // TODO: create server from form data probably
+
+        return new Response(JSON.stringify({ message: "created", id }), {
+            status: 201,
+        });
     },
 });

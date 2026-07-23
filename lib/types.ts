@@ -36,7 +36,6 @@ export interface Role {
 export interface Server {
     id: Id;
     name: string;
-    description: string;
 
     ownerId: Id;
     iconUrl?: string;

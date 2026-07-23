@@ -1,7 +1,7 @@
 import { query } from "@/lib/db.ts";
 import { generateId } from "@/lib/id.ts";
 import { hash } from "@/lib/hashPassword.ts";
-import { Id, User } from "@/lib/types.ts";
+import { Id, Server, User } from "@/lib/types.ts";
 
 export async function createUser(
     { username, password }: { username: string; password: string },
@@ -16,15 +16,14 @@ export async function createUser(
             username,
             password_hash,
             profile_picture_url
-        ) VALUES ($1, $2, $3, '/testImages/users/2.webp');
-        `,
+        ) VALUES ($1, $2, $3, '/testImages/users/2.webp');`,
         [id, username, passwordHash],
     );
 
     return id;
 }
 
-export async function getUser(id: Id): Promise<User> {
+export async function getUser(userId: Id): Promise<User> {
     return (await query<User>(
         `
         SELECT
@@ -35,9 +34,8 @@ export async function getUser(id: Id): Promise<User> {
             created_at
         FROM users
         WHERE id = $1
-        LIMIT 1;
-        `,
-        [id],
+        LIMIT 1;`,
+        [userId],
     ))[0];
 }
 
@@ -53,4 +51,21 @@ export async function getUserIdFromUsername(
         LIMIT 1;`,
         [username],
     ))[0].id;
+}
+
+export async function getServersUserIsIn(userId: Id): Promise<Server[]> {
+    return await query<Server>(
+        `
+        SELECT
+            s.id,
+            s.name,
+            s.owner_id,
+            s.icon_url,
+            s.created_at
+        FROM servers s
+        JOIN members m
+        ON m.server_id = s.id
+        WHERE m.user_id = $1;`,
+        [userId],
+    );
 }

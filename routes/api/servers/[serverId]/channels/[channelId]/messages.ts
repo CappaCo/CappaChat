@@ -12,6 +12,9 @@ export const handler = define.handlers({
     },
 
     async POST(ctx) {
+        const requestingUser = ctx.state.requestingUser;
+        if (requestingUser === undefined) throw "no requesting user";
+
         const channelId = ctx.state.channelId;
 
         const json = await ctx.req.json();
@@ -34,7 +37,7 @@ export const handler = define.handlers({
         }
 
         const message = {
-            authorId: ctx.state.requestingUser.id, // TODO: get meeeee
+            authorId: requestingUser.id, // TODO: get meeeee
             content,
         };
 

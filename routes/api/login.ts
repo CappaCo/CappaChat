@@ -1,6 +1,6 @@
 import { define } from "@/lib/utils.ts";
 import { checkPassword, createSession } from "@/lib/auth.ts";
-import { getUserIdFromUsername } from "@/lib/db/user.ts"
+import { getUserIdFromUsername } from "@/lib/db/user.ts";
 
 export const handler = define.handlers({
     async POST(ctx) {

@@ -1,4 +1,3 @@
-import ServerIcon from "@/islands/ServerIcon.tsx";
 import { Server } from "@/lib/types.ts";
 
 export default function LeftBar({ servers }: { servers?: Server[] }) {
@@ -10,6 +9,7 @@ export default function LeftBar({ servers }: { servers?: Server[] }) {
                         return "Loading servers skeleton...";
                     }
                     return servers.map((server) => {
+                        console.log("rendering server:", server);
                         return <ServerIcon key={server.id} server={server} />;
                     });
                 })()}
@@ -20,6 +20,19 @@ export default function LeftBar({ servers }: { servers?: Server[] }) {
                 </a>
             </ul>
         </aside>
+    );
+}
+
+function ServerIcon({ server }: { server: Server }) {
+    // TODO: add interactivity and stuff
+    const serverLink = `../${server.id}`;
+    return (
+        <li class="server-icon" title={server.name}>
+            <a href={serverLink}>
+                {/* TODO: put actual image source here */}
+                <img src={server.iconUrl} alt={server.name} />
+            </a>
+        </li>
     );
 }
 

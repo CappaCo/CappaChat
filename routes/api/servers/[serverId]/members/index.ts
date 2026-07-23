@@ -1,17 +1,11 @@
 import { define } from "@/lib/utils.ts";
-import { Member } from "@/lib/types.ts";
+import { getUsersInServer } from "@/lib/db/server.ts";
 
 export const handler = define.handlers({
-    GET(ctx) {
+    async GET(ctx) {
         const serverId = ctx.state.serverId;
 
-        console.log("getting members in server:", serverId);
-
-        // TODO: implement this
-        const members: Member[] = [{
-            userId: "0",
-            joinedAt: (new Date()).toISOString(),
-        }];
+        const members = await getUsersInServer(serverId);
 
         return new Response(JSON.stringify(members));
     },

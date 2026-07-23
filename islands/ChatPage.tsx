@@ -12,86 +12,118 @@ export default function ChatPage(
 ) {
     const [server, setServer] = useState<Server>();
     const [servers, setServers] = useState<Server[]>();
+
     const [channel, setChannel] = useState<Channel>();
     const [channels, setChannels] = useState<Channel[]>();
+
+    const [user, setUser] = useState<User>();
     const [users, setUsers] = useState<User[]>();
+
     const [messages, setMessages] = useState<Message[]>();
 
     const appGridRef = useRef<HTMLDivElement>(null);
 
     console.log("chat page rendering now...");
 
-    // TODO: replace this with actually fetching the data
-    if (server === undefined) {
-        setServer({
-            id: serverId,
-            name: "Test server",
-            description: "real",
-            ownerId: "0",
-            iconUrl: "/testImages/servers/0.webp",
-            createdAt: (new Date()).toISOString(),
-        });
-    }
-
-    if (servers === undefined && server) setServers([server]);
-
-    if (channel === undefined) {
-        setChannel({
-            id: channelId,
-            name: "test channel",
-            type: "text",
-            position: 0,
-            serverId: "0",
-            createdAt: (new Date()).toISOString(),
-        });
-    }
-
-    if (channels === undefined && channel) setChannels([channel]);
-
-    if (users === undefined) {
-        setUsers([
-            {
-                id: "0" + new Array(25).fill(" ").join(""), // add padding
-                username: "testUserReal",
-                description: "testing user",
-                profilePictureUrl: "/testImages/users/2.webp",
-                createdAt: (new Date()).toISOString(),
-            },
-            {
-                id: "1" + new Array(25).fill(" ").join(""), // add freddy padding
-                username: "Scrom Doglin",
-                description: "Wabungus Burger",
-                profilePictureUrl: "/testImages/users/0.webp",
-                createdAt: (new Date()).toISOString(),
-            },
-            {
-                id: "2" + new Array(25).fill(" ").join(""), // add padding
-                username: "NahI'dWeave",
-                description: "Michael",
-                profilePictureUrl: "/testImages/users/1.webp",
-                createdAt: (new Date()).toISOString(),
-            },
-        ]);
-    }
-    // ------------------- up to here
-
     useEffect(() => {
-        fetchRecentMessages();
+        if (IS_BROWSER) {
+            // TODO: only do these if they aren't already loaded somewhere
+            fetchServer();
+            fetchServers();
+            fetchChannel();
+            fetchChannels();
+            fetchUser(); // Do this once if it can't be loaded from cache
+            fetchUsers();
+            fetchRecentMessages();
+        }
     }, []);
 
     async function fetchRecentMessages() {
-        if (!IS_BROWSER) return;
-        if (server === undefined || channel === undefined) return;
-
-        console.log("fetching recent messages...");
+        console.info("fetching recent messages...");
 
         const response = await fetch(
-            `/api/servers/${server.id}/channels/${channel.id}/messages`,
+            `/api/servers/${serverId}/channels/${channelId}/messages`,
         );
 
         const messages: Message[] = await response.json();
 
         setMessages(messages.reverse());
+    }
+
+    async function fetchServer() {
+        console.info("fetching server...");
+
+        const response = await fetch(
+            `/api/servers/${serverId}`,
+        );
+
+        const server: Server = await response.json();
+
+        setServer(server);
+    }
+
+    async function fetchServers() {
+        console.info("fetching servers...");
+
+        const response = await fetch(
+            `/api/servers/`,
+        );
+
+        const servers: Server[] = await response.json();
+
+        setServers(servers);
+    }
+
+    async function fetchChannel() {
+        console.info("fetching channel...");
+
+        const response = await fetch(
+            `/api/servers/${serverId}/channels/${channelId}`,
+        );
+
+        const channel: Channel = await response.json();
+
+        setChannel(channel);
+    }
+
+    async function fetchChannels() {
+        console.info("fetching channels...");
+
+        const response = await fetch(
+            `/api/servers/${serverId}/channels`,
+        );
+
+        const channels: Channel[] = await response.json();
+
+        setChannels(channels);
+    }
+
+    async function fetchUser() {
+        console.log("fetching user...");
+
+        const response = await fetch(
+            `/api/users/me`,
+        );
+
+        const user: User = await response.json();
+
+        setUser(user);
+    }
+
+    async function fetchUsers() {
+        console.log("fetching users...");
+
+        const response = await fetch(
+            `/api/servers/${serverId}/members`,
+        );
+
+        const users: User[] = await response.json();
+
+        setUsers(users);
+    }
+
+    if (user?.username) {
+        console.log("currently logged in as:", user.username);
     }
 
     return (
