@@ -1,16 +1,16 @@
 import { Server } from "@/lib/types.ts";
+import { servers } from "@/stores/servers.ts";
 
-export default function LeftBar({ servers }: { servers?: Server[] }) {
+export default function LeftBar() {
+    console.log("rendering left bar");
     return (
         <aside id="left-bar">
             <ul id="server-select">
                 {(() => {
-                    if (servers === undefined) {
+                    if (servers.value.size === 0) {
                         return "Loading servers skeleton...";
                     }
-                    console.log("servers:", servers);
-                    return servers.map((server) => {
-                        console.log("rendering server:", server);
+                    return Array.from(servers.value.values()).map((server) => {
                         return <ServerIcon key={server.id} server={server} />;
                     });
                 })()}

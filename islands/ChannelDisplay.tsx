@@ -1,12 +1,16 @@
 import { Channel } from "@/lib/types.ts";
 
+import * as state from "@/stores/channel.ts";
+
 export default function ChannelDisplay(
-    { channel, highlighted }: {
+    { channel }: {
         channel: Channel;
-        highlighted: boolean;
     },
 ) {
-    const classes = "channel-display" + (highlighted ? " selected" : "");
+    const classes = "channel-display" +
+        (state.channel.value && state.channel.value?.id === channel.id
+            ? " selected"
+            : "");
 
     return (
         <li class={classes}>

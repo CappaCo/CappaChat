@@ -1,19 +1,14 @@
 import ChannelDisplay from "@/islands/ChannelDisplay.tsx";
-import { Channel, Server } from "@/lib/types.ts";
 // @ts-types="preact"
 import { RefObject } from "preact";
 import { useEffect, useRef } from "preact/hooks";
+import { server } from "@/stores/server.ts";
+import { channels } from "@/stores/channels.ts";
 
 export default function ServerInfo(
     {
-        server,
-        channels,
-        currentChannel,
         appGridRef,
     }: {
-        server?: Server;
-        channels?: Channel[];
-        currentChannel?: Channel;
         appGridRef: RefObject<HTMLDivElement>;
     },
 ) {
@@ -83,22 +78,22 @@ export default function ServerInfo(
         <aside id="server-info" ref={serverInfoRef}>
             <div id="server-info-resizer" ref={serverInfoResizerRef} />
             <div id="server-name-container">
-                <h2 id="server-name">{server ? server.name : "Loading..."}</h2>
+                <h2 id="server-name">
+                    {server.value ? server.value.name : "Loading..."}
+                </h2>
             </div>
             <ul id="channels-group">
                 {(() => {
                     if (channels === undefined) return "Loading...";
-                    if (channels.length === 0) return "No channels";
-                    return channels.map((channel) => {
-                        return (
-                            <ChannelDisplay
-                                key={channel.id}
-                                channel={channel}
-                                highlighted={currentChannel === undefined ||
-                                    channel.id === currentChannel.id}
-                            />
-                        );
-                    });
+                    if (channels.value.size === 0) return "Loading channels...";
+                    return Array.from(channels.value.values()).map((
+                        channel,
+                    ) => (
+                        <ChannelDisplay
+                            key={channel.id}
+                            channel={channel}
+                        />
+                    ));
                 })()}
             </ul>
         </aside>

@@ -43,13 +43,6 @@ export interface Server {
     createdAt: Timestamp;
 }
 
-export interface ServerSummary {
-    id: Id;
-    name: string;
-    description: string;
-    iconURL?: string;
-}
-
 // channel
 export interface Channel {
     id: Id;
@@ -61,14 +54,6 @@ export interface Channel {
     serverId: Id;
 
     createdAt: Timestamp;
-}
-
-export interface ChannelSummary {
-    id: Id;
-    name: string;
-    type: "text" | "voice";
-
-    position: number;
 }
 
 // message

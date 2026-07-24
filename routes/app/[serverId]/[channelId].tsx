@@ -6,5 +6,5 @@ export default define.page(function (ctx) {
 
     console.log("rendering ChatPage with:", serverId, channelId);
 
-    return <ChatPage serverId={serverId} channelId={channelId} />;
+    return <ChatPage location={{ kind: "server", serverId, channelId }} />;
 });

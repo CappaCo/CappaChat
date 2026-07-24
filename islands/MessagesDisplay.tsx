@@ -1,29 +1,22 @@
-import { Id, Message, User } from "@/lib/types.ts";
+import { Message, User } from "@/lib/types.ts";
+import { members } from "@/stores/members.ts";
+import { messages } from "@/stores/messages.ts";
 
-export default function MessagesDisplay(
-    { messages, users }: { messages?: Message[]; users?: User[] },
-) {
-    const usersMap = new Map<Id, User>();
-
-    if (users !== undefined) {
-        for (const user of users) {
-            usersMap.set(user.id, user);
-        }
-    }
-
+export default function MessagesDisplay() {
     return (
         <section id="messages-container">
             <ol id="messages">
                 {(() => {
-                    if (messages === undefined) {
+                    if (messages.value === undefined) {
                         return <MessagesLoadingSkeleton />;
                     }
-                    if (messages.length === 0) return "No messages";
+                    if (messages.value.length === 0) return "No messages";
 
-                    return messages.map((message, index) => {
-                        const user = usersMap.get(message.authorId);
-                        const prevMessage = (index !== messages.length)
-                            ? messages[index - 1]
+                    return messages.value.map((message, index) => {
+                        if (messages.value === undefined) throw "how?????";
+                        const user = members.value.get(message.authorId);
+                        const prevMessage = (index !== messages.value.length)
+                            ? messages.value[index - 1]
                             : undefined;
 
                         return (
@@ -61,7 +54,6 @@ function MessageElement(
         );
     }
 
-    //console.log("rendering user:", user);
     const username = user ? user.username : "loading username";
     const pfpURL = user ? user.profilePictureUrl : "/testImages/users/0.webp";
 
