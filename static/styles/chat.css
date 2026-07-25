@@ -224,7 +224,9 @@ body {
 #messages-container {
     overflow-y: auto;
     height: 100%;
-    align-content: end;
+    /* align-content: end; */
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 #messages {

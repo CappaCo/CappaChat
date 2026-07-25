@@ -1,28 +1,30 @@
-import { Channel, Server } from "@/lib/types.ts";
-import { useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
+import { server } from "@/stores/server.ts";
+import { channel } from "@/stores/channel.ts";
 
-export default function ChatControls({
-    server,
-    channel,
-}: {
-    server?: Server;
-    channel?: Channel;
-}) {
+export default function ChatControls() {
     const inputRef = useRef<HTMLInputElement>(null);
     const submitButtonRef = useRef<HTMLButtonElement>(null);
 
     // TODO: debounce this function
     async function sendMessage() {
         if (inputRef.current === null) return;
+
         const content = inputRef.current.value.trim();
-        if (content === "") return alert("Please enter a message");
+
+        if (content === "") {
+            alert("no content");
+            return;
+        }
+
+        console.log("sending message for real!!!");
 
         // TODO: maybe queue this up until it loads?
-        if (server === undefined || channel === undefined) return;
+        if (server.value === undefined || channel.value === undefined) return;
 
         inputRef.current.value = "";
         const response = await fetch(
-            `/api/servers/${server.id}/channels/${channel.id}/messages`,
+            `/api/servers/${server.value.id}/channels/${channel.value.id}/messages`,
             {
                 method: "POST",
                 body: JSON.stringify({
@@ -40,10 +42,29 @@ export default function ChatControls({
         console.log("sending message response:", json);
     }
 
-    inputRef.current?.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            sendMessage();
+    useEffect(() => {
+        if (inputRef.current === null) return;
+
+        console.log("adding event listener");
+
+        function handleKeyPressEvent(event: KeyboardEvent) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
         }
+
+        inputRef.current.addEventListener("keydown", handleKeyPressEvent);
+
+        return () => {
+            if (inputRef.current === null) return;
+
+            console.log("removing event listener");
+
+            inputRef.current.removeEventListener(
+                "keydown",
+                handleKeyPressEvent,
+            );
+        };
     });
 
     return (
@@ -58,7 +79,7 @@ export default function ChatControls({
             <button
                 ref={submitButtonRef}
                 onClick={sendMessage}
-                type="submit"
+                type="button"
                 id="sendButton"
             >
                 Send

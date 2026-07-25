@@ -5,27 +5,48 @@ body {
 
 #settings-page {
     display: grid;
+    grid-template-areas:
+        "settings-title settings-header"
+        "settings-select settings-main";
     grid-template-columns: 200px auto;
+    grid-template-rows: min-content auto;
     height: 100%;
     min-height: 100vh;
 
     --border-weight-on-the-settings-page: 4px;
+
+    --padding-for-stuff-and-things: 16px;
 }
 
-#settings-page > * {
-    height: 100%;
+#settings-page > h1 {
+    padding: var(--padding-for-stuff-and-things);
+    grid-area: settings-title;
+    border-right: var(--background-border);
+    border-bottom: var(--background-border);
+    border-width: var(--border-weight-on-the-settings-page);
+}
+
+#settings-header {
+    padding: var(--padding-for-stuff-and-things);
+    grid-area: settings-header;
+    border-bottom: var(--background-border);
+    border-width: var(--border-weight-on-the-settings-page);
+
+    display: grid;
+    align-items: end;
 }
 
 #settings-select {
+    grid-area: settings-select;
     border-right: var(--background-border);
     border-width: var(--border-weight-on-the-settings-page);
 }
 
-#settings-select a { 
-    padding: 10px;
+#settings-select ul {
+    padding: 16px;
 }
 
-.setting-display {
+.setting-select {
     padding: 8px;
     margin: -4px;
     text-overflow: ellipsis;
@@ -35,20 +56,97 @@ body {
     transition: background-color 0.2s;
 }
 
-.setting-display.selected {
+.setting-select.selected {
     background-color: var(--foreground-highlight-color);
 }
 
-.setting-display a {
+.setting-select a {
     text-decoration: none var(--background-color);
     color: inherit;
     transition: text-decoration 0.2s;
 }
 
-.setting-display:is(:hover, :focus) {
+.setting-select:is(:hover, :focus) {
     background-color: var(--foreground-color);
 }
 
-.setting-display:is(:hover, :focus) a {
+.setting-select:is(:hover, :focus) a {
     text-decoration: underline var(--text-primary);
+}
+
+.setting-section {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.setting-section ul {
+    padding: 0;
+}
+
+/* main styling */
+main {
+    grid-area: settings-main;
+    padding: 1em;
+}
+
+.setting-option {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5em;
+}
+
+.setting-name {
+    display: block;
+}
+
+.setting-description {
+    display: block;
+    color: #aaa;
+}
+
+.sam-switch {
+    --sam-switch-width: 54px;
+    --sam-switch-height: 24px;
+
+    --sam-switch-slider-padding: 6px;
+}
+
+.sam-switch input {
+    display: none;
+}
+
+.sam-switch label {
+    --switch-on-color: #24A738;
+    --switch-off-color: #C22D2D;
+    --switch-neutral-color: #aaa;
+
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: var(--sam-switch-height);
+
+    background-color: var(--switch-neutral-color);
+    width: calc(var(--sam-switch-width));
+    height: calc(var(--sam-switch-height));
+    padding: var(--sam-switch-slider-padding);
+
+    display: flex;
+}
+
+.sam-switch:has(input:checked) label {
+    background-color: var(--switch-on-color);
+    justify-content: end;
+}
+
+.sam-switch:has(input:not(:checked)) label {
+    background-color: var(--switch-off-color);
+}
+
+.sam-switch .sam-switch-slider {
+    width: var(--sam-switch-height);
+    height: var(--sam-switch-height);
+    background-color: #fff;
+    border-radius: 64px;
+
+    /* TODO: add transition to tranform by doing stuff and things */
 }
