@@ -16,7 +16,7 @@ export default function LeftBar() {
                 })()}
             </ul>
             <ul id="left-bar-other">
-                <a href="/settings">
+                <a href="/settings/general">
                     <SettingsIcon />
                 </a>
             </ul>

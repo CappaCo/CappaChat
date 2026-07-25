@@ -24,7 +24,7 @@ export const handler = define.handlers({
 
         if (
             !content /* &&
-            attachments.length === 0*/
+            attachments.length === 0*/ // TODO: add attachments
         ) {
             return new Response(
                 JSON.stringify({
@@ -37,7 +37,7 @@ export const handler = define.handlers({
         }
 
         const message = {
-            authorId: requestingUser.id, // TODO: get meeeee
+            authorId: requestingUser.id,
             content,
         };
 

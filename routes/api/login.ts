@@ -66,7 +66,7 @@ export const handler = define.handlers({
 
         return new Response(
             JSON.stringify({
-                message: "yeah ok, go to /app/0/0",
+                message: "you are now logged in, go to /app/0/0",
             }),
             {
                 status: 302,

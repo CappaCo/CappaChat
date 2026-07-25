@@ -21,6 +21,10 @@ body {
     border-width: var(--border-weight-on-the-settings-page);
 }
 
+#settings-select a { 
+    padding: 10px;
+}
+
 .setting-display {
     padding: 8px;
     margin: -4px;

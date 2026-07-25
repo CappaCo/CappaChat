@@ -113,8 +113,8 @@ function connectWebSocket() {
     console.log("connecting to websocket...");
 
     //const websocketUrl = "ws://localhost:5173/api/websocket";
-    //const websocketUrl = "ws://localhost:8000/";
-    const websocketUrl = (() => {
+    const websocketUrl = "ws://localhost:8000/"; // testing websocket server
+    /*const websocketUrl = (() => {
         const location = globalThis.location;
         let url = "ws";
         if (location.protocol === "https:") url += "s";
@@ -122,14 +122,14 @@ function connectWebSocket() {
         url += location.host;
         url += "/api/websocket";
         return url;
-    })();
+    })();*/
 
     console.log("wsurl", websocketUrl);
     const websocket = new WebSocket(websocketUrl);
 
     websocket.addEventListener("open", () => {
         console.log("websocket open");
-        websocket.send("heyyy");
+        websocket.send(JSON.stringify({ message: "ping" }));
     });
 
     websocket.addEventListener("close", () => {
@@ -141,7 +141,17 @@ function connectWebSocket() {
     });
 
     websocket.addEventListener("message", (message: MessageEvent) => {
-        console.log("websocket message:", message);
+        console.log("websocket message:", message.data);
+
+        let json;
+        try {
+            json = JSON.parse(message.data);
+        } catch (error) {
+            console.log("error parsing json:", error);
+            return;
+        }
+
+        console.log("websocket message json:", json);
     });
 
     return websocket;
