@@ -35,10 +35,14 @@ export default function ChatPage(
 ) {
     useEffect(() => {
         if (location.kind === "server") {
-            return initializePage(location.serverId, location.channelId);
+            initializeChatPage(location.serverId, location.channelId);
         } else if (location.kind === "dm") {
-            console.log("should load dm page here");
+            initializeDmPage();
         }
+
+        return () => {
+            console.log("tearing down loading");
+        };
     }, [location]);
 
     const appGridRef = useRef<HTMLDivElement>(null);
@@ -78,8 +82,8 @@ export default function ChatPage(
     );
 }
 
-async function initializePage(serverId: Id, channelId: Id) {
-    console.log("initializing page");
+async function initializeChatPage(serverId: Id, channelId: Id) {
+    console.log("initializing chat page");
 
     currentServerId.value = serverId;
     currentChannelId.value = channelId;
@@ -92,15 +96,25 @@ async function initializePage(serverId: Id, channelId: Id) {
         fetchUser(),
     ]);
 
-    //const websocket = connectWebSocket();
+    const websocket = connectWebSocket();
+    console.log("connected to websocket:", websocket);
     //return [websocket.close];
 }
 
-function _connectWebSocket() {
+async function initializeDmPage() {
+    console.log("initializing dm page");
+
+    await Promise.all([
+        fetchServers(),
+    ]);
+}
+
+function connectWebSocket() {
     console.log("connecting to websocket...");
 
-    const websocketUrl = "ws://localhost:5173/api/websocket";
-    (() => {
+    //const websocketUrl = "ws://localhost:5173/api/websocket";
+    //const websocketUrl = "ws://localhost:8000/";
+    const websocketUrl = (() => {
         const location = globalThis.location;
         let url = "ws";
         if (location.protocol === "https:") url += "s";
