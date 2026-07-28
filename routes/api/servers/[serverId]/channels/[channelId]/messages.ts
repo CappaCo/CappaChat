@@ -24,7 +24,8 @@ export const handler = define.handlers({
 
         if (
             !content /* &&
-            attachments.length === 0*/ // TODO: add attachments
+            attachments.length === 0*/
+            // TODO: add attachments
         ) {
             return new Response(
                 JSON.stringify({

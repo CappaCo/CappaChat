@@ -1,6 +1,7 @@
 import { asset } from "fresh/runtime";
 
 import { define } from "@/lib/utils.ts";
+import BugWalkingAcrossScreen from "@/islands/funny/BugWalkingAcrossScreen.tsx";
 
 export default define.page(function ({ Component }) {
     return (
@@ -34,6 +35,7 @@ export default define.page(function ({ Component }) {
                 <title>CappaChat</title>
             </head>
             <body>
+                <BugWalkingAcrossScreen />
                 <Component />
             </body>
         </html>
