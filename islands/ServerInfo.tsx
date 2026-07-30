@@ -49,16 +49,21 @@ export default function ServerInfo(
             const containerRect = serverInfo.getBoundingClientRect();
 
             // Calculate the new width of the left section in pixels
-            const newWidth = event.clientX - containerRect.left + resizeOffset;
+            const newWidth = Math.max(
+                Math.min(
+                    event.clientX - containerRect.left + resizeOffset,
+                    maxWidth,
+                ),
+                minWidth,
+            );
 
             // Make sure nothing explodes by checking min-width and max-width
-            if (minWidth < newWidth && newWidth < maxWidth) {
-                // TODO: save this in some settings thing
-                appGrid.style.setProperty(
-                    "--server-info-width",
-                    `${newWidth}px`,
-                );
-            }
+
+            // TODO: save this in some settings thing
+            appGrid.style.setProperty(
+                "--server-info-width",
+                `${newWidth}px`,
+            );
         }
 
         function startResize(event: MouseEvent) {
