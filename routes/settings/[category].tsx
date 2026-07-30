@@ -4,6 +4,7 @@ import { define } from "@/lib/utils.ts";
 // @ts-types="preact"
 import { ComponentChildren } from "preact";
 import { useId } from "preact/hooks";
+import SettingsBackButton from "@/islands/SettingsBackButton.tsx";
 
 export default define.page(function Home(ctx) {
     return (
@@ -16,7 +17,7 @@ export default define.page(function Home(ctx) {
                 />
             </Head>
             <div id="settings-page">
-                <h1>Settings</h1>
+                <h1><SettingsBackButton /><span>Settings</span></h1>
                 <aside id="settings-select">
                     <ul>
                         <SettingsCategory category="General" />

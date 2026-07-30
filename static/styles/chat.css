@@ -25,6 +25,7 @@ body {
         "left-bar server-info chat-container users";
 
     grid-template-columns: min-content var(--server-info-width) auto 15em;
+    /* grid-template-columns: calc(64px + 16px * 2) var(--server-info-width) auto 15em; */
 
     height: 100%;
 }
@@ -71,10 +72,14 @@ body {
     border-width: var(--app-grid-border-width);
 
     padding: 16px;
+    width: var(--icon-size);
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    --icon-size: 64px;
 }
 
 #server-select,
@@ -91,11 +96,10 @@ body {
 
 :is(#server-select, #left-bar-other) a {
     display: block;
-    height: 64px;
 }
 
 #server-select img {
-    width: 64px;
+    width: var(--icon-size);
 }
 
 /* server info section */

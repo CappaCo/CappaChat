@@ -4,6 +4,7 @@ export default function BugWalkingAcrossScreen() {
     const bugImageRef = useRef<HTMLImageElement>(null);
 
     let running = false;
+    const bugSpeed = 0.5;
 
     type Direction = "left" | "right";
 
@@ -12,8 +13,8 @@ export default function BugWalkingAcrossScreen() {
     const offScreenAmount = 50;
 
     let startBugPosition = {
-        x: -10,
-        y: 50,
+        x: offScreenAmount,
+        y: 0,
     };
 
     const endBugPosition = {
@@ -29,16 +30,20 @@ export default function BugWalkingAcrossScreen() {
     function startRunning() {
         const bugImage = bugImageRef.current;
         if (bugImage === null) return;
+
         running = true;
+
         endBugPosition.x = (direction === "right")
             ? -offScreenAmount
             : 100 + offScreenAmount;
         endBugPosition.y = Math.random() * 100;
-        direction = (direction === "right") ? "left" : "right";
+        
         const tranformStyle = "scale" +
-            ((direction === "right") ? "(-1, 1)" : "(1, 1)");
-        console.log("adding style:", tranformStyle);
+            ((direction === "left") ? "(-1, 1)" : "(1, 1)");
         bugImage.style.transform = tranformStyle;
+
+        direction = (direction === "right") ? "left" : "right";
+
         run();
     }
 
@@ -50,7 +55,7 @@ export default function BugWalkingAcrossScreen() {
         const bugImage = bugImageRef.current;
         if (bugImage === null) return;
 
-        bugPosition.x += (direction === "right") ? 1 : -1;
+        bugPosition.x += bugSpeed * ((direction === "right") ? 1 : -1);
 
         const completionPercent = (bugPosition.x - startBugPosition.x) /
             (endBugPosition.x - startBugPosition.x);
@@ -76,12 +81,12 @@ export default function BugWalkingAcrossScreen() {
     useEffect(startRunning);
 
     return (
-        <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -4;">
+        <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 44; pointer-events: none;">
             <img
                 ref={bugImageRef}
                 src="/funny/bugwalking.gif"
-                onClick={stopRunning}
-                style="position: absolute; z-index: 1000000;"
+                width={100}
+                style="position: absolute; top: -100%; left: -100%;"
             />
         </div>
     );

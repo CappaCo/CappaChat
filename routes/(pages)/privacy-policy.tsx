@@ -7,8 +7,6 @@ export default define.page(function PrivacyPolicy() {
         <>
             <Head>
                 <title>Privacy Policy page</title>
-                <script>
-                </script>
             </Head>
             <main>
                 <h1>Privacy Policy page</h1>
