@@ -4,7 +4,7 @@ export default function BugWalkingAcrossScreen() {
     const bugImageRef = useRef<HTMLImageElement>(null);
 
     let running = false;
-    const bugSpeed = 0.5;
+    let bugSpeed = 0.5;
 
     type Direction = "left" | "right";
 
@@ -37,6 +37,8 @@ export default function BugWalkingAcrossScreen() {
             ? -offScreenAmount
             : 100 + offScreenAmount;
         endBugPosition.y = Math.random() * 100;
+
+        bugSpeed = Math.random() * 5 + 0.1;
         
         const tranformStyle = "scale" +
             ((direction === "left") ? "(-1, 1)" : "(1, 1)");
@@ -67,7 +69,7 @@ export default function BugWalkingAcrossScreen() {
         if ((bugPosition.x >= endBugPosition.x) === (direction === "right")) {
             stopRunning();
             startBugPosition = { ...endBugPosition };
-            setTimeout(startRunning, (Math.random() * 9 + 1) * 1000);
+            setTimeout(startRunning, (Math.random() * 5 + 5) * 1000 * 60);
         }
 
         bugImage.style.left = bugPosition.x.toString() + "%";
