@@ -45,8 +45,6 @@ export default function ChatControls() {
     useEffect(() => {
         if (inputRef.current === null) return;
 
-        console.log("adding event listener");
-
         function handleKeyPressEvent(event: KeyboardEvent) {
             if (event.key === "Enter") {
                 sendMessage();
@@ -57,8 +55,6 @@ export default function ChatControls() {
 
         return () => {
             if (inputRef.current === null) return;
-
-            console.log("removing event listener");
 
             inputRef.current.removeEventListener(
                 "keydown",

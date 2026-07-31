@@ -41,7 +41,7 @@ export async function createMessage(
 ) {
     const id = generateId();
 
-    await query(
+    const message = (await query<Message>(
         `
         INSERT INTO messages (
             id,
@@ -50,9 +50,10 @@ export async function createMessage(
             content
         )
         VALUES ($1, $2, $3, $4)
+        RETURNING *
         `,
         [id, channelId, authorId, content],
-    );
+    ))[0];
 
-    return id;
+    return message;
 }

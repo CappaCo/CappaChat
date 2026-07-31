@@ -3,9 +3,6 @@ import { handleWebsocketConnection } from "@/lib/websocket.ts";
 
 export const handler = define.handlers({
     GET(ctx) {
-        /*return new Response(JSON.stringify({ message: "no" }), {
-            status: 501,
-        });*/
         ctx.state.isJsonReturn = false;
         console.log("endpoint for websocket being hit");
 

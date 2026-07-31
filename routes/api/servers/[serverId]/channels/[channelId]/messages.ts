@@ -1,5 +1,6 @@
 import { define } from "@/lib/utils.ts";
 import { createMessage, getMessages } from "@/lib/db/channel.ts";
+import { pub } from "@/lib/pubsub.ts";
 
 export const handler = define.handlers({
     // get messages in the channel
@@ -42,8 +43,9 @@ export const handler = define.handlers({
             content,
         };
 
-        // TODO: implement this with websockets
-        await createMessage(channelId, message);
+        const createdMessage = await createMessage(channelId, message);
+        console.log("created message:", createdMessage);
+        pub({ type: "channel", id: channelId }, JSON.stringify(createdMessage));
 
         return new Response(JSON.stringify({ message: "ok" }));
     },

@@ -6,7 +6,7 @@ export const currentChannelId = signal<Id>();
 
 export const channel = computed<Channel | undefined>(() =>
     currentChannelId.value
-        ? channels.value.get(currentChannelId.value.padEnd(26, " "))
+        ? channels.value.get(currentChannelId.value)
         : undefined
 );
 

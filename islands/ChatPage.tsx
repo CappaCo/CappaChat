@@ -13,7 +13,7 @@ import { fetchChannels } from "@/stores/channels.ts";
 import { channel, currentChannelId } from "@/stores/channel.ts";
 import { fetchMembers } from "@/stores/members.ts";
 import { fetchUser, user } from "@/stores/user.ts";
-import { fetchRecentMessages } from "@/stores/messages.ts";
+import { fetchRecentMessages, messages } from "@/stores/messages.ts";
 
 type ChatLocation =
     | {
@@ -56,9 +56,7 @@ export default function ChatPage(
     return (
         <>
             <Head>
-                <title>
-                    {channel.value?.name} | {server.value?.name} | CappaChat
-                </title>
+                <PageTitle />
             </Head>
             <div id="app-grid" ref={appGridRef}>
                 <LeftBar />
@@ -82,11 +80,20 @@ export default function ChatPage(
     );
 }
 
+function PageTitle() {
+    return (
+        <title>
+            {channel.value?.name} | {server.value?.name} | CappaChat
+        </title>
+    );
+}
+
 async function initializeChatPage(serverId: Id, channelId: Id) {
     console.log("initializing chat page");
 
-    currentServerId.value = serverId;
-    currentChannelId.value = channelId;
+    // TODO: remove padding when serverId and channelId are actually normal generated ids
+    currentServerId.value = serverId.padEnd(26, " ");
+    currentChannelId.value = channelId.padEnd(26, " ");
 
     await Promise.all([
         fetchServers(),
@@ -97,8 +104,8 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     ]);
 
     const websocket = connectWebSocket();
-    console.log("connected to websocket:", websocket);
-    //return [websocket.close];
+
+    return [websocket.close];
 }
 
 async function initializeDmPage() {
@@ -106,30 +113,46 @@ async function initializeDmPage() {
 
     await Promise.all([
         fetchServers(),
+        fetchUser(),
     ]);
 }
 
 function connectWebSocket() {
     console.log("connecting to websocket...");
 
-    //const websocketUrl = "ws://localhost:5173/api/websocket";
-    const websocketUrl = "ws://localhost:8000/"; // testing websocket server
-    /*const websocketUrl = (() => {
+    function getWebsocketUrl() {
         const location = globalThis.location;
+
+        if (location.hostname === "localhost" && location.port === "5173") {
+            throw "websocket not available on deno task dev";
+        }
+
         let url = "ws";
         if (location.protocol === "https:") url += "s";
         url += "://";
-        url += location.host;
+        url += location.hostname;
+        if (location.port !== "") {
+            url += ":";
+            url += location.port;
+        }
         url += "/api/websocket";
         return url;
-    })();*/
+    }
 
-    console.log("wsurl", websocketUrl);
+    const websocketUrl = getWebsocketUrl();
+
+    console.log("wsurl:", websocketUrl);
     const websocket = new WebSocket(websocketUrl);
 
     websocket.addEventListener("open", () => {
         console.log("websocket open");
         websocket.send(JSON.stringify({ message: "ping" }));
+        websocket.send(
+            JSON.stringify({
+                type: "sub",
+                to: { type: "channel", id: currentChannelId.value },
+            }),
+        );
     });
 
     websocket.addEventListener("close", () => {
@@ -141,8 +164,6 @@ function connectWebSocket() {
     });
 
     websocket.addEventListener("message", (message: MessageEvent) => {
-        console.log("websocket message:", message.data);
-
         let json;
         try {
             json = JSON.parse(message.data);
@@ -152,6 +173,16 @@ function connectWebSocket() {
         }
 
         console.log("websocket message json:", json);
+
+        if (json.type === "pub") {
+            switch (json.to.type) {
+                case "channel": {
+                    if (!messages.value) return;
+                    messages.value = [...messages.value, JSON.parse(json.data)];
+                    break;
+                }
+            }
+        }
     });
 
     return websocket;

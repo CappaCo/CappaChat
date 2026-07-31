@@ -6,7 +6,7 @@ export const currentServerId = signal<Id>();
 
 export const server = computed<Server | undefined>(() =>
     currentServerId.value
-        ? servers.value.get(currentServerId.value.padEnd(26, " "))
+        ? servers.value.get(currentServerId.value)
         : undefined
 );
 
