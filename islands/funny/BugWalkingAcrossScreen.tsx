@@ -39,7 +39,7 @@ export default function BugWalkingAcrossScreen() {
         endBugPosition.y = Math.random() * 100;
 
         bugSpeed = Math.random() * 5 + 0.1;
-        
+
         const tranformStyle = "scale" +
             ((direction === "left") ? "(-1, 1)" : "(1, 1)");
         bugImage.style.transform = tranformStyle;

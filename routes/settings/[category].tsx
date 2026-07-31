@@ -17,7 +17,10 @@ export default define.page(function Home(ctx) {
                 />
             </Head>
             <div id="settings-page">
-                <h1><SettingsBackButton /><span>Settings</span></h1>
+                <h1>
+                    <SettingsBackButton />
+                    <span>Settings</span>
+                </h1>
                 <aside id="settings-select">
                     <ul>
                         <SettingsCategory category="General" />

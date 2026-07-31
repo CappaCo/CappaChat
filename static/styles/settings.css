@@ -162,7 +162,8 @@ main {
     /* TODO: add transition to tranform by doing stuff and things */
 }
 
-.back-button, .back-button:hover {
+.back-button,
+.back-button:hover {
     background-color: transparent;
     border: none;
     padding: 0;

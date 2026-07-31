@@ -5,9 +5,7 @@ import { servers } from "@/stores/servers.ts";
 export const currentServerId = signal<Id>();
 
 export const server = computed<Server | undefined>(() =>
-    currentServerId.value
-        ? servers.value.get(currentServerId.value)
-        : undefined
+    currentServerId.value ? servers.value.get(currentServerId.value) : undefined
 );
 
 /*export async function fetchServer() {
