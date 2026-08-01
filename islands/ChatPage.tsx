@@ -62,13 +62,14 @@ export default function ChatPage(
                     __html: `
 (() => {
     const width = (() => {
-        const storageValue = localStorage.getItem(${serverInfoResizerWidthStorageKey});
+        const storageValue = localStorage.getItem("${serverInfoResizerWidthStorageKey}");
         if (storageValue === null || !Number.isFinite(Number(storageValue))) {
-            localStorage.setItem(${serverInfoResizerWidthStorageKey}, "${defaultResizerSize}");
+            localStorage.setItem("${serverInfoResizerWidthStorageKey}", "${defaultResizerSize}");
             return ${defaultResizerSize};
         }
         return Number(storageValue);
     })();
+    console.log("width:", width);
     document.documentElement.style.setProperty(
         "--server-info-width",
         width + "px"
@@ -112,9 +113,7 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     currentServerId.value = serverId.padEnd(26, " ");
     currentChannelId.value = channelId.padEnd(26, " ");
 
-    const websocket = connectWebSocket();
-
-    await Promise.all([
+    const fetchPromises = Promise.all([
         fetchServers(),
         fetchChannels(serverId),
         fetchMembers(serverId),
@@ -122,6 +121,10 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
         fetchUser(),
     ]);
 
+    const websocket = connectWebSocket();
+
+    await fetchPromises;
+    
     return [websocket.close];
 }
 
