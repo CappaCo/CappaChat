@@ -42,7 +42,7 @@ export default function ChatControls() {
         console.log("sending message response:", json);
     }
 
-    useEffect(() => {
+    useEffect(function setUpChatInputs() {
         if (inputRef.current === null) return;
 
         function handleKeyPressEvent(event: KeyboardEvent) {
@@ -67,16 +67,15 @@ export default function ChatControls() {
         <section id="chat-controls">
             <input
                 ref={inputRef}
-                id="inputField"
+                id="message-input"
                 type="text"
                 placeholder="type yo stuff here"
             />
-            {/* TODO: make this hidden until user focuses it for accessability*/}
             <button
                 ref={submitButtonRef}
                 onClick={sendMessage}
                 type="button"
-                id="sendButton"
+                id="send-button"
             >
                 Send
             </button>

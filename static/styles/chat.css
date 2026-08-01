@@ -313,11 +313,11 @@ remove this to see what it does lol
     padding: 1em;
 }
 
-/* TODO: remove this old interface stuff */
-#inputField {
+#message-input {
     flex-grow: 1;
 }
 
-#chat-controls button {
-    padding: 0.5em;
+#send-button {
+    --send-button-display: none;
+    display: var(--send-button-display);
 }
