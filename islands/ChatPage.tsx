@@ -124,7 +124,7 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     const websocket = connectWebSocket();
 
     await fetchPromises;
-    
+
     return [websocket.close];
 }
 

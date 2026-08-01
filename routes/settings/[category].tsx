@@ -3,10 +3,20 @@ import { asset, Head } from "fresh/runtime";
 import { define } from "@/lib/utils.ts";
 // @ts-types="preact"
 import { ComponentChildren } from "preact";
-import { useId } from "preact/hooks";
 import SettingsBackButton from "@/islands/SettingsBackButton.tsx";
 
+import {
+    type SettingsCategory,
+    settingsSchema,
+} from "@/lib/settings/schema.ts";
+import { SettingOption } from "@/islands/SettingOption.tsx";
+
 export default define.page(function Home(ctx) {
+    const selectedCategory = ctx.params.category;
+    const category = settingsSchema[selectedCategory] as
+        | undefined
+        | SettingsCategory;
+
     return (
         <>
             <Head>
@@ -23,34 +33,38 @@ export default define.page(function Home(ctx) {
                 </h1>
                 <aside id="settings-select">
                     <ul>
-                        <SettingsCategory category="General" />
-                        <SettingsCategory category="Account" />
-                        <SettingsCategory category="Freddy" />
-                        <SettingsCategory category="Freddy" />
-                        <SettingsCategory category="Freddy" />
+                        {Object.keys(settingsSchema).map((categoryKey) => {
+                            return (
+                                <SettingsCategory
+                                    key={categoryKey}
+                                    category={categoryKey}
+                                />
+                            );
+                        })}
                     </ul>
                 </aside>
                 <div id="settings-header">
-                    <h2>{ctx.params.category} settings</h2>
+                    <h2>{category?.title || "Category not found"}</h2>
                 </div>
                 <main>
-                    <SettingsSection title="Change my settings">
-                        <SettingOption
-                            name="Freddy mode"
-                            description="You don't want to know what freddy mode does"
-                        />
-                        <SettingOption
-                            name="Epic mode"
-                            description="Totally 100% epic - fact nation approved"
-                        />
-                        <SettingOption
-                            name="Bug mode"
-                            description="A bug will walk across your screen"
-                        />
-                        <SettingOption
-                            name="Khezu"
-                            description="Longer description of the setting goes here"
-                        />
+                    <SettingsSection>
+                        {category?.settings
+                            ? Object.keys(category.settings).map(
+                                (settingKey) => {
+                                    return (
+                                        <SettingOption
+                                            key={settingKey}
+                                            categoryName={selectedCategory}
+                                            settingName={settingKey}
+                                        />
+                                    );
+                                },
+                            )
+                            : (
+                                <a href="/settings/funny">
+                                    Go back to funny settings
+                                </a>
+                            )}
                     </SettingsSection>
                 </main>
             </div>
@@ -58,10 +72,8 @@ export default define.page(function Home(ctx) {
     );
 });
 
-// TODO: move these to an island
-
 interface SettingsSelectionProps {
-    title: string;
+    title?: string;
     children: ComponentChildren;
 }
 
@@ -70,7 +82,7 @@ function SettingsSection(
 ) {
     return (
         <section class="setting-section">
-            <h3>{title}</h3>
+            {title ? <h3>{title}</h3> : null}
             <ul>{children}</ul>
         </section>
     );
@@ -81,37 +93,12 @@ interface SettingsCategoryProps {
 }
 
 function SettingsCategory({ category }: SettingsCategoryProps) {
+    console.log("settings category:", category);
     return (
         <li class="setting-select">
             <a href={`/settings/${category.toLowerCase()}`}>
-                {category}
+                {settingsSchema[category].title}
             </a>
         </li>
-    );
-}
-
-function SettingOption(
-    { name, description }: { name: string; description: string },
-) {
-    return (
-        <li class="setting-option">
-            <div>
-                <span class="setting-name">{name}</span>
-                <small class="setting-description">{description}</small>
-            </div>
-            <SamSwitch name={name} />
-        </li>
-    );
-}
-
-function SamSwitch({ name }: { name: string }) {
-    const id = useId();
-    return (
-        <div class="sam-switch">
-            <input id={id} name={name} type="checkbox" />
-            <label for={id}>
-                <div class="sam-switch-slider"></div>
-            </label>
-        </div>
     );
 }

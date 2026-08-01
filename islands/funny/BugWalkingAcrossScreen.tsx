@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "preact/hooks";
+import { settings } from "@/stores/settings.ts";
 
 export default function BugWalkingAcrossScreen() {
     const bugImageRef = useRef<HTMLImageElement>(null);
@@ -80,7 +81,11 @@ export default function BugWalkingAcrossScreen() {
         }
     }
 
-    useEffect(startRunning);
+    useEffect(() => {
+        if (settings.value.funny.bugCrawlingAcrossScreen) {
+            startRunning();
+        }
+    }, [settings.value.funny.bugCrawlingAcrossScreen]);
 
     return (
         <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 44; pointer-events: none;">
@@ -89,6 +94,7 @@ export default function BugWalkingAcrossScreen() {
                 src="/funny/bugwalking.gif"
                 width={100}
                 style="position: absolute; top: -100%; left: -100%;"
+                alt="bug crawling"
             />
         </div>
     );

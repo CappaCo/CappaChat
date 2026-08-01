@@ -4,6 +4,7 @@ export default function SettingsBackButton() {
             class="back-button"
             type="button"
             href="/app"
+            aria-label="return to CappaChat"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
