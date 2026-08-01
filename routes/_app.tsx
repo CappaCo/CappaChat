@@ -30,8 +30,6 @@ export default define.page(function ({ Component }) {
                     rel="stylesheet"
                 />
 
-                <script defer src="/scripts/main.js" />
-
                 <title>CappaChat</title>
             </head>
             <body>

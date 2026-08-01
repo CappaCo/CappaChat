@@ -1,6 +1,6 @@
 import { Id } from "@/lib/types.ts";
 import { Head } from "fresh/runtime";
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import MessagesDisplay from "@/islands/MessagesDisplay.tsx";
 import ChatControls from "@/islands/ChatControls.tsx";
 import ServerInfo from "@/islands/ServerInfo.tsx";
@@ -12,7 +12,7 @@ import { currentServerId, server } from "@/stores/server.ts";
 import { fetchChannels } from "@/stores/channels.ts";
 import { channel, currentChannelId } from "@/stores/channel.ts";
 import { fetchMembers } from "@/stores/members.ts";
-import { fetchUser, user } from "@/stores/user.ts";
+import { fetchUser } from "@/stores/user.ts";
 import { fetchRecentMessages, messages } from "@/stores/messages.ts";
 
 type ChatLocation =
@@ -45,27 +45,44 @@ export default function ChatPage(
         };
     }, [location]);
 
-    const appGridRef = useRef<HTMLDivElement>(null);
-
     console.log("chat page rendering now...");
 
-    if (user.value?.username) {
-        console.log("currently logged in as:", user.value.username);
-    }
+    const defaultResizerSize = 400; // px
+    const serverInfoResizerWidthStorageKey =
+        "cappachat-server-info-resizer-size";
 
     return (
         <>
             <Head>
                 <PageTitle />
             </Head>
-            <div id="app-grid" ref={appGridRef}>
+            <script
+                // deno-lint-ignore react-no-danger
+                dangerouslySetInnerHTML={{
+                    __html: `
+(() => {
+    const width = (() => {
+        const storageValue = localStorage.getItem(${serverInfoResizerWidthStorageKey});
+        if (storageValue === null || !Number.isFinite(Number(storageValue))) {
+            localStorage.setItem(${serverInfoResizerWidthStorageKey}, "${defaultResizerSize}");
+            return ${defaultResizerSize};
+        }
+        return Number(storageValue);
+    })();
+    document.documentElement.style.setProperty(
+        "--server-info-width",
+        width + "px"
+    );
+})();
+`,
+                }}
+            />
+            <div id="app-grid">
                 <LeftBar />
                 {location.kind === "server"
                     ? (
                         <>
-                            <ServerInfo
-                                appGridRef={appGridRef}
-                            />
+                            <ServerInfo />
                             <MembersDisplay />
 
                             <div id="chat-container">
@@ -95,6 +112,8 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     currentServerId.value = serverId.padEnd(26, " ");
     currentChannelId.value = channelId.padEnd(26, " ");
 
+    const websocket = connectWebSocket();
+
     await Promise.all([
         fetchServers(),
         fetchChannels(serverId),
@@ -102,8 +121,6 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
         fetchRecentMessages(serverId, channelId),
         fetchUser(),
     ]);
-
-    const websocket = connectWebSocket();
 
     return [websocket.close];
 }
@@ -141,7 +158,6 @@ function connectWebSocket() {
 
     const websocketUrl = getWebsocketUrl();
 
-    console.log("wsurl:", websocketUrl);
     const websocket = new WebSocket(websocketUrl);
 
     websocket.addEventListener("open", () => {

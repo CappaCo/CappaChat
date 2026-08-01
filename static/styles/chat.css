@@ -3,6 +3,7 @@
 */
 :root {
     --app-grid-border-width: 4px;
+    --server-info-width: 400px;
 }
 
 html,
@@ -16,7 +17,6 @@ body {
 
 /* app grid */
 #app-grid {
-    --server-info-width: 15em;
     --resizer-width: 16px;
 
     display: grid;

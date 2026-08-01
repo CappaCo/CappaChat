@@ -1,21 +1,11 @@
 import ChannelDisplay from "@/islands/ChannelDisplay.tsx";
-// @ts-types="preact"
-import { RefObject } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 import { server } from "@/stores/server.ts";
 import { channels } from "@/stores/channels.ts";
 
-export default function ServerInfo(
-    {
-        appGridRef,
-    }: {
-        appGridRef: RefObject<HTMLDivElement>;
-    },
-) {
+export default function ServerInfo() {
     const serverInfoRef = useRef<HTMLElement>(null);
     const serverInfoResizerRef = useRef<HTMLDivElement>(null);
-
-    const appGrid = appGridRef.current;
 
     useEffect(function setUpResizer() {
         const serverInfo = serverInfoRef.current;
@@ -39,30 +29,35 @@ export default function ServerInfo(
         const minWidth = getStyleValue("min-width");
         const maxWidth = getStyleValue("max-width");
 
-        // Track mouse down event on the resizer bar
-        serverInfoResizer.addEventListener("mousedown", startResize);
-
-        function resize(event: MouseEvent) {
-            if (serverInfo === null) return;
-            if (appGrid === null) return;
-            // Get the horizontal bounding coordinates of the grid container
-            const containerRect = serverInfo.getBoundingClientRect();
-
-            // Calculate the new width of the left section in pixels
-            const newWidth = Math.max(
+        // Make sure nothing explodes by checking min-width and max-width
+        function clampWidth(width: number): number {
+            return Math.max(
                 Math.min(
-                    event.clientX - containerRect.left + resizeOffset,
+                    width,
                     maxWidth,
                 ),
                 minWidth,
             );
+        }
 
-            // Make sure nothing explodes by checking min-width and max-width
+        const serverInfoResizerWidthStorageKey =
+            "cappachat-server-info-resizer-size";
 
-            // TODO: save this in some settings thing
-            appGrid.style.setProperty(
+        function resize(event: MouseEvent) {
+            const containerRect = serverInfo!.getBoundingClientRect();
+
+            setWidth(clampWidth(
+                event.clientX - containerRect.left + resizeOffset,
+            ));
+        }
+
+        let currentWidth: number = 400;
+
+        function setWidth(width: number) {
+            currentWidth = width;
+            document.documentElement.style.setProperty(
                 "--server-info-width",
-                `${newWidth}px`,
+                `${width}px`,
             );
         }
 
@@ -76,8 +71,19 @@ export default function ServerInfo(
         function stopResize() {
             document.removeEventListener("mousemove", resize);
             document.removeEventListener("mouseup", stopResize);
+
+            localStorage.setItem(
+                serverInfoResizerWidthStorageKey,
+                currentWidth.toString(),
+            );
         }
-    });
+
+        serverInfoResizer.addEventListener("mousedown", startResize);
+
+        return () => {
+            serverInfoResizer.removeEventListener("mousedown", startResize);
+        };
+    }, []);
 
     return (
         <aside id="server-info" ref={serverInfoRef}>
