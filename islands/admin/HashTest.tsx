@@ -1,4 +1,3 @@
-import { IS_BROWSER } from "fresh/runtime";
 import salt from "@/lib/adminSalt.ts";
 
 export default function HashTest() {
@@ -7,8 +6,8 @@ export default function HashTest() {
             <button
                 type="button"
                 onClick={() => {
-                    if (!IS_BROWSER) return;
                     const message = prompt("message");
+
                     if (!message) {
                         alert("fine then, dont");
                         return;

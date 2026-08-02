@@ -365,70 +365,6 @@ input {
 }
 
 /* sam switch */
-/*.sam-switch {
-    --sam-switch-width: 54px;
-    --sam-switch-height: 24px;
-    --sam-switch-slider-padding: 3px;
-}
-
-.sam-switch label {
-    --switch-on-color: #24A738;
-    --switch-off-color: #C22D2D;
-    --switch-neutral-color: #aaa;
-
-    position: relative;
-
-    width: var(--sam-switch-width);
-    height: var(--sam-switch-height);
-    padding: var(--sam-switch-slider-padding);
-
-    border-radius: var(--sam-switch-height);
-    background: var(--switch-neutral-color);
-
-    transition: background-color 0.2s ease;
-
-    cursor: pointer;
-}
-
-.sam-switch-slider {
-    position: absolute;
-    top: var(--sam-switch-slider-padding);
-    left: var(--sam-switch-slider-padding);
-
-    width: calc(
-        var(--sam-switch-height) - var(--sam-switch-slider-padding) * 2
-    );
-    height: calc(
-        var(--sam-switch-height) - var(--sam-switch-slider-padding) * 2
-    );
-
-    background: white;
-    border-radius: 50%;
-
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.sam-switch:has(input:not(:checked)) label {
-    background-color: var(--switch-off-color);
-    transform: translateX(0);
-}
-
-.sam-switch:has(input:checked) label {
-    background-color: var(--switch-on-color);
-    transform: translateX(
-        calc(var(--sam-switch-width) - var(--sam-switch-height))
-    );
-}
-
-.sam-switch:has(input[disabled]) label {
-    background-color: var(--switch-neutral-color);
-    transform: translateX(
-        calc((var(--sam-switch-width) - var(--sam-switch-height)) / 2)
-    );
-}*/
-
 .sam-switch {
     --sam-switch-width: 54px;
     --sam-switch-height: 24px;
@@ -445,8 +381,6 @@ input {
     --switch-off-color: #C22D2D;
     --switch-neutral-color: #aaa;
 
-    width: 100%;
-    height: 100%;
     border-radius: var(--sam-switch-height);
 
     background-color: var(--switch-neutral-color);
@@ -457,7 +391,7 @@ input {
     display: flex;
     cursor: pointer;
 
-    transition: background-colour 0.5s ease;
+    /*transition: background-color 0.1s ease;*/
 }
 
 .sam-switch:has(input:checked) label {
@@ -467,10 +401,12 @@ input {
 
 .sam-switch:has(input:not(:checked)) label {
     background-color: var(--switch-off-color);
+    justify-content: start;
 }
 
 .sam-switch:has(input[disabled]) label {
     background-color: var(--switch-neutral-color);
+    justify-content: center;
 }
 
 .sam-switch .sam-switch-slider {

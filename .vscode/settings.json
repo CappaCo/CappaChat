@@ -2,16 +2,16 @@
     "deno.enable": true,
     "deno.lint": true,
     "deno.enablePaths": [
-        "./routes",
         "./components",
         "./islands",
         "./lib",
+        "./routes",
         "./static/scripts",
         "./stores",
+
+        //"./client.ts",
         "./main.ts",
-        "./devWebsocketServer.ts",
-        "./utils.ts",
-        "./types.ts",
+
         "./deno.json",
         "./deno.lock"
     ],

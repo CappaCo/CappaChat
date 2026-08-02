@@ -44,8 +44,7 @@ export const handler = define.handlers({
         };
 
         const createdMessage = await createMessage(channelId, message);
-        console.log("created message:", createdMessage);
-        pub({ type: "channel", id: channelId }, JSON.stringify(createdMessage));
+        pub({ type: "channel", id: channelId }, createdMessage);
 
         return new Response(JSON.stringify({ message: "ok" }));
     },

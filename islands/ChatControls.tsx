@@ -6,22 +6,23 @@ export default function ChatControls() {
     const inputRef = useRef<HTMLInputElement>(null);
     const submitButtonRef = useRef<HTMLButtonElement>(null);
 
-    // TODO: debounce this function
     async function sendMessage() {
         if (inputRef.current === null) return;
 
         const content = inputRef.current.value.trim();
 
         if (content === "") {
-            alert("no content");
+            console.log("message had no content");
+            return;
+        }
+        console.log("checking server and channel");
+
+        if (server.value === undefined || channel.value === undefined) {
+            console.log("server/channel not loaded yet");
             return;
         }
 
-        console.log("sending message for real!!!");
-
-        // TODO: maybe queue this up until it loads?
-        if (server.value === undefined || channel.value === undefined) return;
-
+        console.log("sending message");
         inputRef.current.value = "";
         const response = await fetch(
             `/api/servers/${server.value.id}/channels/${channel.value.id}/messages`,
@@ -70,6 +71,8 @@ export default function ChatControls() {
                 id="message-input"
                 type="text"
                 placeholder="type yo stuff here"
+                autocomplete="off"
+                autofocus
             />
             <button
                 ref={submitButtonRef}

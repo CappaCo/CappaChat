@@ -14,6 +14,7 @@ export default function ChannelDisplay(
 
     return (
         <li class={classes}>
+            {/* TODO: maybe this should be absolute path?*/}
             <a href={channel.id}>{channel.name}</a>
         </li>
     );

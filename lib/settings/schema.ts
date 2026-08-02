@@ -4,26 +4,26 @@ export const settingsSchema = {
         settings: {
             bugCrawlingAcrossScreen: {
                 title: "Bug mode",
-                type: "boolean",
                 description: "Makes a bug walk across your screen",
+                type: "boolean",
                 default: false,
             },
             epicMode: {
                 title: "Epic mode",
-                type: "boolean",
                 description: "Activate epic mode for a 100% EPIC experience",
+                type: "boolean",
                 default: true,
             },
             freddyMode: {
                 title: "Freddy mode",
-                type: "boolean",
                 description: "freddy fazbear: hur hur hur hur",
+                type: "boolean",
                 default: false,
             },
             khezu: {
                 title: "Khezu",
-                type: "boolean",
                 description: "What does this one do again?",
+                type: "boolean",
                 default: false,
             },
         },
