@@ -11,6 +11,8 @@ export function SettingOption(
 ) {
     const setting = settingsSchema[categoryName].settings[settingName];
 
+    const id = `sam-switch-option-${categoryName}-${settingName}`;
+
     return (
         <li class="setting-option">
             <div>
@@ -22,13 +24,25 @@ export function SettingOption(
                     case "boolean":
                         return (
                             <SamSwitch
-                                id={`sam-switch-option-${categoryName}-${settingName}`}
+                                id={id}
                                 checked={settings
                                     .value[categoryName][
                                         settingName
                                     ] as boolean}
                                 disabled={!IS_BROWSER}
                                 onChange={(checked) => {
+                                    if (
+                                        categoryName === "funny" &&
+                                        settingName === "epicMode"
+                                    ) {
+                                        if (checked === true) return;
+                                        setTimeout(() => {
+                                            document.getElementById(id)
+                                                ?.click();
+                                        }, 100);
+                                        return;
+                                    }
+
                                     changeSetting(
                                         categoryName,
                                         settingName,

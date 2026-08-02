@@ -3,7 +3,7 @@ import { asset, Head } from "fresh/runtime";
 import { define } from "@/lib/utils.ts";
 // @ts-types="preact"
 import { ComponentChildren } from "preact";
-import SettingsBackButton from "@/islands/SettingsBackButton.tsx";
+import { SettingsBackButton } from "@/islands/SettingsBackButton.tsx";
 
 import {
     type SettingsCategory,

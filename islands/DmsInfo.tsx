@@ -16,7 +16,7 @@ export function DmsInfo() {
         const dmsInfoStyle = globalThis.getComputedStyle(dmsInfo);
         function getStyleValue(key: string): number {
             if (dmsInfo === null) {
-                throw "um, yeah I don't know what to write here";
+                throw "CASPER'S DUMB AHH ALERT *WAA* *WAA*";
             }
             return Number(
                 dmsInfoStyle.getPropertyValue(key).replace("px", ""),

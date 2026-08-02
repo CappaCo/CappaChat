@@ -13,9 +13,13 @@ export default function BugWalkingAcrossScreen() {
 
     const offScreenAmount = 50;
 
+    function randomY(): number {
+        return Math.random() * 100;
+    }
+
     let startBugPosition = {
         x: offScreenAmount,
-        y: 0,
+        y: randomY(),
     };
 
     const endBugPosition = {
@@ -37,7 +41,7 @@ export default function BugWalkingAcrossScreen() {
         endBugPosition.x = (direction === "right")
             ? -offScreenAmount
             : 100 + offScreenAmount;
-        endBugPosition.y = Math.random() * 100;
+        endBugPosition.y = randomY();
 
         bugSpeed = Math.random() * 5 + 0.1;
 

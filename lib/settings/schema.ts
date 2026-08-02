@@ -22,7 +22,8 @@ export const settingsSchema = {
             },
             khezu: {
                 title: "Khezu",
-                description: "What does this one do again?",
+                description:
+                    "BRINGS KHEZU TO THE BIG SCREEN (CONTENT WARNING!!!)",
                 type: "boolean",
                 default: false,
             },

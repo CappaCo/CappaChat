@@ -1,8 +1,13 @@
 import Modal from "@/islands/Modal.tsx";
 import EpicFormItem from "@/islands/EpicFormItem.tsx";
-import { user } from "@/stores/user.ts";
+import { fetchUser, user } from "@/stores/user.ts";
+import { useEffect } from "preact/hooks";
 
 export default function () {
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
     return (
         <>
             {(() => {
