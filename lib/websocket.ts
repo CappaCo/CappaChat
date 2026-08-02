@@ -42,5 +42,5 @@ export function handleWebsocketConnection(req: Request): Response {
 function handleSub(socket: WebSocket, json: any) {
     if (json.to === undefined) return;
 
-    sub(socket, json.to);
+    sub({ socket }, json.to);
 }

@@ -14,6 +14,7 @@ import { channel, currentChannelId } from "@/stores/channel.ts";
 import { fetchMembers } from "@/stores/members.ts";
 import { fetchUser } from "@/stores/user.ts";
 import { fetchRecentMessages, messages } from "@/stores/messages.ts";
+import { connection } from "@/stores/websocket.ts";
 
 type ChatLocation =
     | {
@@ -34,14 +35,22 @@ export default function ChatPage(
     { location }: ChatPageProps,
 ) {
     useEffect(() => {
+        connection.connect();
+    }, []);
+
+    useEffect(() => {
         if (location.kind === "server") {
-            initializeChatPage(location.serverId, location.channelId);
+            initializeChatPage(
+                location.serverId,
+                location.channelId,
+            );
         } else if (location.kind === "dm") {
             initializeDmPage();
         }
 
         return () => {
             console.log("tearing down loading");
+            connection.disconnect();
         };
     }, [location]);
 
@@ -113,19 +122,29 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     currentServerId.value = serverId.padEnd(26, " ");
     currentChannelId.value = channelId.padEnd(26, " ");
 
-    const fetchPromises = Promise.all([
+    await Promise.all([
         fetchServers(),
         fetchChannels(serverId),
         fetchMembers(serverId),
         fetchRecentMessages(serverId, channelId),
         fetchUser(),
-    ]);
+    ]).then(() => {
+        console.log("all data fetched!");
+    });
 
-    const websocket = connectWebSocket();
+    connection.send({
+        type: "sub",
+        to: { type: "channel", id: currentChannelId.value },
+    });
 
-    await fetchPromises;
-
-    return [websocket.close];
+    connection.onPub("channel", (data) => {
+        if (!messages.value) return;
+        // TODO: insert message in order (what happens if latency)
+        messages.value = [
+            ...messages.value,
+            data,
+        ];
+    });
 }
 
 async function initializeDmPage() {
@@ -135,74 +154,4 @@ async function initializeDmPage() {
         fetchServers(),
         fetchUser(),
     ]);
-}
-
-function connectWebSocket() {
-    console.log("connecting to websocket...");
-
-    function getWebsocketUrl() {
-        const location = globalThis.location;
-
-        if (location.hostname === "localhost" && location.port === "5173") {
-            throw "websocket not available on deno task dev";
-        }
-
-        let url = "ws";
-        if (location.protocol === "https:") url += "s";
-        url += "://";
-        url += location.hostname;
-        if (location.port !== "") {
-            url += ":";
-            url += location.port;
-        }
-        url += "/api/websocket";
-        return url;
-    }
-
-    const websocketUrl = getWebsocketUrl();
-
-    const websocket = new WebSocket(websocketUrl);
-
-    websocket.addEventListener("open", () => {
-        console.log("websocket open");
-        websocket.send(JSON.stringify({ message: "ping" }));
-        websocket.send(
-            JSON.stringify({
-                type: "sub",
-                to: { type: "channel", id: currentChannelId.value },
-            }),
-        );
-    });
-
-    websocket.addEventListener("close", () => {
-        console.log("websocket close");
-    });
-
-    websocket.addEventListener("error", () => {
-        console.log("websocket error");
-    });
-
-    websocket.addEventListener("message", (message: MessageEvent) => {
-        let json;
-        try {
-            json = JSON.parse(message.data);
-        } catch (error) {
-            console.log("error parsing json:", error);
-            return;
-        }
-
-        console.log("websocket message json:", json);
-
-        if (json.type === "pub") {
-            switch (json.to.type) {
-                case "channel": {
-                    if (!messages.value) return;
-                    messages.value = [...messages.value, JSON.parse(json.data)];
-                    break;
-                }
-            }
-        }
-    });
-
-    return websocket;
 }

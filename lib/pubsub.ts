@@ -1,22 +1,22 @@
 import { Id } from "@/lib/types.ts";
 
-type Client = WebSocket;
+type Client = { socket: WebSocket };
 type Topic = { type: "channel"; id: Id };
 
 const channels = new Map<Id, Set<Client>>();
 
-export function pub(to: Topic, data: string) {
-    console.log("pubbing");
-    console.log("to:", to);
+export function pub(to: Topic, data: object) {
+    // console.log("pubbing");
+    // console.log("to:", to);
+
     switch (to.type) {
         case "channel": {
-            console.log("channels:", channels);
             const clients = channels.get(to.id);
-            console.log(channels);
-            if (clients === undefined) break;
+
+            if (clients === undefined) return;
 
             for (const client of clients) {
-                client.send(JSON.stringify({ type: "pub", to, data }));
+                client.socket.send(JSON.stringify({ type: "pub", to, data }));
             }
 
             break;
@@ -25,8 +25,9 @@ export function pub(to: Topic, data: string) {
 }
 
 export function sub(client: Client, to: Topic) {
-    console.log("subbing");
-    console.log("to:", to);
+    // console.log("subbing");
+    // console.log("to:", to);
+
     switch (to.type) {
         case "channel": {
             let clients = channels.get(to.id);
