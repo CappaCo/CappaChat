@@ -415,3 +415,13 @@ input {
     background-color: #fff;
     border-radius: 64px;
 }
+
+code {
+    overflow-x: auto;
+    background: var(--foreground-color);
+    display: block;
+    margin: 8px;
+    padding: 8px;
+    border: 2px white solid;
+    border-radius: 8px;
+}

@@ -39,6 +39,10 @@ export function SettingOption(
                                 }}
                             />
                         );
+
+                    case "number":
+                        return <em>TODO: add number setting thing</em>;
+
                     default:
                         return (
                             <span>

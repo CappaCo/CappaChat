@@ -30,7 +30,6 @@ export default function Modal({ id, title, children }: ModalProps) {
 
         modal.addEventListener("click", handleClick);
 
-        // cleanup function
         return () => {
             modal.removeEventListener("click", handleClick);
         };

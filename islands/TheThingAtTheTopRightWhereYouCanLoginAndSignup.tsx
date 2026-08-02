@@ -1,29 +1,16 @@
-import { useEffect, useState } from "preact/hooks";
-import { User } from "@/lib/types.ts";
 import Modal from "@/islands/Modal.tsx";
 import EpicFormItem from "@/islands/EpicFormItem.tsx";
+import { user } from "@/stores/user.ts";
 
 export default function () {
-    const [currentUser, setCurrentUser] = useState<User>();
-
-    useEffect(() => {
-        console.log("fetching current user...");
-        fetch("/api/users/me")
-            .then((res) => res.json())
-            .then((user) => {
-                console.log("got user:", user);
-                setCurrentUser(user);
-            });
-    }, []);
-
     return (
         <>
             {(() => {
-                if (currentUser === undefined) {return (
+                if (user.value === undefined) {return (
                         <span>Loading skeleton...</span>
                     );}
 
-                if (currentUser.id === undefined) {
+                if (user.value.id === undefined) {
                     return (
                         <>
                             <LoginButton />
@@ -34,7 +21,7 @@ export default function () {
 
                 return (
                     <>
-                        <span>you are: {currentUser.username}</span>
+                        <span>you are: {user.value.username}</span>
                         <LogoutButton />
                         <a class="button secondary" href="/app">
                             Enter CappaChat

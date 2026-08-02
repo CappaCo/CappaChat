@@ -3,7 +3,7 @@ import { Head } from "fresh/runtime";
 import { useEffect } from "preact/hooks";
 import MessagesDisplay from "@/islands/MessagesDisplay.tsx";
 import ChatControls from "@/islands/ChatControls.tsx";
-import ServerInfo from "@/islands/ServerInfo.tsx";
+import { ServerInfo } from "@/islands/ServerInfo.tsx";
 import MembersDisplay from "@/islands/MembersDisplay.tsx";
 import LeftBar from "@/islands/LeftBar.tsx";
 
@@ -15,6 +15,7 @@ import { fetchMembers } from "@/stores/members.ts";
 import { fetchUser } from "@/stores/user.ts";
 import { fetchRecentMessages, messages } from "@/stores/messages.ts";
 import { connection } from "@/stores/websocket.ts";
+import { DmsInfo } from "@/islands/DmsInfo.tsx";
 
 type ChatLocation =
     | {
@@ -25,6 +26,9 @@ type ChatLocation =
     | {
         kind: "dm";
         conversationId: Id;
+    }
+    | {
+        kind: "none";
     };
 
 type ChatPageProps = {
@@ -35,17 +39,28 @@ export default function ChatPage(
     { location }: ChatPageProps,
 ) {
     useEffect(() => {
-        connection.connect();
+        try {
+            connection.connect();
+        } catch (error) {
+            console.error("failed to connect to websocket:", error);
+        }
     }, []);
 
     useEffect(() => {
-        if (location.kind === "server") {
-            initializeChatPage(
-                location.serverId,
-                location.channelId,
-            );
-        } else if (location.kind === "dm") {
-            initializeDmPage();
+        fetchServers();
+        fetchUser();
+
+        switch (location.kind) {
+            case "server":
+                initializeChatPage(
+                    location.serverId,
+                    location.channelId,
+                );
+                break;
+            case "dm":
+                initializeDmPage();
+                break;
+            case "none":
         }
 
         return () => {
@@ -62,9 +77,6 @@ export default function ChatPage(
 
     return (
         <>
-            <Head>
-                <PageTitle />
-            </Head>
             <script
                 // deno-lint-ignore react-no-danger
                 dangerouslySetInnerHTML={{
@@ -78,7 +90,6 @@ export default function ChatPage(
         }
         return Number(storageValue);
     })();
-    console.log("width:", width);
     document.documentElement.style.setProperty(
         "--server-info-width",
         width + "px"
@@ -89,29 +100,72 @@ export default function ChatPage(
             />
             <div id="app-grid">
                 <LeftBar />
-                {location.kind === "server"
-                    ? (
-                        <>
-                            <ServerInfo />
-                            <MembersDisplay />
+                {(() => {
+                    switch (location.kind) {
+                        case "server":
+                            return (
+                                <>
+                                    <PageTitle
+                                        parts={[
+                                            channel.value?.name,
+                                            server.value?.name,
+                                        ].map((x) => String(x || ""))}
+                                    />
 
-                            <div id="chat-container">
-                                <MessagesDisplay />
-                                <ChatControls />
-                            </div>
-                        </>
-                    )
-                    : <h1>dm page</h1>}
+                                    <ServerInfo />
+                                    <MembersDisplay />
+
+                                    <div id="chat-container">
+                                        <MessagesDisplay />
+                                        <ChatControls />
+                                    </div>
+                                </>
+                            );
+
+                        case "dm":
+                            return (
+                                <>
+                                    <PageTitle
+                                        parts={[
+                                            // TODO: dm name
+                                            "dm page",
+                                        ].map(String)}
+                                    />
+
+                                    <DmsInfo />
+                                    <div id="chat-container">
+                                        <MessagesDisplay />
+                                        <ChatControls />
+                                    </div>
+                                </>
+                            );
+
+                        case "none":
+                            return (
+                                <>
+                                    <PageTitle />
+                                    <DmsInfo />
+                                    <p>hi lol 🎉🎉🎉</p>
+                                </>
+                            );
+
+                        default:
+                            return <p>Location not found???</p>;
+                    }
+                })()}
             </div>
         </>
     );
 }
 
-function PageTitle() {
+// TODO: trim names if they're too long
+function PageTitle({ parts = [] }: { parts?: string[] }) {
     return (
-        <title>
-            {channel.value?.name} | {server.value?.name} | CappaChat
-        </title>
+        <Head>
+            <title>
+                {`${parts.join(" | ")}CappaChat`}
+            </title>
+        </Head>
     );
 }
 
@@ -123,11 +177,9 @@ async function initializeChatPage(serverId: Id, channelId: Id) {
     currentChannelId.value = channelId.padEnd(26, " ");
 
     await Promise.all([
-        fetchServers(),
         fetchChannels(serverId),
         fetchMembers(serverId),
         fetchRecentMessages(serverId, channelId),
-        fetchUser(),
     ]).then(() => {
         console.log("all data fetched!");
     });
@@ -151,7 +203,6 @@ async function initializeDmPage() {
     console.log("initializing dm page");
 
     await Promise.all([
-        fetchServers(),
-        fetchUser(),
+        // TODO: fetch dms
     ]);
 }

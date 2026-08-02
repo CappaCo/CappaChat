@@ -1,28 +1,25 @@
-import ChannelDisplay from "@/islands/ChannelDisplay.tsx";
 import { useEffect, useRef } from "preact/hooks";
-import { server } from "@/stores/server.ts";
-import { channels } from "@/stores/channels.ts";
 
-export function ServerInfo() {
-    const serverInfoRef = useRef<HTMLElement>(null);
-    const serverInfoResizerRef = useRef<HTMLDivElement>(null);
+export function DmsInfo() {
+    const dmsInfoRef = useRef<HTMLElement>(null);
+    const dmsInfoResizerRef = useRef<HTMLDivElement>(null);
 
     useEffect(function setUpResizer() {
-        const serverInfo = serverInfoRef.current;
-        if (serverInfo === null) return;
-        const serverInfoResizer = serverInfoResizerRef.current;
-        if (serverInfoResizer === null) return;
+        const dmsInfo = dmsInfoRef.current;
+        if (dmsInfo === null) return;
+        const dmsInfoResizer = dmsInfoResizerRef.current;
+        if (dmsInfoResizer === null) return;
 
         const resizeOffset = 2; // half of border width
-        if (serverInfo === null || serverInfo === undefined) return;
+        if (dmsInfo === null || dmsInfo === undefined) return;
 
-        const serverInfoStyle = globalThis.getComputedStyle(serverInfo);
+        const dmsInfoStyle = globalThis.getComputedStyle(dmsInfo);
         function getStyleValue(key: string): number {
-            if (serverInfo === null) {
+            if (dmsInfo === null) {
                 throw "um, yeah I don't know what to write here";
             }
             return Number(
-                serverInfoStyle.getPropertyValue(key).replace("px", ""),
+                dmsInfoStyle.getPropertyValue(key).replace("px", ""),
             );
         }
 
@@ -40,11 +37,12 @@ export function ServerInfo() {
             );
         }
 
-        const serverInfoResizerWidthStorageKey =
+        const dmsInfoResizerWidthStorageKey =
             "cappachat-server-info-resizer-size";
+        // TODO: could be different system
 
         function resize(event: MouseEvent) {
-            const containerRect = serverInfo!.getBoundingClientRect();
+            const containerRect = dmsInfo!.getBoundingClientRect();
 
             setWidth(clampWidth(
                 event.clientX - containerRect.left + resizeOffset,
@@ -73,34 +71,33 @@ export function ServerInfo() {
             document.removeEventListener("mouseup", stopResize);
 
             localStorage.setItem(
-                serverInfoResizerWidthStorageKey,
+                dmsInfoResizerWidthStorageKey,
                 currentWidth.toString(),
             );
         }
 
-        serverInfoResizer.addEventListener("mousedown", startResize);
+        dmsInfoResizer.addEventListener("mousedown", startResize);
 
         return () => {
-            serverInfoResizer.removeEventListener("mousedown", startResize);
+            dmsInfoResizer.removeEventListener("mousedown", startResize);
         };
     }, []);
 
     return (
-        <aside id="server-info" ref={serverInfoRef}>
-            <div id="server-info-resizer" ref={serverInfoResizerRef} />
+        <aside id="server-info" ref={dmsInfoRef}>
+            <div id="server-info-resizer" ref={dmsInfoResizerRef} />
             <div id="server-name-container">
-                <h2 id="server-name">
-                    {server.value ? server.value.name : "Loading..."}
-                </h2>
+                <a href="/">
+                    <h2>
+                        Go back to home
+                    </h2>
+                </a>
             </div>
             <ul id="channels-group">
-                {(() => {
-                    if (channels.value === undefined) {
-                        return "Loading channels skeleton...";
-                    }
-                    if (channels.value.size === 0) {
-                        return <em>"No channels"</em>;
-                    }
+                {
+                    /*(() => {
+                    if (channels === undefined) return "Loading...";
+                    if (channels.value.size === 0) return "Loading dms...";
                     return Array.from(channels.value.values()).map((
                         channel,
                     ) => (
@@ -109,7 +106,9 @@ export function ServerInfo() {
                             channel={channel}
                         />
                     ));
-                })()}
+                })()*/
+                }
+                TODO: Implement dms
             </ul>
         </aside>
     );

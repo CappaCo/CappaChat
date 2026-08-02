@@ -14,7 +14,7 @@ export default function MessagesDisplay() {
 
                     return messages.value.map((message, index) => {
                         if (messages.value === undefined) throw "how?????";
-                        const user = members.value.get(message.authorId);
+                        const user = members.value?.get(message.authorId);
                         const prevMessage = (index !== messages.value.length)
                             ? messages.value[index - 1]
                             : undefined;

@@ -5,16 +5,31 @@ export default function LeftBar() {
     console.log("rendering left bar");
     return (
         <aside id="left-bar">
-            <ul id="server-select">
-                {(() => {
-                    if (servers.value.size === 0) {
-                        return "Loading servers skeleton...";
-                    }
-                    return Array.from(servers.value.values()).map((server) => {
-                        return <ServerIcon key={server.id} server={server} />;
-                    });
-                })()}
-            </ul>
+            <div>
+                <a href="/app/dm">
+                    DM
+                </a>
+                <ul id="server-select">
+                    {(() => {
+                        if (servers.value === undefined) {
+                            return "Loading servers skeleton...";
+                        }
+                        if (servers.value.size === 0) {
+                            return <em>No servers</em>;
+                        }
+                        return Array.from(servers.value.values()).map(
+                            (server) => {
+                                return (
+                                    <ServerIcon
+                                        key={server.id}
+                                        server={server}
+                                    />
+                                );
+                            },
+                        );
+                    })()}
+                </ul>
+            </div>
             <ul id="left-bar-other">
                 <a href="/settings/general">
                     <SettingsIcon />
@@ -25,7 +40,6 @@ export default function LeftBar() {
 }
 
 function ServerIcon({ server }: { server: Server }) {
-    // TODO: add interactivity and stuff
     const serverLink = `/app/${server.id}`;
     return (
         <li class="server-icon" title={server.name}>

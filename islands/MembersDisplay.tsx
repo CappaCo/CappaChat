@@ -7,8 +7,11 @@ export default function MembersDisplay() {
         <aside id="users">
             <ul id="users-group">
                 {(() => {
-                    if (members.value.size === 0) {
+                    if (members.value === undefined) {
                         return "Members loading skeleton...";
+                    }
+                    if (members.value.size === 0) {
+                        return <em>No members</em>;
                     }
                     return Array.from(members.value.values()).map((member) => {
                         return <UserDisplay key={member.id} user={member} />;

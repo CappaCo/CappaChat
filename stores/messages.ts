@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals";
 import { Id, Message } from "@/lib/types.ts";
 
-export const messages = signal<Message[]>();
+export const messages = signal<Message[] | undefined>(undefined);
 
 export async function fetchRecentMessages(serverId: Id, channelId: Id) {
     console.info("fetching recent messages...");

@@ -35,8 +35,9 @@ export default function EpicFormItem({ children }: EpicFormItemProps) {
             input.removeEventListener("focus", addMoveUp);
             input.removeEventListener("focusout", removeMoveUp);
         };
-    }, [itemRef /*, children*/]);
+    }, [itemRef.current /*, children*/]);
 
+    // TODO: let this control the children?
     return (
         <div ref={itemRef} class="form-item">
             {children}

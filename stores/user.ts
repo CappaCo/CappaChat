@@ -3,7 +3,7 @@ import { User } from "@/lib/types.ts";
 
 //export const currentUserId = signal<Id | undefined>();
 
-export const user = signal<User>();
+export const user = signal<User | undefined>(undefined);
 
 export async function fetchUser() {
     console.log("fetching user...");

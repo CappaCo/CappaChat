@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals";
 import { Channel, Id } from "@/lib/types.ts";
 
-export const channels = signal<Map<Id, Channel>>(new Map());
+export const channels = signal<Map<Id, Channel> | undefined>(undefined);
 
 export async function fetchChannels(serverId: Id) {
     console.info("fetching channels...");

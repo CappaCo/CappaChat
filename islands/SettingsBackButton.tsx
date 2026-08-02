@@ -1,4 +1,4 @@
-export default function SettingsBackButton() {
+export function SettingsBackButton() {
     return (
         <a
             class="back-button"
