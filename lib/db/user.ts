@@ -5,22 +5,22 @@ import { Id, Server, User } from "@/lib/types.ts";
 
 export async function createUser(
     { username, password }: { username: string; password: string },
-): Promise<Id> {
+): Promise<User> {
     const id = generateId();
     const passwordHash = await hash(password);
 
-    await query(
+    return (await query<User>(
         `
         INSERT INTO users (
             id,
             username,
             password_hash,
             profile_picture_url
-        ) VALUES ($1, $2, $3, '/testImages/users/2.webp');`,
+        ) VALUES ($1, $2, $3, '/testImages/users/2.webp')
+        RETURNING id, username, description, profile_picture_url, created_at;
+        `,
         [id, username, passwordHash],
-    );
-
-    return id;
+    ))[0];
 }
 
 export async function getUser(userId: Id): Promise<User> {
@@ -34,7 +34,8 @@ export async function getUser(userId: Id): Promise<User> {
             created_at
         FROM users
         WHERE id = $1
-        LIMIT 1;`,
+        LIMIT 1;
+        `,
         [userId],
     ))[0];
 }
@@ -48,7 +49,8 @@ export async function getUserIdFromUsername(
             id
         FROM users
         WHERE username = $1
-        LIMIT 1;`,
+        LIMIT 1;
+        `,
         [username],
     ))[0];
 
@@ -69,7 +71,8 @@ export async function getServersUserIsIn(userId: Id): Promise<Server[]> {
         FROM servers s
         JOIN members m
         ON m.server_id = s.id
-        WHERE m.user_id = $1;`,
+        WHERE m.user_id = $1;
+        `,
         [userId],
     );
 }

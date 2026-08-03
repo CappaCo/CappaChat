@@ -21,7 +21,7 @@ export async function getMessages(
         WHERE channel_id = $1
           AND created_at < $2
         ORDER BY created_at DESC
-        LIMIT $3
+        LIMIT $3;
         `,
         [channelId, before, limit],
     );
@@ -50,7 +50,7 @@ export async function createMessage(
             content
         )
         VALUES ($1, $2, $3, $4)
-        RETURNING *
+        RETURNING *;
         `,
         [id, channelId, authorId, content],
     ))[0];

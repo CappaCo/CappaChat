@@ -1,5 +1,6 @@
 import { define } from "@/lib/utils.ts";
 import { getServersUserIsIn } from "@/lib/db/user.ts";
+import { createServer } from "@/lib/db/server.ts";
 
 export const handler = define.handlers({
     async GET(ctx) {
@@ -24,9 +25,32 @@ export const handler = define.handlers({
             );
         }
 
-        const id = await ""; // TODO: create server from form data probably
+        const formData = await ctx.req.formData();
 
-        return new Response(JSON.stringify({ message: "created", id }), {
+        const serverName = formData.get("server-name");
+
+        if (serverName === null) {
+            return new Response(
+                JSON.stringify({ message: "no server name in form data" }),
+                { status: 400 },
+            );
+        }
+
+        const name = serverName.toString().trim();
+
+        if (name === "") {
+            return new Response(
+                JSON.stringify({ message: "server name is empty" }),
+                { status: 400 },
+            );
+        }
+
+        const server = await createServer({
+            ownerId: user.id,
+            name,
+        });
+
+        return new Response(JSON.stringify({ message: "created", server }), {
             status: 201,
         });
     },

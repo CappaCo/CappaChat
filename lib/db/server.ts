@@ -1,5 +1,6 @@
 import { Channel, Id, Server, User } from "@/lib/types.ts";
 import { query } from "@/lib/db.ts";
+import { generateId } from "@/lib/id.ts";
 
 export async function getServer(serverId: Id): Promise<Server> {
     return (await query<Server>(
@@ -12,8 +13,28 @@ export async function getServer(serverId: Id): Promise<Server> {
             s.created_at
         FROM servers s
         WHERE s.id = $1
-        LIMIT 1;`,
+        LIMIT 1;
+        `,
         [serverId],
+    ))[0];
+}
+
+export async function createServer(
+    { ownerId, name }: { ownerId: Id; name: string },
+): Promise<Server> {
+    const id = generateId();
+
+    return (await query<Server>(
+        `
+        INSERT INTO servers (
+            id,
+            owner_id,
+            name
+        )
+        VALUES ($1, $2)
+        RETURNING *;
+        `,
+        [id, ownerId, name],
     ))[0];
 }
 
@@ -48,7 +69,8 @@ export async function getUsersInServer(serverId: Id): Promise<User[]> {
         FROM users u
         JOIN members m
         ON m.user_id = u.id
-        WHERE m.server_id = $1;`,
+        WHERE m.server_id = $1;
+        `,
         [serverId],
     );
 }
