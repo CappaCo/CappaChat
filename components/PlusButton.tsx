@@ -8,7 +8,6 @@ export function PlusButton(
 ) {
     return (
         <svg class="plus-button" id={id} onClick={onClick}>
-            
         </svg>
     );
 }

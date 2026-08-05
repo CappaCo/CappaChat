@@ -1,11 +1,29 @@
 import { define } from "@/lib/utils.ts";
 import { createMessage, getMessages } from "@/lib/db/channel.ts";
 import { pub } from "@/lib/pubsub.ts";
+import { hasPermission } from "@/lib/db/permissions.ts";
 
 export const handler = define.handlers({
-    // get messages in the channel
     async GET(ctx) {
+        const serverId = ctx.state.serverId;
         const channelId = ctx.state.channelId;
+
+        const user = ctx.state.requestingUser;
+        if (user === undefined) {
+            return new Response(
+                JSON.stringify({ message: "you are not logged in" }),
+                { status: 401 },
+            );
+        }
+
+        if (!hasPermission(user, "messages-list", { serverId, channelId })) {
+            return new Response(
+                JSON.stringify({
+                    message: "you don't have permissions to list messages",
+                }),
+                { status: 403 },
+            );
+        }
 
         const messages = await getMessages(channelId);
 
@@ -13,10 +31,26 @@ export const handler = define.handlers({
     },
 
     async POST(ctx) {
-        const requestingUser = ctx.state.requestingUser;
-        if (requestingUser === undefined) throw "no requesting user";
-
+        const serverId = ctx.state.serverId;
         const channelId = ctx.state.channelId;
+
+        const user = ctx.state.requestingUser;
+
+        if (user === undefined) {
+            return new Response(
+                JSON.stringify({ message: "you are not logged in" }),
+                { status: 401 },
+            );
+        }
+
+        if (!hasPermission(user, "message-create", { serverId, channelId })) {
+            return new Response(
+                JSON.stringify({
+                    message: "you don't have permissions to send messages",
+                }),
+                { status: 403 },
+            );
+        }
 
         const json = await ctx.req.json();
         const {
@@ -39,7 +73,7 @@ export const handler = define.handlers({
         }
 
         const message = {
-            authorId: requestingUser.id,
+            authorId: user.id,
             content,
         };
 

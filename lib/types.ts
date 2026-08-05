@@ -47,7 +47,7 @@ export interface Server {
 export interface Channel {
     id: Id;
     name: string;
-    type: "text" | "voice";
+    type: ChannelType;
 
     position: number;
 
@@ -55,6 +55,8 @@ export interface Channel {
 
     createdAt: Timestamp;
 }
+
+export type ChannelType = "text" | "voice";
 
 // message
 export interface Message {

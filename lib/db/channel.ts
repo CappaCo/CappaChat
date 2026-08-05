@@ -1,6 +1,6 @@
 import { generateId } from "@/lib/id.ts";
 import { query } from "@/lib/db.ts";
-import type { Id, Message } from "@/lib/types.ts";
+import type { Channel, ChannelType, Id, Message } from "@/lib/types.ts";
 
 interface GetMessagesOptions {
     before?: Date;
@@ -27,6 +27,33 @@ export async function getMessages(
     );
 
     return response;
+}
+
+export async function createChannel(serverId: Id, {
+    name,
+    type = "text",
+}: {
+    name: string;
+    type: ChannelType;
+}): Promise<Channel> {
+    const id = generateId();
+
+    const position = 0;
+
+    return (await query<Channel>(
+        `
+        INSERT INTO channels (
+            id,
+            server_id,
+            name,
+            type,
+            position,
+        )
+        VALUES ($1, $2, $3, $4, 0)
+        RETURNING *;
+        `,
+        [id, serverId, name, type, position],
+    ))[0];
 }
 
 export async function createMessage(

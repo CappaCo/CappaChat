@@ -160,10 +160,11 @@ export default function ChatPage(
 
 // TODO: trim names if they're too long
 function PageTitle({ parts = [] }: { parts?: string[] }) {
+    parts.push("CappaChat");
     return (
         <Head>
             <title>
-                {`${parts.join(" | ")}CappaChat`}
+                {parts.join(" | ")}
             </title>
         </Head>
     );
