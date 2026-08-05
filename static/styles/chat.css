@@ -141,33 +141,10 @@ body {
 
 #channels-group {
     padding: 16px;
-    list-style-type: none;
-}
-
-.channel-display {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    transition: background-color 0.2s;
-}
-
-.channel-display a {
-    box-sizing: border-box;
-    text-decoration: none var(--background-color);
-    color: inherit;
-    transition: text-decoration 0.2s;
-    border-radius: var(--border-radius);
-    width: 100%;
-    display: block;
-    padding: 8px;
 }
 
 .channel-display.selected a {
     background-color: var(--foreground-highlight-color);
-}
-
-.channel-display:is(:hover, :focus) a {
-    background-color: var(--foreground-color);
-    text-decoration: underline var(--text-primary);
 }
 
 /* users section */

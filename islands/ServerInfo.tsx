@@ -93,7 +93,7 @@ export function ServerInfo() {
                     {server.value ? server.value.name : "Loading..."}
                 </h2>
             </div>
-            <ul id="channels-group">
+            <ul id="channels-group" class="link-list">
                 {(() => {
                     if (channels.value === undefined) {
                         return "Loading channels skeleton...";

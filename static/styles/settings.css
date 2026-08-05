@@ -56,34 +56,6 @@ body {
     padding: 16px;
 }
 
-.setting-select {
-    padding: 8px;
-    margin: -4px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border-radius: var(--border-radius);
-    transition: background-color 0.2s;
-}
-
-.setting-select.selected {
-    background-color: var(--foreground-highlight-color);
-}
-
-.setting-select a {
-    text-decoration: none var(--background-color);
-    color: inherit;
-    transition: text-decoration 0.2s;
-}
-
-.setting-select:is(:hover, :focus) {
-    background-color: var(--foreground-color);
-}
-
-.setting-select:is(:hover, :focus) a {
-    text-decoration: underline var(--text-primary);
-}
-
 .setting-section {
     margin: 0 auto;
     max-width: 1000px;

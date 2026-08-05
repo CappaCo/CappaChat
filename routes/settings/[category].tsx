@@ -32,7 +32,7 @@ export default define.page(function Home(ctx) {
                     <span>Settings</span>
                 </h1>
                 <aside id="settings-select">
-                    <ul>
+                    <ul class="link-list">
                         {Object.keys(settingsSchema).map((categoryKey) => {
                             return (
                                 <SettingsCategory

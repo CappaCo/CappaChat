@@ -306,7 +306,6 @@ a {
 }
 
 /* form */
-
 input {
     background-color: var(--foreground-color);
     border: var(--background-border);
@@ -348,6 +347,10 @@ input {
     padding: 0.5em;
     font-size: 1em;
     color: var(--text-primary);
+}
+
+input[type="text"] {
+    padding: 0.5em 0.75em;
 }
 
 .form-item label {
@@ -416,6 +419,35 @@ input {
     border-radius: 64px;
 }
 
+/* link list */
+.link-list {
+    list-style-type: none;
+}
+
+.link-list > li {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.link-list > li a {
+    box-sizing: border-box;
+    text-decoration: none var(--background-color);
+    color: inherit;
+    transition: text-decoration 0.2s;
+    transition: background-color 0.2s;
+    width: 100%;
+    display: block;
+    border-radius: var(--border-radius);
+    padding: 8px;
+    padding-left: 14px;
+}
+
+.link-list > li:is(:focus, :hover) a {
+    background-color: var(--foreground-color);
+    text-decoration: underline var(--text-primary);
+}
+
+/* random stuff ig */
 code {
     overflow-x: auto;
     background: var(--foreground-color);
