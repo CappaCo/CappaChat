@@ -26,7 +26,12 @@ export function changeSetting(
     settingsSaved.value = false;
 }
 
-export function saveSettings(): void {
+export function resetSettings() {
+    settings.value = defaultSettings;
+    saveSettings();
+}
+
+export function saveSettings() {
     console.log("saving settings");
     localStorage.setItem(
         settingsLocalStorageKey,

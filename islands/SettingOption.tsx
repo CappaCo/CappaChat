@@ -48,7 +48,6 @@ export function SettingOption(
                                         settingName,
                                         checked,
                                     );
-                                    // TODO: make a popup save button?
                                     saveSettings();
                                 }}
                             />

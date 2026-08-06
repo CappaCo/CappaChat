@@ -52,29 +52,40 @@ body {
     border-width: var(--border-weight-on-the-settings-page);
 }
 
-#settings-select ul {
-    padding: 16px;
+#settings-main-container {
+    grid-area: settings-main;
+    padding: 1em;
 }
 
-.setting-section {
-    margin: 0 auto;
-    max-width: 1000px;
+#settings-select ul {
+    padding: 16px;
 }
 
 .setting-section ul {
     padding: 0;
 }
 
+.setting-section {
+    border: solid 2px #fff;
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
 /* main styling */
 main {
-    grid-area: settings-main;
-    padding: 1em;
+    margin: 0 auto;
+    max-width: 1000px;
 }
 
 .setting-option {
     display: flex;
     justify-content: space-between;
-    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.setting-option:last-child {
+    margin-bottom: 0;
 }
 
 .setting-name {

@@ -5,6 +5,7 @@ import { define } from "@/lib/utils.ts";
 import { ComponentChildren } from "preact";
 import { SettingsBackButton } from "@/islands/SettingsBackButton.tsx";
 
+import { ResetSettings } from "@/islands/ResetSettings.tsx";
 import {
     type SettingsCategory,
     settingsSchema,
@@ -46,27 +47,30 @@ export default define.page(function Home(ctx) {
                 <div id="settings-header">
                     <h2>{category?.title || "Category not found"}</h2>
                 </div>
-                <main>
-                    <SettingsSection>
-                        {category?.settings
-                            ? Object.keys(category.settings).map(
-                                (settingKey) => {
-                                    return (
-                                        <SettingOption
-                                            key={settingKey}
-                                            categoryName={selectedCategory}
-                                            settingName={settingKey}
-                                        />
-                                    );
-                                },
-                            )
-                            : (
-                                <a href="/settings/funny">
-                                    Go back to funny settings
-                                </a>
-                            )}
-                    </SettingsSection>
-                </main>
+                <div id="settings-main-container">
+                    <main>
+                        <SettingsSection>
+                            {category?.settings
+                                ? Object.keys(category.settings).map(
+                                    (settingKey) => {
+                                        return (
+                                            <SettingOption
+                                                key={settingKey}
+                                                categoryName={selectedCategory}
+                                                settingName={settingKey}
+                                            />
+                                        );
+                                    },
+                                )
+                                : (
+                                    <a href="/settings/funny">
+                                        Go back to funny settings
+                                    </a>
+                                )}
+                        </SettingsSection>
+                        <ResetSettings />
+                    </main>
+                </div>
             </div>
         </>
     );
