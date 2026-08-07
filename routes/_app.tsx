@@ -2,6 +2,7 @@ import { asset } from "fresh/runtime";
 
 import { define } from "@/lib/utils.ts";
 import BugWalkingAcrossScreen from "@/islands/funny/BugWalkingAcrossScreen.tsx";
+import { KhezuAppearing } from "@/islands/funny/Khezu.tsx";
 
 export default define.page(function ({ Component }) {
     return (
@@ -34,6 +35,7 @@ export default define.page(function ({ Component }) {
             </head>
             <body>
                 <BugWalkingAcrossScreen />
+                <KhezuAppearing />
                 <Component />
             </body>
         </html>
