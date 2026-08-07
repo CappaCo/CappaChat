@@ -34,8 +34,10 @@ export default define.page(function ({ Component }) {
                 <title>CappaChat</title>
             </head>
             <body>
-                <BugWalkingAcrossScreen />
-                <KhezuAppearing />
+                <div>
+                    <BugWalkingAcrossScreen />
+                    <KhezuAppearing />
+                </div>
                 <Component />
             </body>
         </html>
