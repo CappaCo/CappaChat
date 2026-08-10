@@ -13,7 +13,8 @@
         "./main.ts",
 
         "./deno.json",
-        "./deno.lock"
+        "./deno.lock",
+        "./vite.config.ts"
     ],
     "editor.defaultFormatter": "denoland.vscode-deno",
     "[typescriptreact]": {

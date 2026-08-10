@@ -34,7 +34,7 @@ export default define.page(function ({ Component }) {
                 <title>CappaChat</title>
             </head>
             <body>
-                <div>
+                <div style="overflow: hidden;">
                     <BugWalkingAcrossScreen />
                     <KhezuAppearing />
                 </div>

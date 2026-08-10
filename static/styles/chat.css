@@ -313,3 +313,17 @@ remove this to see what it does lol
     --send-button-display: none;
     display: var(--send-button-display);
 }
+
+#add-server-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#add-member-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}

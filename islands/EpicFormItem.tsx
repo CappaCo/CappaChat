@@ -16,6 +16,7 @@ export default function EpicFormItem({ children }: EpicFormItemProps) {
         const moveUpClass = "move-up";
         const label = item.querySelector("label") as HTMLLabelElement;
         const input = item.querySelector("input") as HTMLInputElement;
+        if (input === null) return;
 
         function addMoveUp() {
             label.classList.add(moveUpClass);
