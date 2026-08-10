@@ -17,20 +17,22 @@ export default function BugWalkingAcrossScreen() {
         return Math.random() * 100;
     }
 
-    let startBugPosition = {
-        x: offScreenAmount,
-        y: randomY(),
-    };
-
-    const endBugPosition = {
-        x: 110,
-        y: 50,
-    };
+    let startBugPosition = generateRandomPosition("right");
+    let endBugPosition = generateRandomPosition("left");
 
     const bugPosition = {
         x: 0,
         y: 0,
     };
+
+    function generateRandomPosition(d: "left" | "right") {
+        return {
+            x: (d === "right")
+                ? -offScreenAmount
+                : 100 + offScreenAmount,
+            y: randomY(),
+        };
+    }
 
     function startRunning() {
         const bugImage = bugImageRef.current;
@@ -38,10 +40,7 @@ export default function BugWalkingAcrossScreen() {
 
         running = true;
 
-        endBugPosition.x = (direction === "right")
-            ? -offScreenAmount
-            : 100 + offScreenAmount;
-        endBugPosition.y = randomY();
+        endBugPosition = generateRandomPosition(direction);
 
         bugSpeed = Math.random() * 5 + 0.1;
 
@@ -73,7 +72,7 @@ export default function BugWalkingAcrossScreen() {
 
         if ((bugPosition.x >= endBugPosition.x) === (direction === "right")) {
             stopRunning();
-            startBugPosition = { ...endBugPosition };
+            startBugPosition = structuredClone(endBugPosition);
             setTimeout(startRunning, (Math.random() * 5 + 5) * 1000 * 60);
         }
 
