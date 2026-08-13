@@ -27,9 +27,7 @@ export default function BugWalkingAcrossScreen() {
 
     function generateRandomPosition(d: "left" | "right") {
         return {
-            x: (d === "right")
-                ? -offScreenAmount
-                : 100 + offScreenAmount,
+            x: (d === "right") ? -offScreenAmount : 100 + offScreenAmount,
             y: randomY(),
         };
     }
@@ -84,6 +82,15 @@ export default function BugWalkingAcrossScreen() {
         }
     }
 
+    function bugClick() {
+        stopRunning();
+        // TODO: make bug explode! 😮😮😮💥💥💥
+        setTimeout(() => {
+            alert("yeaowch!!!");
+            globalThis.location.reload();
+        }, 1000);
+    }
+
     useEffect(() => {
         if (settings.value.funny.bugCrawlingAcrossScreen) {
             startRunning();
@@ -91,14 +98,13 @@ export default function BugWalkingAcrossScreen() {
     }, [settings.value.funny.bugCrawlingAcrossScreen]);
 
     return (
-        <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 44; pointer-events: none;">
-            <img
-                ref={bugImageRef}
-                src="/funny/bugwalking.gif"
-                width={100}
-                style="position: absolute; top: -100%; left: -100%;"
-                alt="bug crawling"
-            />
-        </div>
+        <img
+            ref={bugImageRef}
+            src="/funny/bugwalking.gif"
+            width={100}
+            style="position: absolute; top: -100%; left: -100%; pointer-events: auto; z-index: 400;"
+            alt="bug crawling"
+            onClick={bugClick}
+        />
     );
 }
