@@ -20,7 +20,7 @@ export async function getServer(serverId: Id): Promise<Server> {
 }
 
 export async function createServer(
-    { ownerId, name }: { ownerId: Id; name: string },
+    { ownerId, name, icon }: { ownerId: Id; name: string; icon?: string },
 ): Promise<Server> {
     const id = generateId();
 
@@ -29,12 +29,13 @@ export async function createServer(
         INSERT INTO servers (
             id,
             owner_id,
-            name
+            name,
+            icon_url,
         )
-        VALUES ($1, $2, $3)
+        VALUES ($1, $2, $3, $4)
         RETURNING *;
         `,
-        [id, ownerId, name],
+        [id, ownerId, name, icon],
     ))[0];
 }
 

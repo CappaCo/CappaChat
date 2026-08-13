@@ -28,6 +28,7 @@ export const handler = define.handlers({
         const formData = await ctx.req.formData();
 
         const serverName = formData.get("server-name");
+        const serverIcon = formData.get("server-icon");
 
         if (serverName === null) {
             return new Response(
@@ -45,9 +46,26 @@ export const handler = define.handlers({
             );
         }
 
+        if (serverIcon === null) {
+            return new Response(
+                JSON.stringify({ message: "no server name in form data" }),
+                { status: 400 },
+            );
+        }
+
+        const icon = serverIcon.toString().trim();
+
+        if (icon === "") {
+            return new Response(
+                JSON.stringify({ message: "server icon is empty" }),
+                { status: 400 },
+            );
+        }
+
         const server = await createServer({
             ownerId: user.id,
             name,
+            icon,
         });
 
         return new Response(JSON.stringify({ message: "created", server }), {
