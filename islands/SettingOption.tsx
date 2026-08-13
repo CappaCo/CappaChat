@@ -52,9 +52,49 @@ export function SettingOption(
                                 }}
                             />
                         );
-
+                    
                     case "number":
-                        return <em>TODO: add number setting thing</em>;
+                        console.log("rendering number input");
+                        return (
+                            <input
+                                type="number"
+                                id={id}
+                                placeholder={settingsSchema[categoryName]
+                                    .settings[settingName].default}
+                                value={settings
+                                    .value[categoryName][settingName] as number}
+                                onInput={(event) => {
+                                    console.log(
+                                        "number changed with event:",
+                                        event,
+                                    );
+
+                                    function shouldChange(
+                                        value: string,
+                                    ): boolean {
+                                        console.log("checking value:", value);
+                                        const num = Number(value);
+                                        if (Number.isNaN(num)) return false;
+                                        if (num > 1) return false;
+                                        if (num === 0) return false;
+                                        return true;
+                                    }
+
+                                    const value =
+                                        (event.target as HTMLInputElement)
+                                            .value;
+
+                                    if (shouldChange(value)) {
+                                        changeSetting(
+                                            categoryName,
+                                            settingName,
+                                            value,
+                                        );
+                                        saveSettings();
+                                    }
+                                }}
+                            />
+                        );
 
                     default:
                         return (

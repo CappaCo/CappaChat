@@ -16,14 +16,23 @@ export function changeSetting(
     settingName: string,
     value: SettingValue,
 ) {
-    settings.value = {
-        ...settings.value,
-        [categoryName]: {
-            ...settings.value[categoryName],
-            [settingName]: value,
-        },
-    };
-    settingsSaved.value = false;
+    console.log("changing setting");
+    if (
+        isValidValue(
+            settingsSchema[categoryName].settings[settingName].type,
+            value,
+        )
+    ) {
+        console.log("but like for real");
+        settings.value = {
+            ...settings.value,
+            [categoryName]: {
+                ...settings.value[categoryName],
+                [settingName]: value,
+            },
+        };
+        settingsSaved.value = false;
+    }
 }
 
 export function resetSettings() {

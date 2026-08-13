@@ -23,9 +23,16 @@ export const settingsSchema = {
             khezu: {
                 title: "Khezu",
                 description:
-                    "BRINGS KHEZU TO THE BIG SCREEN (CONTENT WARNING!!!)",
+                    "BRINGS KHEZU TO THE BIG SCREEN (Jumpscare Warning!!!)",
                 type: "boolean",
                 default: false,
+            },
+            khezuChance: {
+                title: "Khezu chance",
+                description:
+                    "Chance per second of khezu appearing",
+                type: "number",
+                default: 1 / 10_000,
             },
         },
     },
