@@ -34,7 +34,7 @@ export default define.page(function ({ Component }) {
                 <title>CappaChat</title>
             </head>
             <body>
-                <div style="overflow: hidden; width: 100%; height: 100%; position: fixed; overflow: hidden; pointer-events: none;">
+                <div style="overflow: hidden; width: 100%; height: 100%; position: fixed; pointer-events: none;">
                     <BugWalkingAcrossScreen />
                     <KhezuAppearing />
                 </div>

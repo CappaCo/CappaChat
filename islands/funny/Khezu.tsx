@@ -1,13 +1,17 @@
 import { useEffect, useRef } from "preact/hooks";
 import { settings } from "@/stores/settings.ts";
 
+let khezuTimeout: NodeJS.Timeout | undefined;
+
 export function KhezuAppearing() {
     const khezuRef = useRef<HTMLImageElement>(null);
     let sound: HTMLAudioElement | undefined;
 
-    const chance = settings.value.funny.khezuChance as number; // 1 in 10,000 chance
+    const chance = settings.value.funny.khezuChance as number;
     const perTime = 1 * 1_000; // per second of khezu appearing
     const showTime = 1 * 1_000; // for 1 second
+
+    if (khezuTimeout) clearTimeout(khezuTimeout);
 
     function randomKhezu() {
         const number = Math.random();
@@ -26,10 +30,15 @@ export function KhezuAppearing() {
             }, showTime);
         }
 
-        if (settings.value.funny.khezu) setTimeout(randomKhezu, perTime);
+        if (settings.value.funny.khezu) {
+            khezuTimeout = setTimeout(randomKhezu, perTime);
+        }
     }
 
-    useEffect(randomKhezu, [settings.value.funny.khezu]);
+    useEffect(randomKhezu, [
+        settings.value.funny.khezu,
+        settings.value.funny.khezuChance,
+    ]);
 
     useEffect(() => {
         sound = new Audio("/funny/beefyscream.ogg");

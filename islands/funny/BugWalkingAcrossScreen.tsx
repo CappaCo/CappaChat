@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "preact/hooks";
-import { settings } from "@/stores/settings.ts";
+import { changeSetting, saveSettings, settings } from "@/stores/settings.ts";
 
 export default function BugWalkingAcrossScreen() {
     const bugImageRef = useRef<HTMLImageElement>(null);
+    const explodeRef = useRef<HTMLImageElement>(null);
 
     let running = false;
     let bugSpeed = 0.5;
@@ -74,20 +75,31 @@ export default function BugWalkingAcrossScreen() {
             setTimeout(startRunning, (Math.random() * 5 + 5) * 1000 * 60);
         }
 
-        bugImage.style.left = bugPosition.x.toString() + "%";
-        bugImage.style.top = bugPosition.y.toString() + "%";
+        setPosition(bugPosition);
 
         if (running) {
             requestAnimationFrame(run);
         }
     }
 
+    function setPosition({ x, y }: { x: number; y: number }) {
+        const bugImage = bugImageRef.current;
+        if (bugImage === null) return;
+        bugImage.style.left = x.toString() + "%";
+        bugImage.style.top = y.toString() + "%";
+    }
+
     function bugClick() {
         stopRunning();
-        // TODO: make bug explode! 😮😮😮💥💥💥
+        if (explodeRef.current === null) return;
+        explodeRef.current.style.display = "block";
+
         setTimeout(() => {
-            alert("yeaowch!!!");
-            globalThis.location.reload();
+            if (explodeRef.current === null) return;
+            explodeRef.current.style.display = "none";
+            setPosition({ x: -100, y: -100 });
+            changeSetting("funny", "bugCrawlingAcrossScreen", false);
+            saveSettings();
         }, 1000);
     }
 
@@ -98,13 +110,20 @@ export default function BugWalkingAcrossScreen() {
     }, [settings.value.funny.bugCrawlingAcrossScreen]);
 
     return (
-        <img
-            ref={bugImageRef}
-            src="/funny/bugwalking.gif"
-            width={100}
-            style="position: absolute; top: -100%; left: -100%; pointer-events: auto; z-index: 400;"
-            alt="bug crawling"
-            onClick={bugClick}
-        />
+        <>
+            <img
+                ref={explodeRef}
+                src="/funny/explode.gif"
+                style="position: absolute: top: 0; left: 0; width: 100%; height: 100%; display: none;"
+            />
+            <img
+                ref={bugImageRef}
+                src="/funny/bugwalking.gif"
+                width={100}
+                style="position: absolute; top: -100%; left: -100%; pointer-events: auto; z-index: 400;"
+                alt="bug crawling"
+                onClick={bugClick}
+            />
+        </>
     );
 }

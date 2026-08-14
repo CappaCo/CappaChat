@@ -2,6 +2,7 @@ import { settingsSchema } from "@/lib/settings/schema.ts";
 import { SamSwitch } from "@/components/SamSwitch.tsx";
 import { changeSetting, saveSettings, settings } from "@/stores/settings.ts";
 import { IS_BROWSER } from "fresh/runtime";
+import { useEffect, useRef } from "preact/hooks";
 
 export function SettingOption(
     { categoryName, settingName }: {
@@ -52,17 +53,26 @@ export function SettingOption(
                                 }}
                             />
                         );
-                    
-                    case "number":
+
+                    case "number": {
                         console.log("rendering number input");
+                        const inputRef = useRef<HTMLInputElement>(null);
+                        useEffect(() => {
+                            if (inputRef.current === null) return;
+                            inputRef.current.value = String(
+                                settings
+                                    .value[categoryName][settingName] as number,
+                            );
+                        }, []);
                         return (
                             <input
                                 type="number"
                                 id={id}
+                                ref={inputRef}
                                 placeholder={settingsSchema[categoryName]
                                     .settings[settingName].default}
-                                value={settings
-                                    .value[categoryName][settingName] as number}
+                                //value={settings
+                                //    .value[categoryName][settingName] as number}
                                 onInput={(event) => {
                                     console.log(
                                         "number changed with event:",
@@ -75,8 +85,6 @@ export function SettingOption(
                                         console.log("checking value:", value);
                                         const num = Number(value);
                                         if (Number.isNaN(num)) return false;
-                                        if (num > 1) return false;
-                                        if (num === 0) return false;
                                         return true;
                                     }
 
@@ -85,17 +93,18 @@ export function SettingOption(
                                             .value;
 
                                     if (shouldChange(value)) {
+                                        console.log("changing number settings");
                                         changeSetting(
                                             categoryName,
                                             settingName,
-                                            value,
+                                            Number(value),
                                         );
                                         saveSettings();
                                     }
                                 }}
                             />
                         );
-
+                    }
                     default:
                         return (
                             <span>
