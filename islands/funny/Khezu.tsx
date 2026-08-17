@@ -5,7 +5,7 @@ let khezuTimeout: NodeJS.Timeout | undefined;
 
 export function KhezuAppearing() {
     const khezuRef = useRef<HTMLImageElement>(null);
-    let sound: HTMLAudioElement | undefined;
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const chance = settings.value.funny.khezuChance as number;
     const perTime = 1 * 1_000; // per second of khezu appearing
@@ -20,8 +20,8 @@ export function KhezuAppearing() {
             if (khezuRef.current === null) return;
             khezuRef.current.style.display = "block";
 
-            if (sound) {
-                sound.play();
+            if (audioRef.current) {
+                audioRef.current.play();
             }
 
             setTimeout(() => {
@@ -40,17 +40,13 @@ export function KhezuAppearing() {
         settings.value.funny.khezuChance,
     ]);
 
-    useEffect(() => {
-        sound = new Audio("/funny/beefyscream.ogg");
-        console.log("khezu roar loaded");
-    }, []);
-
-    return (
+    return (<>
+            <audio ref={audioRef} src="/funny/beefyscream.ogg" />
         <img
             ref={khezuRef}
             id="khezu"
             src="/funny/khezu.webp"
             style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-        />
+        /></>
     );
 }

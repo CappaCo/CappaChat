@@ -4,6 +4,8 @@ import { changeSetting, saveSettings, settings } from "@/stores/settings.ts";
 export default function BugWalkingAcrossScreen() {
     const bugImageRef = useRef<HTMLImageElement>(null);
     const explodeRef = useRef<HTMLImageElement>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const thingSize = 75;
 
     let running = false;
     let bugSpeed = 0.5;
@@ -41,7 +43,7 @@ export default function BugWalkingAcrossScreen() {
 
         endBugPosition = generateRandomPosition(direction);
 
-        bugSpeed = Math.random() * 5 + 0.1;
+        bugSpeed = 0.1;//Math.random() * 5 + 0.1;
 
         const tranformStyle = "scale" +
             ((direction === "left") ? "(-1, 1)" : "(1, 1)");
@@ -87,12 +89,22 @@ export default function BugWalkingAcrossScreen() {
         if (bugImage === null) return;
         bugImage.style.left = x.toString() + "%";
         bugImage.style.top = y.toString() + "%";
+        const explodeImage = explodeRef.current;
+        if (explodeImage === null) return;
+        explodeImage.style.left = (x - thingSize/2).toString() + "%";
+        explodeImage.style.top = (y - thingSize/2).toString() + "%";
     }
 
     function bugClick() {
         stopRunning();
         if (explodeRef.current === null) return;
         explodeRef.current.style.display = "block";
+        console.log("exploding sound:", audioRef.current);
+        if (audioRef.current) {
+            console.log("playing sound");
+            audioRef.current.currentTime = 0;
+            audioRef.current.play()
+        };
 
         setTimeout(() => {
             if (explodeRef.current === null) return;
@@ -100,7 +112,7 @@ export default function BugWalkingAcrossScreen() {
             setPosition({ x: -100, y: -100 });
             changeSetting("funny", "bugCrawlingAcrossScreen", false);
             saveSettings();
-        }, 1000);
+        }, 1500);
     }
 
     useEffect(() => {
@@ -111,10 +123,11 @@ export default function BugWalkingAcrossScreen() {
 
     return (
         <>
+            <audio ref={audioRef} src="/funny/bombexplode.mp3" />
             <img
                 ref={explodeRef}
-                src="/funny/explode.gif"
-                style="position: absolute: top: 0; left: 0; width: 100%; height: 100%; display: none;"
+                src="/funny/realbombtoexploderealbugsandalsomichael.gif"
+                style={`position: absolute; top: 0; left: 0; width: ${thingSize}%; height: ${thingSize}%; display: none; z-index: 401;`}
             />
             <img
                 ref={bugImageRef}
