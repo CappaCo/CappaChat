@@ -43,7 +43,8 @@ export default function BugWalkingAcrossScreen() {
 
         endBugPosition = generateRandomPosition(direction);
 
-        bugSpeed = 0.1;//Math.random() * 5 + 0.1;
+        const bugSlowMode = false;
+        bugSpeed = bugSlowMode ? 0.1 : Math.random() * 5 + 0.1;
 
         const tranformStyle = "scale" +
             ((direction === "left") ? "(-1, 1)" : "(1, 1)");
@@ -91,8 +92,8 @@ export default function BugWalkingAcrossScreen() {
         bugImage.style.top = y.toString() + "%";
         const explodeImage = explodeRef.current;
         if (explodeImage === null) return;
-        explodeImage.style.left = (x - thingSize/2).toString() + "%";
-        explodeImage.style.top = (y - thingSize/2).toString() + "%";
+        explodeImage.style.left = (x - thingSize / 2).toString() + "%";
+        explodeImage.style.top = (y - thingSize / 2).toString() + "%";
     }
 
     function bugClick() {
@@ -103,8 +104,8 @@ export default function BugWalkingAcrossScreen() {
         if (audioRef.current) {
             console.log("playing sound");
             audioRef.current.currentTime = 0;
-            audioRef.current.play()
-        };
+            audioRef.current.play();
+        }
 
         setTimeout(() => {
             if (explodeRef.current === null) return;
