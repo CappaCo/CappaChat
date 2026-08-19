@@ -34,7 +34,7 @@ export async function createChannel(serverId: Id, {
     type = "text",
 }: {
     name: string;
-    type: ChannelType;
+    type?: ChannelType;
 }): Promise<Channel> {
     const id = generateId();
 
@@ -47,9 +47,9 @@ export async function createChannel(serverId: Id, {
             server_id,
             name,
             type,
-            position,
+            position
         )
-        VALUES ($1, $2, $3, $4, 0)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING *;
         `,
         [id, serverId, name, type, position],

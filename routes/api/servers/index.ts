@@ -48,7 +48,7 @@ export const handler = define.handlers({
 
         if (serverIcon === null) {
             return new Response(
-                JSON.stringify({ message: "no server name in form data" }),
+                JSON.stringify({ message: "no server icon in form data" }),
                 { status: 400 },
             );
         }

@@ -1,6 +1,8 @@
 import { Channel, Id, Server, User } from "@/lib/types.ts";
 import { query } from "@/lib/db.ts";
 import { generateId } from "@/lib/id.ts";
+import { joinUser } from "@/lib/db/members.ts";
+import { createChannel } from "@/lib/db/channel.ts";
 
 export async function getServer(serverId: Id): Promise<Server> {
     return (await query<Server>(
@@ -24,19 +26,27 @@ export async function createServer(
 ): Promise<Server> {
     const id = generateId();
 
-    return (await query<Server>(
+    // TODO: do this all in one transaction
+    const server = (await query<Server>(
         `
         INSERT INTO servers (
             id,
             owner_id,
             name,
-            icon_url,
+            icon_url
         )
         VALUES ($1, $2, $3, $4)
         RETURNING *;
         `,
         [id, ownerId, name, icon],
     ))[0];
+
+    await Promise.all([
+        joinUser(server.ownerId, server.id),
+        createChannel(server.id, { name: "general" }),
+    ]);
+
+    return server;
 }
 
 export async function getChannelsInServer(serverId: Id): Promise<Channel[]> {

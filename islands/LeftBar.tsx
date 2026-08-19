@@ -100,20 +100,19 @@ function AddServerButton() {
             <Modal title="Make a Server" id="add-server-modal">
                 <form action="/api/servers" method="POST">
                     <EpicFormItem>
-                        <label for="servername">Server Name</label>
+                        <label for="server-name">Server Name</label>
                         <input
                             id="server-name"
                             name="server-name"
-                            // type="email"
                             autofocus
                         />
                     </EpicFormItem>
 
                     <EpicFormItem>
-                        <label for="servericon">Server Icon (enter URL)</label>
+                        <label for="server-icon">Server Icon (enter URL)</label>
                         <input
-                            id="servericon"
-                            name="servericon"
+                            id="server-icon"
+                            name="server-icon"
                             autofocus
                         />
                     </EpicFormItem>
