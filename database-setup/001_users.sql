@@ -2,7 +2,7 @@ CREATE TABLE users (
   id CHAR(26) PRIMARY KEY,
 
   username TEXT NOT NULL UNIQUE,
-  display_name TEXT, -- dont' do this
+  display_name TEXT, -- don't do this
   description TEXT NOT NULL DEFAULT '',
   avatar_url TEXT, -- renamed to profile_picture_url
   password_hash TEXT NOT NULL,
