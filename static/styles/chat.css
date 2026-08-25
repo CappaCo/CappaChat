@@ -165,13 +165,22 @@ body {
     padding: 0;
 }
 
-.user-display {
+.user-display, #add-member-button {
     padding: 8px;
     margin: 8px;
     display: flex;
     gap: 8px;
+}
+
+.user-display {
     border-radius: var(--border-radius);
     transition: background-color 0.2s;
+}
+
+#add-member-button {
+    background-color: transparent;
+    border: none;
+    align-items: center;
 }
 
 .user-display:is(:hover, :focus) {
@@ -315,13 +324,6 @@ remove this to see what it does lol
 }
 
 #add-server-button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-#add-member-button {
     background-color: transparent;
     border: none;
     padding: 0;

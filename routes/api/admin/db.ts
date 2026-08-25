@@ -21,7 +21,12 @@ export const handler = define.handlers({
             );
         }
 
-        const response = await db.query(query, args);
+        const response = await db.query(query, args).catch((e) => {
+            if (e.name === "PostgresError") {
+                return e;
+            }
+            throw e;
+        });
 
         return new Response(JSON.stringify(response));
     },

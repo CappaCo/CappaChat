@@ -14,13 +14,26 @@ const db = new Client({
     database: databaseURL.pathname.replace("/", ""),
 
     tls: {
-        enabled: false,
+        enabled: false, // disable tls so database works at school
     },
 });
 
 console.info("connecting to db...");
 await db.connect();
 console.info("connected to db");
+
+export async function query<T>(
+    query: string,
+    args?: QueryArguments,
+) {
+    const response = await db.queryObject<T>({
+        text: query,
+        args,
+        camelCase: true,
+    });
+
+    return response.rows;
+}
 
 async function cleanup() {
     console.log("closing database...");
@@ -31,17 +44,3 @@ async function cleanup() {
 
 Deno.addSignalListener("SIGINT", cleanup);
 Deno.addSignalListener("SIGTERM", cleanup);
-
-export async function query<T>(
-    query: string,
-    args?: QueryArguments,
-) {
-    //const response = await db.queryObject<T>(query, args);
-    const response = await db.queryObject<T>({
-        text: query,
-        args,
-        camelCase: true,
-    });
-
-    return response.rows;
-}
