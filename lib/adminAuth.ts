@@ -143,7 +143,11 @@ export async function isAdminRequest(headers: Headers) {
 // set up stuff ig
 // TODO: get this from a .env file
 async function addMasterAuth() {
-    await addAdminAuth("cappa");
+    const password = Deno.env.get("CAPPACHAT_ADMIN_PASSWORD");
+    if (password === undefined) {
+        throw "CAPPACHAT_ADMIN_PASSWORD is not set";
+    }
+    await addAdminAuth(password);
 }
 
 addMasterAuth();
