@@ -40,8 +40,6 @@ export async function createSession(userId: Id): Promise<SessionToken> {
 
     const sessionTokenHash = await hash(sessionToken);
 
-    // I think expiry can be handled by the database
-    // TODO: add more metadata like location or ip address?
     await query(
         `
         INSERT INTO sessions (
@@ -56,6 +54,9 @@ export async function createSession(userId: Id): Promise<SessionToken> {
 
     return sessionToken;
 }
+
+let timeOfLastSessionExpiryCleanup: number = 0;
+let currentlyCleaningUpExpiredSessions = false;
 
 export async function getUserFromSession(
     headers: Headers,
@@ -83,5 +84,31 @@ export async function getUserFromSession(
         [sessionTokenHash],
     ))[0];
 
+    if (timeOfLastSessionExpiryCleanup < Date.now() - 1000 * 60 * 60 * 24) {
+        cleanupExpiredSessions();
+    }
+
     return user;
 }
+
+async function cleanupExpiredSessions() {
+    if (currentlyCleaningUpExpiredSessions) return;
+    currentlyCleaningUpExpiredSessions = true;
+
+    try {
+        console.log("deleting expired sessions...");
+
+        const deletedRows = await query(`
+            DELETE FROM sessions
+            WHERE expires_at < NOW()
+            RETURNING *;
+        `);
+
+        console.log(`deleted ${deletedRows.length} expired sessions`);
+        timeOfLastSessionExpiryCleanup = Date.now();
+    } finally {
+        currentlyCleaningUpExpiredSessions = false;
+    }
+}
+
+cleanupExpiredSessions();
