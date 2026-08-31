@@ -5,6 +5,7 @@ import EpicFormItem from "@/islands/EpicFormItem.tsx";
 import { currentServerId } from "@/stores/server.ts";
 import { User } from "@/lib/types.ts";
 import { useSignal } from "@preact/signals";
+import { users } from "@/stores/users.ts";
 
 export default function MembersDisplay() {
     // TODO: make the classes members instead of users
@@ -19,7 +20,15 @@ export default function MembersDisplay() {
                         return <em>No members</em>;
                     }
                     return Array.from(members.value.values()).map((member) => {
-                        return <UserDisplay key={member.id} user={member} />;
+                        const user = users.value?.get(member.userId);
+                        if (user === undefined) {
+                            return (
+                                <em key={member.userId}>
+                                    User is somehow undefined
+                                </em>
+                            );
+                        }
+                        return <UserDisplay key={member.userId} user={user} />;
                     });
                 })()}
             </ul>

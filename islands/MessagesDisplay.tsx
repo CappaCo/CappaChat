@@ -1,5 +1,5 @@
 import { Message, User } from "@/lib/types.ts";
-import { members } from "@/stores/members.ts";
+import { users } from "@/stores/users.ts";
 import { messages } from "@/stores/messages.ts";
 
 export default function MessagesDisplay() {
@@ -14,7 +14,7 @@ export default function MessagesDisplay() {
 
                     return messages.value.map((message, index) => {
                         if (messages.value === undefined) throw "how?????";
-                        const user = members.value?.get(message.authorId);
+                        const user = users.value?.get(message.authorId);
                         const prevMessage = (index !== messages.value.length)
                             ? messages.value[index - 1]
                             : undefined;

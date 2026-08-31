@@ -1,5 +1,5 @@
 import { define } from "@/lib/utils.ts";
-import { getUsersInServer } from "@/lib/db/server.ts";
+import { getMembersInServer } from "@/lib/db/server.ts";
 import { hasPermission } from "@/lib/db/permissions.ts";
 import { joinUser } from "@/lib/db/members.ts";
 import { getUserIdFromUsername } from "@/lib/db/user.ts";
@@ -25,7 +25,7 @@ export const handler = define.handlers({
             );
         }
 
-        const members = await getUsersInServer(serverId);
+        const members = await getMembersInServer(serverId);
 
         return new Response(JSON.stringify(members));
     },

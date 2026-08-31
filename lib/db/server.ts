@@ -1,4 +1,4 @@
-import { Channel, Id, Server, User } from "@/lib/types.ts";
+import { Channel, Id, MemberResponse, Server, User } from "@/lib/types.ts";
 import { query } from "@/lib/db.ts";
 import { generateId } from "@/lib/id.ts";
 import { joinUser } from "@/lib/db/members.ts";
@@ -80,6 +80,29 @@ export async function getUsersInServer(serverId: Id): Promise<User[]> {
         FROM users u
         JOIN members m
         ON m.user_id = u.id
+        WHERE m.server_id = $1;
+        `,
+        [serverId],
+    );
+}
+
+export async function getMembersInServer(
+    serverId: Id,
+): Promise<MemberResponse[]> {
+    return await query<MemberResponse>(
+        `
+        SELECT
+            m.joined_at AS "joinedAt",
+            json_build_object(
+                'id', u.id,
+                'username', u.username,
+                'description', u.description,
+                'profilePictureUrl', u.profile_picture_url,
+                'createdAt', u.created_at
+            ) AS "user"
+        FROM members m
+        JOIN users u
+            ON u.id = m.user_id
         WHERE m.server_id = $1;
         `,
         [serverId],

@@ -25,6 +25,10 @@ export interface Member {
     joinedAt: Timestamp;
 }
 
+export interface MemberResponse extends Omit<Member, "userId"> {
+    user: User;
+}
+
 // role
 export interface Role {
     id: Id;
