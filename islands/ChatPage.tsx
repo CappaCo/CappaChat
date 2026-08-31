@@ -47,21 +47,32 @@ export default function ChatPage(
     }, []);
 
     useEffect(() => {
+        const fetchingStartTime = performance.now();
         fetchServers();
         fetchUser();
 
-        switch (location.kind) {
-            case "server":
-                initializeChatPage(
-                    location.serverId,
-                    location.channelId,
-                );
-                break;
-            case "dm":
-                initializeDmPage();
-                break;
-            case "none":
-        }
+        (() => {
+            switch (location.kind) {
+                case "server":
+                    return initializeChatPage(
+                        location.serverId,
+                        location.channelId,
+                    );
+                case "dm":
+                    return initializeDmPage();
+                case "none":
+                    return new Promise(() => {});
+            }
+        })().then(function finishedLoading() {
+            const now = performance.now();
+            const timeTakenToFetch = now - fetchingStartTime;
+            const timeTakenToFetchFormatted = (timeTakenToFetch / 1000).toFixed(
+                2,
+            );
+            console.log(
+                `really finished fetching in ${timeTakenToFetchFormatted}s`,
+            );
+        });
 
         return () => {
             console.log("tearing down loading");
