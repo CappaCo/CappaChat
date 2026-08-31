@@ -58,12 +58,25 @@ export async function createSession(userId: Id): Promise<SessionToken> {
 let timeOfLastSessionExpiryCleanup: number = 0;
 let currentlyCleaningUpExpiredSessions = false;
 
+type SessionCache = { expiry: number; user: User };
+const cachedSessions: Map<string, SessionCache> = new Map();
+
 export async function getUserFromSession(
     headers: Headers,
 ): Promise<User | undefined> {
     const sessionToken = cookie.getCookies(headers)["session"];
 
     if (sessionToken === undefined) return undefined;
+
+    const cachedSession = cachedSessions.get(sessionToken);
+    outer: if (cachedSession !== undefined) {
+        if (cachedSession.expiry < Date.now()) {
+            console.log("cached session expired!");
+            cachedSessions.delete(sessionToken);
+            break outer;
+        }
+        return cachedSession.user;
+    }
 
     const sessionTokenHash = await hash(sessionToken);
 
@@ -83,6 +96,11 @@ export async function getUserFromSession(
         LIMIT 1;`,
         [sessionTokenHash],
     ))[0];
+
+    cachedSessions.set(sessionToken, {
+        expiry: Date.now() + 1000 * 60,
+        user,
+    });
 
     if (timeOfLastSessionExpiryCleanup < Date.now() - 1000 * 60 * 60 * 24) {
         cleanupExpiredSessions();
