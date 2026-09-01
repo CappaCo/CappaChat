@@ -8,7 +8,7 @@ export default function LeftBar() {
     return (
         <aside id="left-bar">
             <div>
-                <a href="/app/dm" aria-label="go to direct messages">
+                <a href="/app/dm" title="Direct messages" aria-label="Go to direct messages">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="64px"
@@ -42,7 +42,7 @@ export default function LeftBar() {
                 <AddServerButton />
             </div>
             <ul id="left-bar-other">
-                <a href="/settings/general">
+                <a href="/settings/general" title="Settings">
                     <SettingsIcon />
                 </a>
             </ul>
@@ -53,9 +53,8 @@ export default function LeftBar() {
 function ServerIcon({ server }: { server: Server }) {
     const serverLink = `/app/${server.id}`;
     return (
-        <li class="server-icon" title={server.name}>
-            <a href={serverLink}>
-                {/* TODO: put actual image source here */}
+        <li class="server-icon">
+            <a href={serverLink} title={server.name}>
                 <img src={server.iconUrl} alt={server.name} />
             </a>
         </li>
@@ -85,6 +84,7 @@ function AddServerButton() {
                 aria-label="Make server"
                 command="show-modal"
                 commandfor="add-server-modal"
+                title="Add server"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
