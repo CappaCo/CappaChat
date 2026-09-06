@@ -140,7 +140,7 @@ export default function ChatPage(
                                         parts={[
                                             // TODO: dm name
                                             "dm page",
-                                        ].map(String)}
+                                        ]}
                                     />
 
                                     <DmsInfo />

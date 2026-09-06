@@ -41,7 +41,6 @@ export async function fetchMembers(serverId: Id) {
     }
 
     const fetchedMembers: MemberResponse[] = await response.json();
-    console.warn({ fetchedMembers });
 
     const nextMembers = new Map<Id, Member>();
     const nextUsers = new Map(users.value);
@@ -60,8 +59,6 @@ export async function fetchMembers(serverId: Id) {
     users.value = nextUsers;
 
     // save the things to cache
-    console.warn("saving to cache");
-    console.warn({ fetchedMembers });
     const memberCacheKey = cacheKey + serverId;
     localStorage.setItem(memberCacheKey, JSON.stringify(fetchedMembers));
     saveUsersToCache();

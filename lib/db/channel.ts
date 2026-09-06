@@ -32,13 +32,13 @@ export async function getMessages(
 export async function createChannel(serverId: Id, {
     name,
     type = "text",
+    position = 0,
 }: {
     name: string;
     type?: ChannelType;
+    position?: number;
 }): Promise<Channel> {
     const id = generateId();
-
-    const position = 0;
 
     return (await query<Channel>(
         `

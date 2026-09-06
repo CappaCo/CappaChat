@@ -141,6 +141,13 @@ body {
 
 #channels-group {
     padding: 16px;
+    
+}
+
+.channel-display a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .channel-display.selected a {

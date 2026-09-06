@@ -54,7 +54,7 @@ export const handler = define.handlers({
 
         if (channelName === null) {
             return new Response(
-                JSON.stringify({ message: "no server name in form data" }),
+                JSON.stringify({ message: "no channel name in form data" }),
                 { status: 400 },
             );
         }
@@ -63,20 +63,49 @@ export const handler = define.handlers({
 
         if (name === "") {
             return new Response(
-                JSON.stringify({ message: "server name is empty" }),
+                JSON.stringify({ message: "channel name is empty" }),
                 { status: 400 },
             );
         }
 
-        const channel = await createChannel(serverId, {
-            name,
-        });
+        function getPosition(): number | undefined {
+            const channelPosition = formData.get("channel-position");
 
-        return new Response(
-            JSON.stringify({ message: "created", server: channel }),
-            {
-                status: 201,
-            },
-        );
+            if (channelPosition === undefined) return undefined;
+
+            const position = Number(channelPosition);
+
+            if (!Number.isFinite(position)) {
+                throw new Response(
+                    JSON.stringify({
+                        message: "channel position was not a finite number",
+                    }),
+                    { status: 400 },
+                );
+            }
+
+            return position;
+        }
+
+        try {
+            const position = getPosition();
+
+            const channel = await createChannel(serverId, {
+                name,
+                position,
+            });
+
+            return new Response(
+                JSON.stringify({ message: "created", server: channel }),
+                {
+                    status: 201,
+                },
+            );
+        } catch (e) {
+            if (e instanceof Response) {
+                return e;
+            }
+            throw e;
+        }
     },
 });
