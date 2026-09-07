@@ -188,6 +188,11 @@ body {
     background-color: transparent;
     border: none;
     align-items: center;
+    width: 100%;
+}
+
+#add-member-button:hover {
+    background-color: var(--foreground-color);
 }
 
 .user-display:is(:hover, :focus) {
@@ -208,6 +213,7 @@ body {
     margin: 8px;
     display: flex;
     flex-direction: row;
+    
 }
 
 #add-users > * {
@@ -335,4 +341,21 @@ remove this to see what it does lol
     border: none;
     padding: 0;
     margin: 0;
+}
+#add-server-button:hover {
+    background-color: var(--foreground-color);
+}
+
+#new-channel-button {
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+#new-channel-button:hover {
+    background-color: var(--foreground-color);
 }
