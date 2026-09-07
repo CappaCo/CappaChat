@@ -122,7 +122,7 @@ export default function ChatPage(
                                             server.value?.name,
                                         ].map((x) => String(x || ""))}
                                     />
-
+                                    
                                     <ServerInfo />
                                     <MembersDisplay />
 

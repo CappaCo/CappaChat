@@ -6,7 +6,7 @@ export default function UserDisplay({ user }: { user: User }) {
 
     function doThings() {
         alert(
-            "do something like show the user description: " + user.description,
+            user.description,
         );
     }
 

@@ -98,7 +98,10 @@ export const handler = define.handlers({
             return new Response(
                 JSON.stringify({ message: "created", server: channel }),
                 {
-                    status: 201,
+                    status: 302,
+                    headers: {
+                        "Location": `/app/${serverId}/${channel.id}`,
+                    },
                 },
             );
         } catch (e) {

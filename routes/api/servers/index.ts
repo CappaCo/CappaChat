@@ -69,7 +69,10 @@ export const handler = define.handlers({
         });
 
         return new Response(JSON.stringify({ message: "created", server }), {
-            status: 201,
+            status: 302,
+            headers: {
+                "Location": `/app/${server.id}`,
+            },
         });
     },
 });
