@@ -23,6 +23,16 @@ export async function createUser(
     ))[0];
 }
 
+export async function deleteUser(userId: Id) {
+    await query(
+        `
+        DELETE FROM users
+        WHERE id=$0;
+        `,
+        [userId],
+    );
+}
+
 export async function getUser(userId: Id): Promise<User> {
     return (await query<User>(
         `

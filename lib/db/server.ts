@@ -49,6 +49,16 @@ export async function createServer(
     return server;
 }
 
+export async function deleteServer(serverId: Id) {
+    await query(
+        `
+        DELETE FROM servers
+        WHERE id=$0;
+        `,
+        [serverId],
+    );
+}
+
 export async function getChannelsInServer(serverId: Id): Promise<Channel[]> {
     return await query<Channel>(
         `

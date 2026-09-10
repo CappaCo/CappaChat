@@ -14,3 +14,14 @@ export async function joinUser(userId: Id, serverId: Id): Promise<Member> {
         [userId, serverId],
     ))[0];
 }
+
+export async function unjoinUser(userId: Id, serverId: Id) {
+    await query(
+        `
+        DELETE FROM members
+        WHERE user_id=$0
+        AND server_id=$1;
+        `,
+        [userId, serverId],
+    );
+}

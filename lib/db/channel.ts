@@ -56,6 +56,16 @@ export async function createChannel(serverId: Id, {
     ))[0];
 }
 
+export async function deleteChannel(channelId: Id) {
+    await query(
+        `
+        DELETE FROM channels
+        WHERE id=$0;
+        `,
+        [channelId],
+    );
+}
+
 export async function createMessage(
     channelId: Id,
     {
